@@ -1,4 +1,6 @@
 ﻿using GarageFlow.Constants;
+using GarageFlow.CQRS.User.Commands.AssignUserRole;
+using GarageFlow.CQRS.User.Commands.UnassignRole;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,7 @@ public class AuthController(IMediator mediator) : ControllerBase
 
     [HttpDelete("userRole")]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> UnAssignUserRole(UnAssignUserRoleCommand command)
+    public async Task<IActionResult> UnassignUserRole(UnassignUserRoleCommand command)
     {
         await mediator.Send(command);
         return NoContent();
