@@ -9,3 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Naming", "VSSpell001:Spell Check", Justification = "<Pending>", Scope = "type", Target = "~T:GarageFlow.CQRS.User.Commands.UnassignRole.UnassignUserRoleCommandHandler")]
 [assembly: SuppressMessage("Naming", "VSSpell001:Spell Check", Justification = "<Pending>", Scope = "type", Target = "~T:GarageFlow.CQRS.User.Commands.UnassignRole.UnassignUserRoleCommand")]
 [assembly: SuppressMessage("Naming", "VSSpell001:Spell Check", Justification = "<Pending>", Scope = "type", Target = "~T:GarageFlow.Middlewares.ErrorHandlingMiddleware")]
+[assembly: SuppressMessage("Naming", "VSSpell001:Spell Check", Justification = "<Pending>", Scope = "type", Target = "~T:GarageFlow.Data.AppDbContext")]
+[assembly: SuppressMessage("Naming", "VSSpell001:Spell Check", Justification = "<Pending>", Scope = "type", Target = "~T:GarageFlow.Data.Seeders.AppSeeder")]
+[assembly: SuppressMessage("Naming", "VSSpell001:Spell Check", Justification = "<Pending>", Scope = "type", Target = "~T:GarageFlow.Data.Seeders.IAppSeeder")]

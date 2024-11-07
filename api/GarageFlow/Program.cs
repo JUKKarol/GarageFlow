@@ -1,40 +1,36 @@
 using GarageFlow.Data;
+using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
+using GarageFlow.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
-namespace GarageFlow;
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-public class Program
+var connectionString = configuration.GetConnectionString("GarageFlow");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddAuthentication();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
 {
-    public static void Main(string[] args)
+    c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
     {
-        var builder = WebApplication.CreateBuilder(args);
-        var configuration = builder.Configuration;
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+    });
 
-        var connectionString = configuration.GetConnectionString("GarageFlow");
-        builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
-
-        builder.Services.AddIdentityApiEndpoints<AppUser>()
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<AppDbContext>();
-
-        builder.Services.AddAuthentication();
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(c =>
-        {
-            c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
-            {
-                Type = SecuritySchemeType.Http,
-                Scheme = "Bearer",
-            });
-
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
                 {
                     new OpenApiSecurityScheme
                     {
@@ -46,31 +42,35 @@ public class Program
                     },
                     new List<string>()
                 }
-            });
-        });
+    });
+});
 
-        builder.Host.UseSerilog((context, configuration) =>
-            configuration.ReadFrom.Configuration(context.Configuration)
-        );
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration)
+);
 
-        var app = builder.Build();
+var app = builder.Build();
 
-        //if (app.Environment.IsDevelopment())
-        //{
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        //}
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
+await seeder.Seed();
 
-        app.UseHttpsRedirection();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
-        app.MapGroup("/api/auth")
-            .WithTags("Auth")
-            .MapIdentityApi<AppUser>();
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
 
-        app.UseAuthorization();
+app.UseHttpsRedirection();
 
-        app.MapControllers();
+app.MapGroup("/api/auth")
+    .WithTags("Auth")
+    .MapIdentityApi<AppUser>();
 
-        app.Run();
-    }
-}
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
