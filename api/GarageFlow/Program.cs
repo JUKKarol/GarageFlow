@@ -1,3 +1,4 @@
+using GarageFlow.Configuration;
 using GarageFlow.Data;
 using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
@@ -9,10 +10,11 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
 
-var connectionString = configuration.GetConnectionString("GarageFlow");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(appSettings.ConnectionStrings.DefaultConnection));
 
 builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddRoles<IdentityRole>()
@@ -49,11 +51,17 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration)
 );
 
-var app = builder.Build();
+//services
 
+var app = builder.Build();
 var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
-await seeder.Seed();
+var dbContext = scope.ServiceProvider.GetService<AppDbContext>();
+
+var pendingMigrations = dbContext.Database.GetPendingMigrations();
+if (pendingMigrations.Any())
+{
+    dbContext.Database.Migrate();
+}
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
@@ -61,6 +69,17 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 //{
 app.UseSwagger();
 app.UseSwaggerUI();
+
+var services = scope.ServiceProvider;
+try
+{
+    var seeder = services.GetRequiredService<AppSeeder>();
+    await seeder.Seed();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Seeder error: {ex.Message}");
+}
 //}
 
 app.UseHttpsRedirection();
