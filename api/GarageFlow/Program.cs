@@ -51,7 +51,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration)
 );
 
-//services
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
