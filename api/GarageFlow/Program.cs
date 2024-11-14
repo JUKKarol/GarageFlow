@@ -52,6 +52,7 @@ builder.Host.UseSerilog((context, configuration) =>
 );
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<IAppSeeder, AppSeeder>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
@@ -70,16 +71,8 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-var services = scope.ServiceProvider;
-try
-{
-    var seeder = services.GetRequiredService<AppSeeder>();
-    await seeder.Seed();
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Seeder error: {ex.Message}");
-}
+var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
+await seeder.Seed();
 //}
 
 app.UseHttpsRedirection();
