@@ -1,19 +1,22 @@
 ﻿using GarageFlow.Constants;
+using GarageFlow.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.Data.Seeders;
 
-public class AppSeeder(AppDbContext db) : IAppSeeder
+public class AppSeeder(AppDbContext db, UserManager<AppUser> userManager) : IAppSeeder
 {
     public async Task Seed()
     {
         if (await db.Database.CanConnectAsync())
         {
-            if (!db.Roles.Any())
+            if (!db.Roles.Any() && !db.Users.Any())
             {
                 var roles = GetRoles();
                 await db.Roles.AddRangeAsync(roles);
                 await db.SaveChangesAsync();
+
+                await SeedUsers();
             }
         }
     }
@@ -37,5 +40,46 @@ public class AppSeeder(AppDbContext db) : IAppSeeder
         ];
 
         return roles;
+    }
+
+    private async Task SeedUsers()
+    {
+        var users = GetUsers();
+
+        foreach (var user in users)
+        {
+            var result = await userManager.CreateAsync(user.User, user.Password);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user.User, user.Role);
+            }
+        }
+    }
+
+    private IEnumerable<(AppUser User, string Password, string Role)> GetUsers()
+    {
+        return new List<(AppUser, string, string)>
+        {
+            (new AppUser
+            {
+                UserName = "client@example.com",
+                Email = "client@example.com",
+                EmailConfirmed = true
+            }, "GarageFlow1!", UserRoles.Client),
+
+            (new AppUser
+            {
+                UserName = "employee@example.com",
+                Email = "employee@example.com",
+                EmailConfirmed = true
+            }, "GarageFlow1!", UserRoles.Employee),
+
+            (new AppUser
+            {
+                UserName = "admin@example.com",
+                Email = "admin@example.com",
+                EmailConfirmed = true
+            }, "GarageFlow1!", UserRoles.Admin),
+        };
     }
 }
