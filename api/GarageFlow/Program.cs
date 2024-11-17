@@ -18,6 +18,18 @@ var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSetting
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(appSettings.ConnectionStrings.DefaultConnection));
 
+var frontendCorsName = "frontendCors";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(frontendCorsName, policy =>
+    {
+        policy.WithOrigins(appSettings.AllowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
@@ -77,6 +89,8 @@ app.UseSwaggerUI();
 var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
 await seeder.Seed();
 //}
+
+app.UseCors(frontendCorsName);
 
 app.UseHttpsRedirection();
 
