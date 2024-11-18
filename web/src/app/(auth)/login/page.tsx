@@ -33,8 +33,8 @@ export default function LoginPage() {
                         </div>
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
-                                <Checkbox id="remember-me" className="border-white">Zapamiętaj mnie</Checkbox>
-                                <Label htmlFor="remember">Remember me</Label>
+                                <Checkbox id="remember-me" className="border-white"></Checkbox>
+                                <Label htmlFor="remember-me">Zapamiętaj mnie</Label>
                             </div>
                             <a href="#" className="text-blue-400 hover:underline">Zapomniałeś hasła?</a>
                         </div>
