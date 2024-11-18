@@ -3,7 +3,9 @@ using GarageFlow.Data;
 using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares;
+using GarageFlow.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
@@ -53,6 +55,7 @@ builder.Host.UseSerilog((context, configuration) =>
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<IAppSeeder, AppSeeder>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
