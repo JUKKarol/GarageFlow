@@ -30,14 +30,13 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
         return NoContent();
     }
 
-    [HttpPost("login1")]
+    [HttpPost("login/jwt")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        var model1 = model;
-        var user = await userManager.FindByEmailAsync(model.Username);
+        var user = await userManager.FindByEmailAsync(model.Email);
         if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
         {
-            var token = tokenService.GenerateToken(user.Id);
+            var token = await tokenService.GenerateToken(user);
             return Ok(new { Token = token });
         }
 
@@ -46,7 +45,7 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
 
     public class LoginModel
     {
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
     }
 }
