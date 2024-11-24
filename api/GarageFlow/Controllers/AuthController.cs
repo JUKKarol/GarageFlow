@@ -1,10 +1,12 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.User.Commands.AssignUserRole;
-using GarageFlow.CQRS.User.Commands.UnassignRole;
+using GarageFlow.CQRS.User.Commands.UnassignUserRole;
+using GarageFlow.CQRS.User.Queries.GetUserToken;
 using GarageFlow.Entities;
 using GarageFlow.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,21 +33,9 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
     }
 
     [HttpPost("login/jwt")]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    public async Task<IActionResult> Login([FromBody] GetUserTokenQuery command)
     {
-        var user = await userManager.FindByEmailAsync(model.Email);
-        if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
-        {
-            var token = await tokenService.GenerateToken(user);
-            return Ok(new { Token = token });
-        }
-
-        return Unauthorized();
-    }
-
-    public class LoginModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        var userToken = await mediator.Send(command);
+        return Ok(userToken);
     }
 }

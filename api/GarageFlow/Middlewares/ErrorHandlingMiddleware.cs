@@ -15,6 +15,11 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
             context.Response.StatusCode = 404;
             await context.Response.WriteAsync(notFound.Message);
         }
+        catch (UnauthorizedAccessException unauthorized)
+        {
+            context.Response.StatusCode = 401;
+            await context.Response.WriteAsync(unauthorized.Message);
+        }
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
