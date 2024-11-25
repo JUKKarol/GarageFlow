@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ClipboardList, Car, } from "lucide-react"
 import { useState } from "react"
 import { Progress } from "@/components/ui/progress"
+import Header from "@/app/_components/dashboard/header"
 
 export default function DashboardPage() {
 
@@ -21,9 +22,7 @@ export default function DashboardPage() {
 
     return (
         <div>
-            <header className="flex justify-between w-full items-center mb-8">
-                <h2 className="text-3xl text-white font-bold">Dashboard</h2>
-            </header>
+          <Header title="Dashboard" />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <Card className="bg-zinc-950 border-zinc-900 text-white">
