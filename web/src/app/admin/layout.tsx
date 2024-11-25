@@ -1,6 +1,6 @@
-import { Bell, Car, ChevronDown, Wrench, Users, House, ClipboardList, Landmark } from "lucide-react";
+import { Car, Wrench, Users, House, ClipboardList, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import Link from "next/link";
 
 export default function Layout({
     children,
@@ -25,10 +25,12 @@ export default function Layout({
                 </div>
                 <nav>
                     {navItems.map((item) => ( 
+                        <Link key={item.id} href={item.href}>
                         <Button key={item.id} variant={`ghost`} className={`w-full justify-start mb-2 text-white hover:text-white hover:bg-zinc-800`}>
                             <item.icon className={`mr-2 h-4 w-4`} />
                             {item.name}
                         </Button>
+                        </Link>
                     ))}
                 </nav>
             </aside>
