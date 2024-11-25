@@ -103,14 +103,17 @@ if (pendingMigrations.Any())
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
+var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
+
 //if (app.Environment.IsDevelopment())
 //{
 app.UseSwagger();
 app.UseSwaggerUI();
 
-var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
-await seeder.Seed();
+await seeder.SeedDev();
 //}
+
+await seeder.Seed();
 
 app.UseCors(frontendCorsName);
 

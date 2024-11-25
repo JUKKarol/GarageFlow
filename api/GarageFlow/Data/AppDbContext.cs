@@ -6,10 +6,11 @@ namespace GarageFlow.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options)
 {
-    internal DbSet<Brand> Brands { get; set; }
-    internal DbSet<Car> Cars { get; set; }
-    internal DbSet<Model> Models { get; set; }
-    internal DbSet<Repair> Repair { get; set; }
+    public DbSet<Brand> Brands { get; set; }
+    public DbSet<Car> Cars { get; set; }
+    public DbSet<Model> Models { get; set; }
+    public DbSet<Repair> Repairs { get; set; }
+    public DbSet<AppConfig> AppConfig { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -78,6 +79,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
                 .WithOne(c => c.Model)
                 .HasForeignKey(c => c.ModelId)
                 .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        modelBuilder.Entity<AppConfig>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever();
         });
 
         base.OnModelCreating(modelBuilder);

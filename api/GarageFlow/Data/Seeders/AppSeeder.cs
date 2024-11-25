@@ -1,12 +1,13 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.Entities;
+using GarageFlow.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.Data.Seeders;
 
 public class AppSeeder(AppDbContext db, UserManager<AppUser> userManager) : IAppSeeder
 {
-    public async Task Seed()
+    public async Task SeedDev()
     {
         if (await db.Database.CanConnectAsync())
         {
@@ -17,6 +18,23 @@ public class AppSeeder(AppDbContext db, UserManager<AppUser> userManager) : IApp
                 await db.SaveChangesAsync();
 
                 await SeedUsers();
+            }
+        }
+    }
+
+    public async Task Seed()
+    {
+        if (await db.Database.CanConnectAsync())
+        {
+            if (!db.AppConfig.Any())
+            {
+                var config = new AppConfig
+                {
+                    Id = Guid.Empty,
+                    RepairsLimit = 10,
+                };
+                await db.AppConfig.AddAsync(config);
+                await db.SaveChangesAsync();
             }
         }
     }
