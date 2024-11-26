@@ -3,7 +3,7 @@
 public enum RepairStatus
 {
     None = 0,
-    Active = 1,
-    Archieve = 2,
+    Waiting = 1,
+    InProgres = 2,
     Canceled = 3
 }
