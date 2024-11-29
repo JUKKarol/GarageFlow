@@ -1,8 +1,10 @@
 using GarageFlow.Configuration;
+using GarageFlow.CQRS.User;
 using GarageFlow.Data;
 using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares;
+using GarageFlow.Repositories;
 using GarageFlow.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -86,10 +88,14 @@ builder.Host.UseSerilog((context, configuration) =>
 );
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<IAppSeeder, AppSeeder>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IUserContext, UserContext>();
+
 builder.Services.AddTransient<TokenService>();
+builder.Services.AddScoped<IRepairRepository, RepairRepository>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
