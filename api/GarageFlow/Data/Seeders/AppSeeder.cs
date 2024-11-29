@@ -31,7 +31,7 @@ public class AppSeeder(AppDbContext db, UserManager<AppUser> userManager) : IApp
                 var config = new AppConfig
                 {
                     Id = Guid.Empty,
-                    RepairsLimit = 10,
+                    RepairsLimitPerDay = 10,
                 };
                 await db.AppConfig.AddAsync(config);
                 await db.SaveChangesAsync();
