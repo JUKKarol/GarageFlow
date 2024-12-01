@@ -1,7 +1,7 @@
 ﻿using GarageFlow.Entities;
 using System.Threading;
 
-namespace GarageFlow.Repositories;
+namespace GarageFlow.Repositories.RepairRepository;
 
 public interface IRepairRepository
 {

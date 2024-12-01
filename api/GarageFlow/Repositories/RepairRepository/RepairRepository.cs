@@ -2,19 +2,19 @@
 using GarageFlow.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace GarageFlow.Repositories;
+namespace GarageFlow.Repositories.RepairRepository;
 
-public class RepairRepository(AppDbContext context) : IRepairRepository
+public class RepairRepository(AppDbContext db) : IRepairRepository
 {
     public async Task<Repair> CreateRepair(Repair repair, CancellationToken cancellationToken)
     {
-        await context.Repairs.AddAsync(repair, cancellationToken);
-        await context.SaveChangesAsync();
+        await db.Repairs.AddAsync(repair, cancellationToken);
+        await db.SaveChangesAsync();
         return repair;
     }
 
     public async Task<List<Repair>> GetAllRepairs(CancellationToken cancellationToken)
     {
-        return await context.Repairs.ToListAsync(cancellationToken);
+        return await db.Repairs.ToListAsync(cancellationToken);
     }
 }

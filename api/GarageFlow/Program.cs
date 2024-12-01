@@ -4,7 +4,7 @@ using GarageFlow.Data;
 using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares;
-using GarageFlow.Repositories;
+using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

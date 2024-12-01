@@ -1,8 +1,6 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.Repair.Commands.CreateRepair;
-using GarageFlow.CQRS.User.Commands.AssignUserRole;
 using GarageFlow.Entities;
-using GarageFlow.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +13,7 @@ namespace GarageFlow.Controllers;
 public class RepairController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
 {
     [HttpPost]
-    [Authorize(Roles = UserRoles.Client)]
+    [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateRepair(CreateRepairCommand command)
     {
         await mediator.Send(command);
