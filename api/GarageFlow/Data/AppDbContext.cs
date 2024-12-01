@@ -61,7 +61,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
             entity.HasMany(b => b.Models)
                 .WithOne(m => m.Brand)
-                .HasForeignKey(m => m.brandId)
+                .HasForeignKey(m => m.BrandId)
                 .OnDelete(DeleteBehavior.NoAction);
         });
 
@@ -73,7 +73,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
             entity.HasOne(m => m.Brand)
                 .WithMany(b => b.Models)
-                .HasForeignKey(m => m.brandId)
+                .HasForeignKey(m => m.BrandId)
                 .OnDelete(DeleteBehavior.NoAction);
             entity.HasMany(m => m.Cars)
                 .WithOne(c => c.Model)

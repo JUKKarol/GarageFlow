@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageFlow.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241130111221_RepairToDateOnly")]
-    partial class RepairToDateOnly
+    [Migration("20241201183907_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -186,6 +186,9 @@ namespace GarageFlow.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -196,12 +199,9 @@ namespace GarageFlow.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("brandId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("brandId");
+                    b.HasIndex("BrandId");
 
                     b.ToTable("Models");
                 });
@@ -418,7 +418,7 @@ namespace GarageFlow.Migrations
                 {
                     b.HasOne("GarageFlow.Entities.Brand", "Brand")
                         .WithMany("Models")
-                        .HasForeignKey("brandId")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
