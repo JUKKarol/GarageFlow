@@ -94,7 +94,7 @@ builder.Services.AddScoped<IAppSeeder, AppSeeder>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 
-builder.Services.AddTransient<TokenService>();
+builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IRepairRepository, RepairRepository>();
 
 var app = builder.Build();

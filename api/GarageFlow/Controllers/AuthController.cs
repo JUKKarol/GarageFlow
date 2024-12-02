@@ -14,7 +14,7 @@ namespace GarageFlow.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService) : ControllerBase
+public class AuthController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService) : ControllerBase
 {
     [HttpPost("userRole")]
     [Authorize(Roles = UserRoles.Admin)]

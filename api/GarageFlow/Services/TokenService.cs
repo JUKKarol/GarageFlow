@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.Services;
 
-public class TokenService(IOptions<AppSettings> appSettings, UserManager<AppUser> userManager)
+public class TokenService(IOptions<AppSettings> appSettings, UserManager<AppUser> userManager) : ITokenService
 {
     public async Task<string> GenerateToken(AppUser user)
     {
