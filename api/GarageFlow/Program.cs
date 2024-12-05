@@ -6,6 +6,7 @@ using GarageFlow.Entities;
 using GarageFlow.Middlewares;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
+using GarageFlow.Services.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;

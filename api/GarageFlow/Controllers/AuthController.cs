@@ -3,7 +3,7 @@ using GarageFlow.CQRS.User.Commands.AssignUserRole;
 using GarageFlow.CQRS.User.Commands.UnassignUserRole;
 using GarageFlow.CQRS.User.Queries.GetUserToken;
 using GarageFlow.Entities;
-using GarageFlow.Services;
+using GarageFlow.Services.TokenService;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;

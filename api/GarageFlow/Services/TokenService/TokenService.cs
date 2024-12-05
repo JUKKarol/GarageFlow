@@ -1,16 +1,13 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
 using GarageFlow.Configuration;
 using Microsoft.Extensions.Options;
 using GarageFlow.Entities;
-using GarageFlow.Constants;
 using Microsoft.AspNetCore.Identity;
 
-namespace GarageFlow.Services;
+namespace GarageFlow.Services.TokenService;
 
 public class TokenService(IOptions<AppSettings> appSettings, UserManager<AppUser> userManager) : ITokenService
 {

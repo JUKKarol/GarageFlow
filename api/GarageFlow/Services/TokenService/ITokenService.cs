@@ -1,6 +1,6 @@
 ﻿using GarageFlow.Entities;
 
-namespace GarageFlow.Services;
+namespace GarageFlow.Services.TokenService;
 
 public interface ITokenService
 {
