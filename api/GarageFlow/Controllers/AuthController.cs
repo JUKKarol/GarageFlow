@@ -6,7 +6,6 @@ using GarageFlow.Entities;
 using GarageFlow.Services.TokenService;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
