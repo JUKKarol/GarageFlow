@@ -30,7 +30,7 @@ public class RepairController(IMediator mediator, UserManager<AppUser> userManag
         return NoContent();
     }
 
-    [HttpGet]
+    [HttpGet("Status")]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> GetRepairByStatus(GetRepairsByStatusQuery command)
     {
