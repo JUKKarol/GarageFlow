@@ -15,7 +15,7 @@ namespace GarageFlow.Controllers;
 public class RepairController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
 {
     [HttpPost]
-    [Authorize(Roles = UserRoles.Client)]
+    [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateRepair(CreateRepairCommand command)
     {
         await mediator.Send(command);

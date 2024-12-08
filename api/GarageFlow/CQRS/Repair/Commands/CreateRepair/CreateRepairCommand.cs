@@ -6,7 +6,11 @@ namespace GarageFlow.CQRS.Repair.Commands.CreateRepair;
 
 public class CreateRepairCommand : IRequest
 {
+    public DateOnly StartedEstimateAt { get; set; }
+    public DateOnly FinisheEstimatedAt { get; set; }
+    public int PriceEstimate { get; set; }
     public string Description { get; set; }
+    public Guid CarId { get; set; }
 
     [JsonIgnore]
     public Guid CustomerId { get; set; }
