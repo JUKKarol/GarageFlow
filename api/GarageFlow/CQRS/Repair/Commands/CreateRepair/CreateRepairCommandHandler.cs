@@ -21,12 +21,7 @@ public class CreateRepairCommandHandler(IUserContext userContext,
             ?? throw new NotFoundException(nameof(AppUser), userClaims.Email);
 
         var repair = mapper.Map<GarageFlow.Entities.Repair>(request);
-        repair.CustomerId = Guid.Parse(user.Id);
-
-        repair.Users = new List<AppUser>
-        {
-            user
-        };
+        //repair.Users.Add(user);
 
         await repairRepository.CreateRepair(repair, cancellationToken);
     }

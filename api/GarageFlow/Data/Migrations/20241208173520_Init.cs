@@ -235,15 +235,16 @@ namespace GarageFlow.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StartedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    StartedEstimateAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    PlannedStartdAt = table.Column<DateOnly>(type: "date", nullable: false),
                     FinishedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    FinisheEstimatedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    PlannedFinishAt = table.Column<DateOnly>(type: "date", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    PriceEstimate = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {

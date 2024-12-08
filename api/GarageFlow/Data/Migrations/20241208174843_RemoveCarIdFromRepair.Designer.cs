@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageFlow.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241201183907_Init")]
-    partial class Init
+    [Migration("20241208174843_RemoveCarIdFromRepair")]
+    partial class RemoveCarIdFromRepair
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,34 +212,37 @@ namespace GarageFlow.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CarId")
+                    b.Property<Guid?>("CarId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CustomerEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("FinisheEstimatedAt")
+                    b.Property<DateOnly>("FinishedAt")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("FinishedAt")
+                    b.Property<DateOnly>("PlannedFinishAt")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly>("PlannedStartdAt")
                         .HasColumnType("date");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<int>("PriceEstimate")
-                        .HasColumnType("int");
-
                     b.Property<DateOnly>("StartedAt")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("StartedEstimateAt")
                         .HasColumnType("date");
 
                     b.Property<int>("Status")
@@ -429,9 +432,7 @@ namespace GarageFlow.Migrations
                 {
                     b.HasOne("GarageFlow.Entities.Car", "Car")
                         .WithMany("Repairs")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("CarId");
 
                     b.Navigation("Car");
                 });

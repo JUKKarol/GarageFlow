@@ -20,10 +20,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
             entity.Property(r => r.Price).IsRequired();
 
-            entity.HasOne(r => r.Car)
-                .WithMany(c => c.Repairs)
-                .HasForeignKey(r => r.CarId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //entity.HasOne(r => r.Car)
+            //    .WithMany(c => c.Repairs)
+            //    .HasForeignKey(r => r.CarId)
+            //    .OnDelete(DeleteBehavior.NoAction);
             entity.HasMany(r => r.Users)
                .WithMany(e => e.Repairs);
         });
@@ -47,10 +47,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
                 .WithMany(m => m.Cars)
                 .HasForeignKey(c => c.ModelId)
                 .OnDelete(DeleteBehavior.NoAction);
-            entity.HasMany(c => c.Repairs)
-               .WithOne(r => r.Car)
-               .HasForeignKey(r => r.CarId)
-               .OnDelete(DeleteBehavior.NoAction);
+            //entity.HasMany(c => c.Repairs)
+            //   .WithOne(r => r.Car)
+            //   .HasForeignKey(r => r.CarId)
+            //   .OnDelete(DeleteBehavior.NoAction);
         });
 
         modelBuilder.Entity<Brand>(entity =>
