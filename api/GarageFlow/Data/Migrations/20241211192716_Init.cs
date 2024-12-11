@@ -244,7 +244,7 @@ namespace GarageFlow.Migrations
                     CustomerPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {

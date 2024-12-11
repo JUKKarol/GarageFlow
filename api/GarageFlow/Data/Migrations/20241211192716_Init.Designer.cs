@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageFlow.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241208174843_RemoveCarIdFromRepair")]
-    partial class RemoveCarIdFromRepair
+    [Migration("20241211192716_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
