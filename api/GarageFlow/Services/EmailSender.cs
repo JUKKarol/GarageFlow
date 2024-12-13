@@ -1,11 +1,10 @@
-﻿using GarageFlow.Configuration;
+﻿using FluentEmail.Core;
+using FluentEmail.Smtp;
+using GarageFlow.Configuration;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
-using System.Net.Mail;
 using System.Net;
-using FluentEmail.Core;
-using FluentEmail.Smtp;
-using GarageFlow.Middlewares;
+using System.Net.Mail;
 
 namespace GarageFlow.Services;
 

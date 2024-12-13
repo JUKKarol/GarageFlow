@@ -1,11 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using GarageFlow.Configuration;
-using Microsoft.Extensions.Options;
+﻿using GarageFlow.Configuration;
 using GarageFlow.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace GarageFlow.Services.TokenService;
 

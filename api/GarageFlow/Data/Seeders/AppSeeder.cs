@@ -1,6 +1,5 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.Entities;
-using GarageFlow.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.Data.Seeders;

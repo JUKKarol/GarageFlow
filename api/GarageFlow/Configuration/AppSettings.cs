@@ -1,5 +1,4 @@
 ﻿using GarageFlow.Configuration.Options;
-using System.Xml.Linq;
 
 namespace GarageFlow.Configuration;
 

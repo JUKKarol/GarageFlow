@@ -1,6 +1,4 @@
-﻿using GarageFlow.Entities;
-using MediatR;
-using System.Text.Json.Serialization;
+﻿using MediatR;
 
 namespace GarageFlow.CQRS.Repair.Commands.CreateRepair;
 
