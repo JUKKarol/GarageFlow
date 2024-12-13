@@ -6,10 +6,11 @@ namespace GarageFlow.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options)
 {
-    internal DbSet<Brand> Brands { get; set; }
-    internal DbSet<Car> Cars { get; set; }
-    internal DbSet<Model> Models { get; set; }
-    internal DbSet<Repair> Repair { get; set; }
+    public DbSet<Brand> Brands { get; set; }
+    public DbSet<Car> Cars { get; set; }
+    public DbSet<Model> Models { get; set; }
+    public DbSet<Repair> Repairs { get; set; }
+    public DbSet<AppConfig> AppConfig { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,10 +20,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
             entity.Property(r => r.Price).IsRequired();
 
-            entity.HasOne(r => r.Car)
-                .WithMany(c => c.Repairs)
-                .HasForeignKey(r => r.CarId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //entity.HasOne(r => r.Car)
+            //    .WithMany(c => c.Repairs)
+            //    .HasForeignKey(r => r.CarId)
+            //    .OnDelete(DeleteBehavior.NoAction);
             entity.HasMany(r => r.Users)
                .WithMany(e => e.Repairs);
         });
@@ -46,10 +47,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
                 .WithMany(m => m.Cars)
                 .HasForeignKey(c => c.ModelId)
                 .OnDelete(DeleteBehavior.NoAction);
-            entity.HasMany(c => c.Repairs)
-               .WithOne(r => r.Car)
-               .HasForeignKey(r => r.CarId)
-               .OnDelete(DeleteBehavior.NoAction);
+            //entity.HasMany(c => c.Repairs)
+            //   .WithOne(r => r.Car)
+            //   .HasForeignKey(r => r.CarId)
+            //   .OnDelete(DeleteBehavior.NoAction);
         });
 
         modelBuilder.Entity<Brand>(entity =>
@@ -60,7 +61,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
             entity.HasMany(b => b.Models)
                 .WithOne(m => m.Brand)
-                .HasForeignKey(m => m.brandId)
+                .HasForeignKey(m => m.BrandId)
                 .OnDelete(DeleteBehavior.NoAction);
         });
 
@@ -72,12 +73,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
             entity.HasOne(m => m.Brand)
                 .WithMany(b => b.Models)
-                .HasForeignKey(m => m.brandId)
+                .HasForeignKey(m => m.BrandId)
                 .OnDelete(DeleteBehavior.NoAction);
             entity.HasMany(m => m.Cars)
                 .WithOne(c => c.Model)
                 .HasForeignKey(c => c.ModelId)
                 .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        modelBuilder.Entity<AppConfig>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever();
         });
 
         base.OnModelCreating(modelBuilder);

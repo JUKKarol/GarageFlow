@@ -20,12 +20,12 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
             context.Response.StatusCode = 401;
             await context.Response.WriteAsync(unauthorized.Message);
         }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, ex.Message);
+        //catch (Exception ex)
+        //{
+        //    logger.LogError(ex, ex.Message);
 
-            context.Response.StatusCode = 500;
-            await context.Response.WriteAsync("Something went wrong");
-        }
+        //    context.Response.StatusCode = 500;
+        //    await context.Response.WriteAsync("Something went wrong");
+        //}
     }
 }

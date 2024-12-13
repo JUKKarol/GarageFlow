@@ -3,4 +3,6 @@
 public interface IAppSeeder
 {
     Task Seed();
+
+    Task SeedDev();
 }

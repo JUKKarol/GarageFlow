@@ -1,15 +1,16 @@
 using GarageFlow.Configuration;
+using GarageFlow.CQRS.User;
 using GarageFlow.Data;
 using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares;
+using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
+using GarageFlow.Services.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -86,10 +87,14 @@ builder.Host.UseSerilog((context, configuration) =>
 );
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<IAppSeeder, AppSeeder>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddTransient<TokenService>();
+builder.Services.AddScoped<IUserContext, UserContext>();
+
+builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddScoped<IRepairRepository, RepairRepository>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
@@ -103,14 +108,17 @@ if (pendingMigrations.Any())
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
+var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
+
 //if (app.Environment.IsDevelopment())
 //{
 app.UseSwagger();
 app.UseSwaggerUI();
 
-var seeder = scope.ServiceProvider.GetRequiredService<IAppSeeder>();
-await seeder.Seed();
+await seeder.SeedDev();
 //}
+
+await seeder.Seed();
 
 app.UseCors(frontendCorsName);
 

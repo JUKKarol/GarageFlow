@@ -12,6 +12,20 @@ namespace GarageFlow.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AppConfig",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RepairsLimitPerDay = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppConfig", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -177,15 +191,15 @@ namespace GarageFlow.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    brandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Models", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Models_Brands_brandId",
-                        column: x => x.brandId,
+                        name: "FK_Models_Brands_BrandId",
+                        column: x => x.BrandId,
                         principalTable: "Brands",
                         principalColumn: "Id");
                 });
@@ -214,23 +228,29 @@ namespace GarageFlow.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Repair",
+                name: "Repairs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    PlannedStartdAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    FinishedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    PlannedFinishAt = table.Column<DateOnly>(type: "date", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Repair", x => x.Id);
+                    table.PrimaryKey("PK_Repairs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Repair_Cars_CarId",
+                        name: "FK_Repairs_Cars_CarId",
                         column: x => x.CarId,
                         principalTable: "Cars",
                         principalColumn: "Id");
@@ -253,9 +273,9 @@ namespace GarageFlow.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AppUserRepair_Repair_RepairsId",
+                        name: "FK_AppUserRepair_Repairs_RepairsId",
                         column: x => x.RepairsId,
-                        principalTable: "Repair",
+                        principalTable: "Repairs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -310,19 +330,22 @@ namespace GarageFlow.Migrations
                 column: "ModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Models_brandId",
+                name: "IX_Models_BrandId",
                 table: "Models",
-                column: "brandId");
+                column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Repair_CarId",
-                table: "Repair",
+                name: "IX_Repairs_CarId",
+                table: "Repairs",
                 column: "CarId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppConfig");
+
             migrationBuilder.DropTable(
                 name: "AppUserRepair");
 
@@ -342,7 +365,7 @@ namespace GarageFlow.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Repair");
+                name: "Repairs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

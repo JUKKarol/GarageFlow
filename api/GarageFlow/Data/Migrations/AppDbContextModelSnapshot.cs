@@ -37,6 +37,25 @@ namespace GarageFlow.Migrations
                     b.ToTable("AppUserRepair");
                 });
 
+            modelBuilder.Entity("GarageFlow.Entities.AppConfig", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RepairsLimitPerDay")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppConfig");
+                });
+
             modelBuilder.Entity("GarageFlow.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -164,6 +183,9 @@ namespace GarageFlow.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -174,12 +196,9 @@ namespace GarageFlow.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("brandId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("brandId");
+                    b.HasIndex("BrandId");
 
                     b.ToTable("Models");
                 });
@@ -190,20 +209,38 @@ namespace GarageFlow.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CarId")
+                    b.Property<Guid?>("CarId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CustomerEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateOnly>("FinishedAt")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly>("PlannedFinishAt")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly>("PlannedStartdAt")
+                        .HasColumnType("date");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
+
+                    b.Property<DateOnly>("StartedAt")
+                        .HasColumnType("date");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -215,7 +252,7 @@ namespace GarageFlow.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("Repair");
+                    b.ToTable("Repairs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -381,7 +418,7 @@ namespace GarageFlow.Migrations
                 {
                     b.HasOne("GarageFlow.Entities.Brand", "Brand")
                         .WithMany("Models")
-                        .HasForeignKey("brandId")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -392,9 +429,7 @@ namespace GarageFlow.Migrations
                 {
                     b.HasOne("GarageFlow.Entities.Car", "Car")
                         .WithMany("Repairs")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("CarId");
 
                     b.Navigation("Car");
                 });
