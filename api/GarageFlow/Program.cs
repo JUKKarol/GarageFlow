@@ -6,8 +6,6 @@ using GarageFlow.Entities;
 using GarageFlow.Middlewares;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
-using GarageFlow.Services.TokenService;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -38,24 +36,7 @@ builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidIssuer = appSettings.JWT.Issuer,
-        ValidateAudience = true,
-        ValidAudience = appSettings.JWT.Audience,
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(appSettings.JWT.SigningKey)
-        )
-    };
-});
+builder.Services.AddAuthentication();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -93,7 +74,6 @@ builder.Services.AddScoped<IAppSeeder, AppSeeder>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 
-builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IRepairRepository, RepairRepository>();
 
 var app = builder.Build();
