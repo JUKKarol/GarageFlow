@@ -1,9 +1,7 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.User.Commands.AssignUserRole;
 using GarageFlow.CQRS.User.Commands.UnassignUserRole;
-using GarageFlow.CQRS.User.Queries.GetUserToken;
 using GarageFlow.Entities;
-using GarageFlow.Services.TokenService;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +11,7 @@ namespace GarageFlow.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService) : ControllerBase
+public class AuthController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
 {
     [HttpPost("userRole")]
     [Authorize(Roles = UserRoles.Admin)]
@@ -29,12 +27,5 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
     {
         await mediator.Send(command);
         return NoContent();
-    }
-
-    [HttpPost("login/jwt")]
-    public async Task<IActionResult> Login([FromBody] GetUserTokenQuery command)
-    {
-        var userToken = await mediator.Send(command);
-        return Ok(userToken);
     }
 }

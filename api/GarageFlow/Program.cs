@@ -6,7 +6,6 @@ using GarageFlow.Entities;
 using GarageFlow.Middlewares;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
-using GarageFlow.Services.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -93,7 +92,6 @@ builder.Services.AddScoped<IAppSeeder, AppSeeder>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 
-builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IRepairRepository, RepairRepository>();
 
 var app = builder.Build();
