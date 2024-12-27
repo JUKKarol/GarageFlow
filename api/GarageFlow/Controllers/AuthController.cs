@@ -1,11 +1,13 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.User.Commands.AssignUserRole;
 using GarageFlow.CQRS.User.Commands.UnassignUserRole;
+using GarageFlow.CQRS.User.Queries.GetFullUserInfo;
 using GarageFlow.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GarageFlow.Controllers;
 
@@ -27,5 +29,15 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
     {
         await mediator.Send(command);
         return NoContent();
+    }
+
+    [HttpGet("manage/info/full")]
+    [Authorize]
+    public async Task<IActionResult> GetFullInfo()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var query = new GetFullUserInfoQuery { UserId = Guid.Parse(userId) };
+        var result = await mediator.Send(query);
+        return Ok(result);
     }
 }
