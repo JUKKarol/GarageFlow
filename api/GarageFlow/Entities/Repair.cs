@@ -8,7 +8,7 @@ public class Repair
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public DateOnly StartedAt { get; set; }
-    public DateOnly PlannedStartdAt { get; set; }
+    public DateOnly PlannedStartAt { get; set; }
     public DateOnly FinishedAt { get; set; }
     public DateOnly PlannedFinishAt { get; set; }
     public int Price { get; set; }

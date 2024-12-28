@@ -1,23 +1,21 @@
-﻿using GarageFlow.Enums;
-using MediatR;
-using System.Text.Json.Serialization;
+﻿using GarageFlow.Entities;
+using GarageFlow.Enums;
 
-namespace GarageFlow.CQRS.Repair.Commands.UpdateRepair;
+namespace GarageFlow.CQRS.Repair.Queries;
 
-public class UpdateRepairCommand : IRequest
+public class RepairResponse
 {
     public Guid Id { get; set; }
-
-    [JsonIgnore]
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
     public DateOnly StartedAt { get; set; }
+    public DateOnly PlannedStartAt { get; set; }
     public DateOnly FinishedAt { get; set; }
+    public DateOnly PlannedFinishAt { get; set; }
     public int Price { get; set; }
     public string Description { get; set; }
     public string CustomerName { get; set; }
     public string CustomerPhoneNumber { get; set; }
     public string CustomerEmail { get; set; }
     public RepairStatus Status { get; set; }
-    public List<Guid> Users { get; set; }
 }
