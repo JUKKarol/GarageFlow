@@ -3,7 +3,7 @@ using MediatR;
 
 namespace GarageFlow.CQRS.Repair.Queries.GetRepairsByStatus;
 
-public class GetRepairsByStatusQuery : IRequest<List<GarageFlow.Entities.Repair>>
+public class GetRepairsByStatusQuery : IRequest<List<RepairResponse>>
 {
-    public RepairStatus RepairStatus { get; set; }
+    public RepairStatus Status { get; set; }
 }

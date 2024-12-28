@@ -1,6 +1,7 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.Repair.Commands.CreateRepair;
 using GarageFlow.CQRS.Repair.Commands.UpdateRepair;
+using GarageFlow.CQRS.Repair.Queries.GetRepairsById;
 using GarageFlow.CQRS.Repair.Queries.GetRepairsByStatus;
 using GarageFlow.Entities;
 using MediatR;
@@ -30,11 +31,19 @@ public class RepairController(IMediator mediator, UserManager<AppUser> userManag
         return NoContent();
     }
 
-    [HttpGet("Status")]
+    [HttpGet("{Id}")]
     [Authorize(Roles = UserRoles.Employee)]
-    public async Task<IActionResult> GetRepairByStatus(GetRepairsByStatusQuery command)
+    public async Task<IActionResult> GetRepairById([FromRoute] GetRepairsByIdQuery query)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var repair = await mediator.Send(query);
+        return Ok(repair);
+    }
+
+    [HttpGet("Status/{Status}")]
+    [Authorize(Roles = UserRoles.Employee)]
+    public async Task<IActionResult> GetRepairByStatus([FromRoute] GetRepairsByStatusQuery query)
+    {
+        var repairs = await mediator.Send(query);
+        return Ok(repairs);
     }
 }
