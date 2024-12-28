@@ -14,9 +14,21 @@ public class RepairRepository(AppDbContext db) : IRepairRepository
         return repair;
     }
 
+    public async Task<Repair> UpdateRepair(Repair repair, CancellationToken cancellationToken)
+    {
+        db.Repairs.Update(repair);
+        await db.SaveChangesAsync(cancellationToken);
+        return repair;
+    }
+
     public async Task<List<Repair>> GetAllRepairs(CancellationToken cancellationToken)
     {
         return await db.Repairs.ToListAsync(cancellationToken);
+    }
+
+    public async Task<Repair> GetRepairById(Guid repairId, CancellationToken cancellationToken)
+    {
+        return await db.Repairs.FirstOrDefaultAsync(r => r.Id == repairId, cancellationToken);
     }
 
     public async Task<List<Repair>> GetRepairsByStatus(RepairStatus repairStatus, CancellationToken cancellationToken)
