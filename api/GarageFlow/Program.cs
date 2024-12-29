@@ -6,6 +6,7 @@ using GarageFlow.Entities;
 using GarageFlow.Middlewares;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
+using GarageFlow.Services.NotificationService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -75,6 +76,8 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 
 builder.Services.AddScoped<IRepairRepository, RepairRepository>();
+
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
