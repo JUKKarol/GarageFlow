@@ -12,10 +12,15 @@ const getUserData = async (token: string) => {
 }
 
 export const login = async (email: string, password: string) => {
+
     const response = await httpClient.post('/auth/login', { email, password });
     const data  = response.data;
+
+    document.cookie = `token=${data.accessToken}; path=/; max-age=3600`;
     useAuthStore.getState().setToken(data.accessToken);
+
     const userData = await getUserData(data.accessToken);
+    document.cookie = `userRoles=${JSON.stringify(userData.roles)}; path=/; max-age=3600`;
     useAuthStore.getState().setUser(userData);
 
     return response;
