@@ -2,7 +2,7 @@
 
 namespace GarageFlow.CQRS.Repair.Queries.GetRepairsById;
 
-public class GetRepairsByIdQuery : IRequest<RepairResponse>
+public class GetRepairByIdQuery : IRequest<RepairResponse>
 {
     public Guid Id { get; set; }
 }

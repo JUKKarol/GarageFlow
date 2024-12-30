@@ -2,10 +2,13 @@
 using GarageFlow.Entities;
 using GarageFlow.Enums;
 using Microsoft.EntityFrameworkCore;
+using Sieve.Models;
+using Sieve.Services;
 
 namespace GarageFlow.Repositories.RepairRepository;
 
-public class RepairRepository(AppDbContext db) : IRepairRepository
+public class RepairRepository(AppDbContext db,
+    ISieveProcessor sieveProcessor) : IRepairRepository
 {
     public async Task<Repair> CreateRepair(Repair repair, CancellationToken cancellationToken)
     {
@@ -21,9 +24,29 @@ public class RepairRepository(AppDbContext db) : IRepairRepository
         return repair;
     }
 
-    public async Task<List<Repair>> GetAllRepairs(CancellationToken cancellationToken)
+    public async Task<List<Repair>> GetAllRepairs(SieveModel query, CancellationToken cancellationToken)
     {
-        return await db.Repairs.AsNoTracking().ToListAsync(cancellationToken);
+        var repairs = db
+            .Repairs
+            .AsNoTracking()
+            .AsQueryable();
+
+        return await sieveProcessor
+            .Apply(query, repairs)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<int> GetRepairsCount(SieveModel query, CancellationToken cancellationToken)
+    {
+        var repairs = db
+            .Repairs
+            .AsNoTracking()
+            .AsQueryable();
+
+        return await sieveProcessor
+            .Apply(query, repairs, applyPagination: false)
+            .CountAsync(cancellationToken);
     }
 
     public async Task<Repair> GetRepairById(Guid repairId, CancellationToken cancellationToken)

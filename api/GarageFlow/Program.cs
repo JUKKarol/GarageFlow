@@ -7,12 +7,14 @@ using GarageFlow.Middlewares;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
 using GarageFlow.Services.NotificationService;
+using GarageFlow.Utilities.Sieve;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Sieve.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,6 +73,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<ISieveProcessor, ApplicationSieveProcessor>();
 builder.Services.AddScoped<IAppSeeder, AppSeeder>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IUserContext, UserContext>();

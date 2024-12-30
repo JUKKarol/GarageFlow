@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Sieve.Models;
 
 namespace GarageFlow.Controllers;
 
@@ -33,17 +34,21 @@ public class RepairController(IMediator mediator, UserManager<AppUser> userManag
 
     [HttpGet("{Id}")]
     [Authorize(Roles = UserRoles.Employee)]
-    public async Task<IActionResult> GetRepairById([FromRoute] GetRepairsByIdQuery query)
+    public async Task<IActionResult> GetRepairById([FromRoute] GetRepairByIdQuery query)
     {
         var repair = await mediator.Send(query);
         return Ok(repair);
     }
 
-    [HttpGet("Status/{Status}")]
-    [Authorize(Roles = UserRoles.Employee)]
-    public async Task<IActionResult> GetRepairByStatus([FromRoute] GetRepairsByStatusQuery query)
+    [HttpGet]
+    public async Task<IActionResult> GetRepairs([FromQuery] SieveModel query)
     {
-        var repairs = await mediator.Send(query);
+        GetRepairsQuery getRepairsQuery = new GetRepairsQuery
+        {
+            Query = query
+        };
+
+        var repairs = await mediator.Send(getRepairsQuery);
         return Ok(repairs);
     }
 }
