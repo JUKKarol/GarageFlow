@@ -21,7 +21,7 @@ interface AuthState {
 }
 
 const useAuthStore = create<AuthState>((set) => {
-  // We can safely access localStorage only in the client
+
   if (typeof window !== 'undefined') {
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
@@ -36,6 +36,7 @@ const useAuthStore = create<AuthState>((set) => {
       setToken: (token) => {
         set((state) => ({ token, isAuthenticated: true }));
         localStorage.setItem('token', token);
+        document.cookie = `token=${token}; path=/; max-age=3600`;
       },
       clearToken: () => {
         set((state) => ({ token: null, isAuthenticated: false }));
@@ -43,16 +44,22 @@ const useAuthStore = create<AuthState>((set) => {
       },
       setUser: (user) => {
         set((state) => ({ user }));
-        localStorage.setItem('user', JSON.stringify(user)); // Store user in localStorage
+        localStorage.setItem('user', JSON.stringify(user)); 
+        document.cookie = `userRoles=${JSON.stringify(user.roles)}; path=/; max-age=3600`;
       },
       clearUser: () => {
         set((state) => ({ user: null }));
-        localStorage.removeItem('user'); // Remove user from localStorage
+        localStorage.removeItem('user'); 
       },
       logout: () => {
         set((state) => ({ token: null, isAuthenticated: false, user: null }));
         localStorage.removeItem('token');
-        localStorage.removeItem('user'); // Remove both token and user on logout
+        localStorage.removeItem('user'); 
+
+        document.cookie = "token=; path=/; max-age=0";
+        document.cookie = "userRoles=; path=/; max-age=0";
+
+        window.location.href = '/login';
       },
     };
   }
