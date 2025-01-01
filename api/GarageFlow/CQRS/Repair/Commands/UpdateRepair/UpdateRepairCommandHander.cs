@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services.NotificationService;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Repair.Commands.UpdateRepair;
 
-public class UpdateRepairCommandHander(IMapper mapper,
+public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
+    IMapper mapper,
     IRepairRepository repairRepository,
     INotificationService notificationService) : IRequestHandler<UpdateRepairCommand>
 {
@@ -20,6 +23,20 @@ public class UpdateRepairCommandHander(IMapper mapper,
         }
 
         var repair = mapper.Map<GarageFlow.Entities.Repair>(request);
+
+        if (request.Users.Any())
+        {
+            List<AppUser> users = new();
+
+            foreach (var userId in request.Users)
+            {
+                var user = await userManager.FindByIdAsync(userId.ToString());
+                users.Add(user);
+            }
+
+            repair.Users = users;
+        }
+
         await repairRepository.UpdateRepair(repair, cancellationToken);
 
         if (existingRepair.Status != request.Status)

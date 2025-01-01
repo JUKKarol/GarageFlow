@@ -10,8 +10,9 @@ public class RepairProfile : Profile
 {
     public RepairProfile()
     {
-        CreateMap<CreateRepairCommand, Repair>();
-        CreateMap<UpdateRepairCommand, Repair>();
+        CreateMap<CreateRepairCommand, Repair>().ReverseMap();
+        CreateMap<UpdateRepairCommand, Repair>()
+            .ForMember(dest => dest.Users, opt => opt.Ignore());
         CreateMap<RepairResponse, Repair>().ReverseMap();
     }
 }
