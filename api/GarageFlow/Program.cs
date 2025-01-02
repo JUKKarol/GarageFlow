@@ -4,6 +4,7 @@ using GarageFlow.Data;
 using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares;
+using GarageFlow.Repositories.BrandRepository;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
 using GarageFlow.Services.NotificationService;
@@ -79,6 +80,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 
 builder.Services.AddScoped<IRepairRepository, RepairRepository>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 
 builder.Services.AddScoped<INotificationService, NotificationService>();
 

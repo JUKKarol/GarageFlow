@@ -1,6 +1,7 @@
 import { Car, Wrench, Users, House, ClipboardList, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
+import UserCard from "../_components/dashboard/userCard";
 
 export default function Layout({
     children,
@@ -18,11 +19,12 @@ export default function Layout({
     
     return (
         <div className={`flex min-h-screen bg-zinc-950`}>
-            <aside className={`w-64 bg-zinc-900 p-6 shadow-md`}>
+            <aside className={`w-72 bg-zinc-900 p-6 shadow-md`}>
                 <div className={`flex items-center mb-8`}>
                     <Wrench className={`w-8 h-8 text-blue-500 mr-2`} />
                     <h1 className={`text-2xl font-semibold text-white`}>GarageFlow</h1>
                 </div>
+                <UserCard />
                 <nav>
                     {navItems.map((item) => ( 
                         <Link key={item.id} href={item.href}>
