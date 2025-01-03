@@ -5,6 +5,7 @@ using GarageFlow.Data.Seeders;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares;
 using GarageFlow.Repositories.BrandRepository;
+using GarageFlow.Repositories.ModelRepository;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
 using GarageFlow.Services.NotificationService;
@@ -81,6 +82,7 @@ builder.Services.AddScoped<IUserContext, UserContext>();
 
 builder.Services.AddScoped<IRepairRepository, RepairRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<IModelRepository, ModelRepository>();
 
 builder.Services.AddScoped<INotificationService, NotificationService>();
 

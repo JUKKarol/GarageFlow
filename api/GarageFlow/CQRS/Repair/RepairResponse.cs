@@ -1,7 +1,6 @@
-﻿using GarageFlow.Entities;
-using GarageFlow.Enums;
+﻿using GarageFlow.Enums;
 
-namespace GarageFlow.CQRS.Repair.Queries;
+namespace GarageFlow.CQRS.Repair;
 
 public class RepairResponse
 {
