@@ -1,7 +1,7 @@
 import httpClient from "@/shared/tools/axiosInstance";
 
 export const getBrandData = async (token: string) => {
-    const response = await httpClient.get('/brand', {
+    const response = await httpClient.get('/brand?sorts=name', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
