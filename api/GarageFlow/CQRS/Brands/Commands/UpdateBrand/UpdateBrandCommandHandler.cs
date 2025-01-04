@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
-using GarageFlow.CQRS.Brands.Commands.CreateBrand;
-using GarageFlow.CQRS.Repair.Commands.UpdateRepair;
-using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.BrandRepository;
-using GarageFlow.Repositories.RepairRepository;
-using GarageFlow.Services.NotificationService;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Brands.Commands.UpdateBrand;
 
-public class UpdateBrandCommandHandler(UserManager<AppUser> userManager,
-    IMapper mapper,
+public class UpdateBrandCommandHandler(IMapper mapper,
     IBrandRepository brandRepository) : IRequestHandler<UpdateBrandCommand>
 {
     public async Task Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
@@ -25,6 +18,7 @@ public class UpdateBrandCommandHandler(UserManager<AppUser> userManager,
         }
 
         var brand = mapper.Map<GarageFlow.Entities.Brand>(request);
+        brand.UpdatedAt = DateTime.UtcNow;
 
         await brandRepository.UpdateBrand(brand, cancellationToken);
     }

@@ -23,6 +23,7 @@ public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
         }
 
         var repair = mapper.Map<GarageFlow.Entities.Repair>(request);
+        repair.UpdatedAt = DateTime.UtcNow;
 
         if (request.Users.Any())
         {

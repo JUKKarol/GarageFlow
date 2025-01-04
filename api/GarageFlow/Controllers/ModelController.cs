@@ -1,5 +1,7 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.Model.Commands.CreateModel;
+using GarageFlow.CQRS.Model.Commands.UpdateModel;
+using GarageFlow.CQRS.Model.Queries.GetModels;
 using GarageFlow.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,14 +29,6 @@ public class ModelController(IMediator mediator, UserManager<AppUser> userManage
     {
         await mediator.Send(command);
         return NoContent();
-    }
-
-    [HttpGet("{Id}")]
-    [Authorize(Roles = UserRoles.Employee)]
-    public async Task<IActionResult> GetModelById([FromRoute] GetModelByIdQuery query)
-    {
-        var model = await mediator.Send(query);
-        return Ok(model);
     }
 
     [HttpGet]
