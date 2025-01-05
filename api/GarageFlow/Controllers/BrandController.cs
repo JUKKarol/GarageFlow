@@ -36,7 +36,7 @@ public class BrandController(IMediator mediator, UserManager<AppUser> userManage
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetBrand([FromQuery] SieveModel query)
+    public async Task<IActionResult> GetBrands([FromQuery] SieveModel query)
     {
         GetBrandsQuery getBrandsQuery = new GetBrandsQuery
         {
