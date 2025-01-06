@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
+using GarageFlow.Repositories.CarRepository;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services.NotificationService;
 using MediatR;
@@ -11,6 +12,7 @@ namespace GarageFlow.CQRS.Repair.Commands.UpdateRepair;
 public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
     IMapper mapper,
     IRepairRepository repairRepository,
+    ICarRepository carRepository,
     INotificationService notificationService) : IRequestHandler<UpdateRepairCommand>
 {
     public async Task Handle(UpdateRepairCommand request, CancellationToken cancellationToken)
@@ -23,6 +25,25 @@ public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
         }
 
         var repair = mapper.Map<GarageFlow.Entities.Repair>(request);
+
+        if (request.CarId != Guid.Empty)
+        {
+            var car = await carRepository.GetCarById(request.CarId, cancellationToken);
+
+            if (car == null)
+            {
+                throw new NotFoundException(nameof(Car), request.CarId.ToString());
+            }
+            else
+            {
+                repair.CarId = car.Id;
+            }
+        }
+        else
+        {
+            repair.CarId = null;
+        }
+
         repair.UpdatedAt = DateTime.UtcNow;
 
         if (request.Users.Any())

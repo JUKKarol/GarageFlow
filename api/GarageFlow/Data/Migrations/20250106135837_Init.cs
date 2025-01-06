@@ -235,7 +235,7 @@ namespace GarageFlow.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StartedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    PlannedStartdAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    PlannedStartAt = table.Column<DateOnly>(type: "date", nullable: false),
                     FinishedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     PlannedFinishAt = table.Column<DateOnly>(type: "date", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),

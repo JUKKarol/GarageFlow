@@ -17,7 +17,7 @@ public class Repair
     public string CustomerPhoneNumber { get; set; }
     public string CustomerEmail { get; set; }
     public RepairStatus Status { get; set; } = RepairStatus.Waiting;
-    //public Guid CarId { get; set; }
+    public Guid? CarId { get; set; }
 
     public Car Car { get; set; }
     public List<AppUser> Users { get; set; }

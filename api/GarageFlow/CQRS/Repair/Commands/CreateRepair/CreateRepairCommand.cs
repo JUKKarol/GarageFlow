@@ -10,4 +10,6 @@ public class CreateRepairCommand : IRequest
     public string customerName { get; set; }
     public string customerPhoneNumber { get; set; }
     public string customerEmail { get; set; }
+
+    public Guid CarId { get; set; }
 }

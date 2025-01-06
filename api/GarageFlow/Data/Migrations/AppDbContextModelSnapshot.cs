@@ -429,7 +429,8 @@ namespace GarageFlow.Migrations
                 {
                     b.HasOne("GarageFlow.Entities.Car", "Car")
                         .WithMany("Repairs")
-                        .HasForeignKey("CarId");
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Car");
                 });

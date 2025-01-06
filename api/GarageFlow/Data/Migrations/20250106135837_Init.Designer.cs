@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageFlow.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241211192716_Init")]
+    [Migration("20250106135837_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -236,7 +236,7 @@ namespace GarageFlow.Migrations
                     b.Property<DateOnly>("PlannedFinishAt")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("PlannedStartdAt")
+                    b.Property<DateOnly>("PlannedStartAt")
                         .HasColumnType("date");
 
                     b.Property<int>("Price")
@@ -432,7 +432,8 @@ namespace GarageFlow.Migrations
                 {
                     b.HasOne("GarageFlow.Entities.Car", "Car")
                         .WithMany("Repairs")
-                        .HasForeignKey("CarId");
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Car");
                 });
