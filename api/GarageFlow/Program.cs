@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using GarageFlow.Configuration;
 using GarageFlow.CQRS.User;
 using GarageFlow.Data;
@@ -75,6 +77,7 @@ builder.Host.UseSerilog((context, configuration) =>
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()).AddFluentValidationAutoValidation();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<ISieveProcessor, ApplicationSieveProcessor>();
 builder.Services.AddScoped<IAppSeeder, AppSeeder>();
