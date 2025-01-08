@@ -32,7 +32,7 @@ public class AppSeeder(AppDbContext db, UserManager<AppUser> userManager) : IApp
                     Engine = 2800,
                     RegistrationNumber = "PO44445",
                     Vin = "WBAAB31030EA12345",
-                    yearOfProduction = 1995,
+                    YearOfProduction = 1995,
                     ModelId = modelId
                 };
 

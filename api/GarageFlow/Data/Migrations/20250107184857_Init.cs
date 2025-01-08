@@ -214,7 +214,7 @@ namespace GarageFlow.Migrations
                     Engine = table.Column<int>(type: "int", nullable: false),
                     RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Vin = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    yearOfProduction = table.Column<int>(type: "int", nullable: false),
+                    YearOfProduction = table.Column<int>(type: "int", nullable: false),
                     ModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

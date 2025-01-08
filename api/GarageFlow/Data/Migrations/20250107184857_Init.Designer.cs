@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageFlow.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250106135837_Init")]
+    [Migration("20250107184857_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -170,7 +170,7 @@ namespace GarageFlow.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("yearOfProduction")
+                    b.Property<int>("YearOfProduction")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

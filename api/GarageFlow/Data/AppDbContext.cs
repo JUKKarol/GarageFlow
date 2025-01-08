@@ -41,7 +41,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
             entity.Property(c => c.Engine).IsRequired();
             entity.Property(c => c.Vin).IsRequired();
-            entity.Property(c => c.yearOfProduction).IsRequired();
+            entity.Property(c => c.YearOfProduction).IsRequired();
             entity.Property(c => c.ModelId).IsRequired();
 
             entity.HasOne(c => c.Model)

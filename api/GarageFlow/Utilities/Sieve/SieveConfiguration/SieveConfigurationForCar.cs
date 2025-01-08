@@ -25,7 +25,7 @@ public class SieveConfigurationForCar : ISieveConfiguration
            .CanFilter()
            .CanSort();
 
-        mapper.Property<Car>(r => r.yearOfProduction)
+        mapper.Property<Car>(r => r.YearOfProduction)
            .CanFilter()
            .CanSort();
 
