@@ -17,4 +17,6 @@ public class RepairResponse
     public string CustomerPhoneNumber { get; set; }
     public string CustomerEmail { get; set; }
     public RepairStatus Status { get; set; }
+
+    public Guid? CarId { get; set; }
 }

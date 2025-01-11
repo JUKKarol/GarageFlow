@@ -24,6 +24,14 @@ public class RepairController(IMediator mediator, UserManager<AppUser> userManag
         return NoContent();
     }
 
+    [HttpPost("Invoice")]
+    [Authorize(Roles = UserRoles.Employee)]
+    public async Task<IActionResult> PrintInvoice(GetInvoiceQuery query)
+    {
+        var invoice = await mediator.Send(query);
+        return Ok(invoice);
+    }
+
     [HttpPatch]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> UpdateRepair(UpdateRepairCommand command)
