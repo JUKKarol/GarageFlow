@@ -3,7 +3,7 @@ using GarageFlow.Middlewares.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace GarageFlow.CQRS.User.Commands.UnassignUserRole;
+namespace GarageFlow.CQRS.User.Commands.UnAssignUserRole;
 
 public class UnassignUserRoleCommandHandler(UserManager<AppUser> userManager,
     RoleManager<IdentityRole> roleManager) : IRequestHandler<UnassignUserRoleCommand>

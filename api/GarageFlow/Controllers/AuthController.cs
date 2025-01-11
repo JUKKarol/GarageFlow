@@ -1,6 +1,6 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.User.Commands.AssignUserRole;
-using GarageFlow.CQRS.User.Commands.UnassignUserRole;
+using GarageFlow.CQRS.User.Commands.UnAssignUserRole;
 using GarageFlow.CQRS.User.Queries.GetFullUserInfo;
 using GarageFlow.Entities;
 using MediatR;

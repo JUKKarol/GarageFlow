@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace GarageFlow.CQRS.User.Commands.UnassignUserRole;
+namespace GarageFlow.CQRS.User.Commands.UnAssignUserRole;
 
 public class UnassignUserRoleCommand : IRequest
 {
