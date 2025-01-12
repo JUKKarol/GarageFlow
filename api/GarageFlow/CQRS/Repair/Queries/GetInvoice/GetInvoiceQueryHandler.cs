@@ -12,6 +12,11 @@ public class GetInvoiceQueryHandler(IMapper mapper, IRepairRepository repairRepo
     {
         var repair = await repairRepository.GetRepairById(request.RepairId, cancellationToken);
 
+        if (repair == null)
+        {
+            throw new NotFoundException(nameof(Repair), request.RepairId.ToString());
+        }
+
         if (repair.Status != RepairStatus.Done)
         {
             throw new BadRequestException($"Repair {repair.Id} should be Done instead of {repair.Status}");
