@@ -20,3 +20,12 @@ export const createBrand = async (token: string, name: string) => {
     return response.data;
 }
 
+export const updateBrand = async (token: string, id: string, name: string) => {
+    const response = await httpClient.patch(`/brand`, { name, id: id }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+}
