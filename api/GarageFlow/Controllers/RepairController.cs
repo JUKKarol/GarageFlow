@@ -1,6 +1,7 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.Repair.Commands.CreateRepair;
 using GarageFlow.CQRS.Repair.Commands.UpdateRepair;
+using GarageFlow.CQRS.Repair.Queries.GetInvoice;
 using GarageFlow.CQRS.Repair.Queries.GetRepairsById;
 using GarageFlow.CQRS.Repair.Queries.GetRepairsByStatus;
 using GarageFlow.Entities;
