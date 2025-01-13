@@ -23,8 +23,8 @@ public class BrandController(IMediator mediator, UserManager<AppUser> userManage
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateBrand(CreateBrandCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var brand = await mediator.Send(command);
+        return Ok(brand);
     }
 
     [HttpPatch]

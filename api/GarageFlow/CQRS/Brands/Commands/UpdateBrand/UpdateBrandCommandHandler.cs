@@ -6,9 +6,9 @@ using MediatR;
 namespace GarageFlow.CQRS.Brands.Commands.UpdateBrand;
 
 public class UpdateBrandCommandHandler(IMapper mapper,
-    IBrandRepository brandRepository) : IRequestHandler<UpdateBrandCommand>
+    IBrandRepository brandRepository) : IRequestHandler<UpdateBrandCommand, BrandResponse>
 {
-    public async Task Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
+    public async Task<BrandResponse> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
     {
         var existingBrand = await brandRepository.GetBrandById(request.Id, cancellationToken);
 
@@ -21,5 +21,8 @@ public class UpdateBrandCommandHandler(IMapper mapper,
         brand.UpdatedAt = DateTime.UtcNow;
 
         await brandRepository.UpdateBrand(brand, cancellationToken);
+
+        var brandDto = mapper.Map<BrandResponse>(brand);
+        return brandDto;
     }
 }
