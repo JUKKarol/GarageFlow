@@ -9,9 +9,9 @@ namespace GarageFlow.CQRS.Model.Commands.CreateModel;
 
 public class CreateModelCommandHandler(IModelRepository modelRepository,
     IBrandRepository brandRepository,
-    IMapper mapper) : IRequestHandler<CreateModelCommand>
+    IMapper mapper) : IRequestHandler<CreateModelCommand, ModelResponse>
 {
-    public async Task Handle(CreateModelCommand request, CancellationToken cancellationToken)
+    public async Task<ModelResponse> Handle(CreateModelCommand request, CancellationToken cancellationToken)
     {
         var brand = await brandRepository.GetBrandById(request.BrandId, cancellationToken);
         if (brand == null)
@@ -21,5 +21,8 @@ public class CreateModelCommandHandler(IModelRepository modelRepository,
 
         var model = mapper.Map<GarageFlow.Entities.Model>(request);
         await modelRepository.CreateModel(model, cancellationToken);
+
+        var modelDto = mapper.Map<ModelResponse>(model);
+        return modelDto;
     }
 }

@@ -19,16 +19,16 @@ public class ModelController(IMediator mediator, UserManager<AppUser> userManage
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateModel(CreateModelCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var model = await mediator.Send(command);
+        return Ok(model);
     }
 
     [HttpPatch]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> UpdateModel(UpdateModelCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var model = await mediator.Send(command);
+        return Ok(model);
     }
 
     [HttpGet]

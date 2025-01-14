@@ -6,9 +6,9 @@ using MediatR;
 namespace GarageFlow.CQRS.Model.Commands.UpdateModel;
 
 public class UpdateModelCommandHandler(IModelRepository modelRepository,
-    IMapper mapper) : IRequestHandler<UpdateModelCommand>
+    IMapper mapper) : IRequestHandler<UpdateModelCommand, ModelResponse>
 {
-    public async Task Handle(UpdateModelCommand request, CancellationToken cancellationToken)
+    public async Task<ModelResponse> Handle(UpdateModelCommand request, CancellationToken cancellationToken)
     {
         var existingModel = await modelRepository.GetModelById(request.Id, cancellationToken);
 
@@ -22,5 +22,8 @@ public class UpdateModelCommandHandler(IModelRepository modelRepository,
         model.UpdatedAt = DateTime.UtcNow;
 
         await modelRepository.UpdateModel(model, cancellationToken);
+
+        var modelDto = mapper.Map<ModelResponse>(model);
+        return modelDto;
     }
 }
