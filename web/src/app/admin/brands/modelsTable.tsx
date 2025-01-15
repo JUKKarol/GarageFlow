@@ -40,17 +40,12 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
     };
 
     useEffect(() => {
-        console.log("Brands:", brands);
         if (!brands[0]) return;
         setBrandId(brands[0].id);
         setBrandName(brands[0].name);
         if (!brandId) return;
-
-        console.log("BrandId:", brandId);
         fetchModels(brandId);
 
-
-        // console.log("Models:", models);
     }, [brands]);
 
 
@@ -110,7 +105,7 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
                         )}
                     </Table>
                     {models.length === 0 && (
-                        <p className="text-gray-500 mt-4">No models found.</p>
+                        <p className="text-gray-500 m-2">Nie znaleziono modeli.</p>
                     )}
                 </div>
             )}
