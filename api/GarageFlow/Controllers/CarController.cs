@@ -22,16 +22,16 @@ public class CarController(IMediator mediator, UserManager<AppUser> userManager,
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateCar(CreateCarCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var car = await mediator.Send(command);
+        return Ok(car);
     }
 
     [HttpPatch]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var car = await mediator.Send(command);
+        return Ok(car);
     }
 
     [HttpGet]

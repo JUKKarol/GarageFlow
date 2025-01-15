@@ -8,9 +8,9 @@ namespace GarageFlow.CQRS.Car.Command.CreateCar;
 
 public class CreateCarCommandHandler(IMapper mapper,
     ICarRepository carRepository,
-    IModelRepository modelRepository) : IRequestHandler<CreateCarCommand>
+    IModelRepository modelRepository) : IRequestHandler<CreateCarCommand, CarResponse>
 {
-    public async Task Handle(CreateCarCommand request, CancellationToken cancellationToken)
+    public async Task<CarResponse> Handle(CreateCarCommand request, CancellationToken cancellationToken)
     {
         var model = await modelRepository.GetModelById(request.ModelId, cancellationToken);
         if (model == null)
@@ -20,5 +20,8 @@ public class CreateCarCommandHandler(IMapper mapper,
 
         var car = mapper.Map<GarageFlow.Entities.Car>(request);
         await modelRepository.CreateModel(model, cancellationToken);
+
+        var carDto = mapper.Map<CarResponse>(car);
+        return carDto;
     }
 }

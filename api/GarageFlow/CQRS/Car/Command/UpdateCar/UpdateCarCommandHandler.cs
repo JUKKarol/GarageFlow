@@ -8,9 +8,9 @@ namespace GarageFlow.CQRS.Car.Command.UpdateCar;
 
 public class UpdateCarCommandHandler(IMapper mapper,
     ICarRepository carRepository,
-    IModelRepository modelRepository) : IRequestHandler<UpdateCarCommand>
+    IModelRepository modelRepository) : IRequestHandler<UpdateCarCommand, CarResponse>
 {
-    public async Task Handle(UpdateCarCommand request, CancellationToken cancellationToken)
+    public async Task<CarResponse> Handle(UpdateCarCommand request, CancellationToken cancellationToken)
     {
         var existingCar = await carRepository.GetCarById(request.Id, cancellationToken);
         if (existingCar == null)
@@ -24,10 +24,13 @@ public class UpdateCarCommandHandler(IMapper mapper,
             throw new NotFoundException(nameof(Model), request.ModelId.ToString());
         }
 
-        var car = mapper.Map(request, existingCar);
+        var car = mapper.Map<GarageFlow.Entities.Car>(request);
         car.UpdatedAt = DateTime.UtcNow;
         car.ModelId = model.Id;
 
         await carRepository.UpdateCar(car, cancellationToken);
+
+        var carDto = mapper.Map<CarResponse>(car);
+        return carDto;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace GarageFlow.CQRS.Car.Command.UpdateCar;
 
-public class UpdateCarCommand : IRequest
+public class UpdateCarCommand : IRequest<CarResponse>
 {
     public Guid Id { get; set; }
     public int Engine { get; set; }

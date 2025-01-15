@@ -2,7 +2,7 @@
 
 namespace GarageFlow.CQRS.Car.Command.CreateCar;
 
-public class CreateCarCommand : IRequest
+public class CreateCarCommand : IRequest<CarResponse>
 {
     public int Engine { get; set; }
     public string RegistrationNumber { get; set; }
