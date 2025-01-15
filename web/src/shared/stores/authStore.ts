@@ -1,13 +1,5 @@
 import { create } from 'zustand';
-
-interface User {
-  userId: string;
-  userName: string;
-  email: string;
-  emailConfirmed: boolean;
-  phoneNumber?: string;
-  roles: string[];
-}
+import { User } from '../types';
 
 interface AuthState {
   token: string | null;
