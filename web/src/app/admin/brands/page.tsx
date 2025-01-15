@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { brandSchema } from "@/modules/brands/validation/brandValidation";
 import { set, z } from "zod";
 import { Pencil } from "lucide-react";
+import ModelsTable from "./modelsTable";
 
 export default function BrandsPage() {
     const token = useAuthStore((state) => state.token);
@@ -211,6 +212,7 @@ export default function BrandsPage() {
                     </Table>
                 </div>
             </div>
+            <ModelsTable brands={brands} />
         </div>
     );
 }
