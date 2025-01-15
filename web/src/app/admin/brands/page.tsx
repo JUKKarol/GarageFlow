@@ -149,8 +149,8 @@ export default function BrandsPage() {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-zinc-950 hover:bg-transparent">
-                                <TableHead className="font-semibold text-white py-3">Name</TableHead>
-                                <TableHead className="font-semibold text-white py-3">Actions</TableHead>
+                                <TableHead className="font-semibold text-white py-3">Nazwa</TableHead>
+                                <TableHead className="font-semibold text-white py-3">Akcje</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
