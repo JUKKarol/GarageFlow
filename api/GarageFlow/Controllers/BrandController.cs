@@ -31,8 +31,8 @@ public class BrandController(IMediator mediator, UserManager<AppUser> userManage
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> UpdateBrand(UpdateBrandCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var brand = await mediator.Send(command);
+        return Ok(brand);
     }
 
     [HttpGet]
