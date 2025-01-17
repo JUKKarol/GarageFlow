@@ -1,9 +1,5 @@
 import { create } from 'zustand';
-
-interface Brand {
-  id: string;
-  name: string;
-}
+import { Brand } from '../types';
 
 interface BrandState {
   brands: Brand[];
