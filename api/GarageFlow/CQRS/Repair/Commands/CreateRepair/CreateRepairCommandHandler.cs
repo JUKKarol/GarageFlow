@@ -14,9 +14,9 @@ public class CreateRepairCommandHandler(IUserContext userContext,
     IMapper mapper,
     IRepairRepository repairRepository,
     ICarRepository carRepository,
-    UserManager<AppUser> userManager) : IRequestHandler<CreateRepairCommand>
+    UserManager<AppUser> userManager) : IRequestHandler<CreateRepairCommand, RepairResponse>
 {
-    public async Task Handle(CreateRepairCommand request, CancellationToken cancellationToken)
+    public async Task<RepairResponse> Handle(CreateRepairCommand request, CancellationToken cancellationToken)
     {
         //var userClaims = userContext.GetCurrentUser();
         //var user = await userManager.FindByEmailAsync(userClaims.Email)
@@ -45,5 +45,9 @@ public class CreateRepairCommandHandler(IUserContext userContext,
         //repair.Users.Add(user);
 
         await repairRepository.CreateRepair(repair, cancellationToken);
+
+        var repairDto = mapper.Map<RepairResponse>(repair);
+
+        return repairDto;
     }
 }

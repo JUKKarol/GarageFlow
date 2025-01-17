@@ -13,9 +13,9 @@ public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
     IMapper mapper,
     IRepairRepository repairRepository,
     ICarRepository carRepository,
-    INotificationService notificationService) : IRequestHandler<UpdateRepairCommand>
+    INotificationService notificationService) : IRequestHandler<UpdateRepairCommand, RepairResponse>
 {
-    public async Task Handle(UpdateRepairCommand request, CancellationToken cancellationToken)
+    public async Task<RepairResponse> Handle(UpdateRepairCommand request, CancellationToken cancellationToken)
     {
         var existingRepair = await repairRepository.GetRepairById(request.Id, cancellationToken);
 
@@ -65,5 +65,8 @@ public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
         {
             await notificationService.SendChangeRepairStatusEmail(existingRepair.CustomerEmail, existingRepair.Status);
         }
+
+        var repairDto = mapper.Map<RepairResponse>(repair);
+        return repairDto;
     }
 }

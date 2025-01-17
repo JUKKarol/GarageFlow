@@ -21,8 +21,8 @@ public class RepairController(IMediator mediator, UserManager<AppUser> userManag
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateRepair(CreateRepairCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var repair = await mediator.Send(command);
+        return Ok(repair);
     }
 
     [HttpPost("Invoice")]
@@ -37,8 +37,8 @@ public class RepairController(IMediator mediator, UserManager<AppUser> userManag
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> UpdateRepair(UpdateRepairCommand command)
     {
-        await mediator.Send(command);
-        return NoContent();
+        var repair = await mediator.Send(command);
+        return Ok(repair);
     }
 
     [HttpGet("{Id}")]

@@ -2,7 +2,7 @@
 
 namespace GarageFlow.CQRS.Repair.Commands.CreateRepair;
 
-public class CreateRepairCommand : IRequest
+public class CreateRepairCommand : IRequest<RepairResponse>
 {
     public DateOnly PlannedFinishAt { get; set; }
     public DateOnly PlannedStartAt { get; set; }

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace GarageFlow.CQRS.Repair.Commands.UpdateRepair;
 
-public class UpdateRepairCommand : IRequest
+public class UpdateRepairCommand : IRequest<RepairResponse>
 {
     public Guid Id { get; set; }
 
