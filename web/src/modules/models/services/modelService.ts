@@ -19,3 +19,13 @@ export const createModel = async (token: string, name: string, brandId: string) 
 
     return response.data;
 }
+
+export const updateModel = async (token: string, id: string, name: string) => {
+    const response = await httpClient.patch(`/model`, { name, id }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+}
