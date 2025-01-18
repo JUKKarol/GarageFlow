@@ -13,7 +13,7 @@ public class CreateBrandCommandHandler(UserManager<AppUser> userManager,
 {
     public async Task<BrandResponse> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
     {
-        var existingBrand = await brandRepository.GetBrandByName(request.Name, cancellationToken);
+        var existingBrand = await brandRepository.GetBrandsByName(request.Name, cancellationToken);
         if (existingBrand != null)
         {
             throw new ConflictException($"Brand {request.Name} already exists");
