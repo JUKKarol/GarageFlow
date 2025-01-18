@@ -15,5 +15,5 @@ public interface IBrandRepository
 
     Task<Brand> GetBrandById(Guid brandId, CancellationToken cancellationToken);
 
-    Task<Brand> GetBrandByName(string brandName, CancellationToken cancellationToken);
+    Task<List<Brand>> GetBrandsByName(string brandName, CancellationToken cancellationToken);
 }

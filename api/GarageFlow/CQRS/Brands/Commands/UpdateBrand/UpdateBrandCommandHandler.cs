@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.BrandRepository;
 using MediatR;
@@ -14,11 +15,11 @@ public class UpdateBrandCommandHandler(IMapper mapper,
 
         if (existingBrandById == null)
         {
-            throw new NotFoundException(nameof(Repair), request.Id.ToString());
+            throw new NotFoundException(nameof(Brand), request.Id.ToString());
         }
 
-        var existingBrandByName = await brandRepository.GetBrandByName(request.Name, cancellationToken);
-        if (existingBrandByName != null)
+        var existingBrandsByName = await brandRepository.GetBrandsByName(request.Name, cancellationToken);
+        if (existingBrandsByName.Any(b => b.Id != request.Id))
         {
             throw new ConflictException($"Brand {request.Name} already exists");
         }
