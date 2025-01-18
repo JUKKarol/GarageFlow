@@ -25,6 +25,11 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
             context.Response.StatusCode = 400;
             await context.Response.WriteAsync(badRequest.Message);
         }
+        catch (ConflictException badRequest)
+        {
+            context.Response.StatusCode = 409;
+            await context.Response.WriteAsync(badRequest.Message);
+        }
         //catch (Exception ex)
         //{
         //    logger.LogError(ex, ex.Message);

@@ -52,4 +52,9 @@ public class BrandRepository(AppDbContext db,
     {
         return await db.Brands.AsNoTracking().FirstOrDefaultAsync(b => b.Id == brandId, cancellationToken);
     }
+
+    public async Task<Brand> GetBrandByName(string brandName, CancellationToken cancellationToken)
+    {
+        return await db.Brands.AsNoTracking().FirstOrDefaultAsync(b => b.Name.ToLower() == brandName.ToLower(), cancellationToken);
+    }
 }

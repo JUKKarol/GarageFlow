@@ -10,11 +10,17 @@ public class UpdateBrandCommandHandler(IMapper mapper,
 {
     public async Task<BrandResponse> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
     {
-        var existingBrand = await brandRepository.GetBrandById(request.Id, cancellationToken);
+        var existingBrandById = await brandRepository.GetBrandById(request.Id, cancellationToken);
 
-        if (existingBrand == null)
+        if (existingBrandById == null)
         {
             throw new NotFoundException(nameof(Repair), request.Id.ToString());
+        }
+
+        var existingBrandByName = await brandRepository.GetBrandByName(request.Name, cancellationToken);
+        if (existingBrandByName != null)
+        {
+            throw new ConflictException($"Brand {request.Name} already exists");
         }
 
         var brand = mapper.Map<GarageFlow.Entities.Brand>(request);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GarageFlow.Entities;
+using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.BrandRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,12 @@ public class CreateBrandCommandHandler(UserManager<AppUser> userManager,
 {
     public async Task<BrandResponse> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
     {
+        var existingBrand = await brandRepository.GetBrandByName(request.Name, cancellationToken);
+        if (existingBrand != null)
+        {
+            throw new ConflictException($"Brand {request.Name} already exists");
+        }
+
         var brand = mapper.Map<GarageFlow.Entities.Brand>(request);
         await brandRepository.CreateBrand(brand, cancellationToken);
 

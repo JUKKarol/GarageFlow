@@ -14,4 +14,6 @@ public interface IBrandRepository
     Task<int> GetBrandsCount(SieveModel query, CancellationToken cancellationToken);
 
     Task<Brand> GetBrandById(Guid brandId, CancellationToken cancellationToken);
+
+    Task<Brand> GetBrandByName(string brandName, CancellationToken cancellationToken);
 }
