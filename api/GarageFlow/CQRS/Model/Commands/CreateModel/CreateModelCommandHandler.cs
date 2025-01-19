@@ -13,10 +13,16 @@ public class CreateModelCommandHandler(IModelRepository modelRepository,
 {
     public async Task<ModelResponse> Handle(CreateModelCommand request, CancellationToken cancellationToken)
     {
-        var brand = await brandRepository.GetBrandById(request.BrandId, cancellationToken);
-        if (brand == null)
+        var brandById = await brandRepository.GetBrandById(request.BrandId, cancellationToken);
+        if (brandById == null)
         {
             throw new NotFoundException(nameof(Brand), request.BrandId.ToString());
+        }
+
+        var modelByName = await modelRepository.GetModelsByName(request.Name, cancellationToken);
+        if (modelByName != null && modelByName.Any(m => m.BrandId == request.BrandId))
+        {
+            throw new ConflictException($"Model with name '{request.Name}' already exists for the brand.");
         }
 
         var model = mapper.Map<GarageFlow.Entities.Model>(request);

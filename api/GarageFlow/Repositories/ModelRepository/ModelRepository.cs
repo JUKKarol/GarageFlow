@@ -52,4 +52,12 @@ public class ModelRepository(AppDbContext db,
     {
         return await db.Models.AsNoTracking().FirstOrDefaultAsync(b => b.Id == modelId, cancellationToken);
     }
+
+    public async Task<List<Model>> GetModelsByName(string modelName, CancellationToken cancellationToken)
+    {
+        return await db.Models
+            .AsNoTracking()
+            .Where(m => string.Equals(m.Name, modelName, StringComparison.OrdinalIgnoreCase))
+            .ToListAsync(cancellationToken);
+    }
 }

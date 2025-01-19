@@ -17,6 +17,12 @@ public class UpdateModelCommandHandler(IModelRepository modelRepository,
             throw new NotFoundException(nameof(GarageFlow.Entities.Model), request.Id.ToString());
         }
 
+        var modelByName = await modelRepository.GetModelsByName(request.Name, cancellationToken);
+        if (modelByName.Any(m => m.BrandId == existingModel.BrandId && m.Id != request.Id))
+        {
+            throw new ConflictException($"A model with the name '{request.Name}' already exists in the brand.");
+        }
+
         var model = mapper.Map<GarageFlow.Entities.Model>(request);
         model.BrandId = existingModel.BrandId;
         model.UpdatedAt = DateTime.UtcNow;

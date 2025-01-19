@@ -14,4 +14,6 @@ public interface IModelRepository
     Task<int> GetModelsCount(SieveModel query, CancellationToken cancellationToken);
 
     Task<Model> GetModelById(Guid modelId, CancellationToken cancellationToken);
+
+    Task<List<Model>> GetModelsByName(string modelName, CancellationToken cancellationToken);
 }
