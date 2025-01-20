@@ -12,10 +12,16 @@ public class UpdateCarCommandHandler(IMapper mapper,
 {
     public async Task<CarResponse> Handle(UpdateCarCommand request, CancellationToken cancellationToken)
     {
-        var existingCar = await carRepository.GetCarById(request.Id, cancellationToken);
-        if (existingCar == null)
+        var existingCarById = await carRepository.GetCarById(request.Id, cancellationToken);
+        if (existingCarById == null)
         {
             throw new NotFoundException(nameof(Car), request.Id.ToString());
+        }
+
+        var existingCarByVin = await carRepository.GetCarByVin(request.Vin, cancellationToken);
+        if (existingCarByVin != null && existingCarByVin.Id != request.Id)
+        {
+            throw new ConflictException($"Car with VIN {request.Vin} already exists");
         }
 
         var model = await modelRepository.GetModelById(request.ModelId, cancellationToken);

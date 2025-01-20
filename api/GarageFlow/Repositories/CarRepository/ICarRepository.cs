@@ -14,4 +14,6 @@ public interface ICarRepository
     Task<int> GetCarsCount(SieveModel query, CancellationToken cancellationToken);
 
     Task<Car> GetCarById(Guid carId, CancellationToken cancellationToken);
+
+    Task<Car> GetCarByVin(string carVin, CancellationToken cancellationToken);
 }

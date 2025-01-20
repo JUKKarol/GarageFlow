@@ -18,6 +18,12 @@ public class CreateCarCommandHandler(IMapper mapper,
             throw new NotFoundException(nameof(Model), request.ModelId.ToString());
         }
 
+        var existingCarByVin = await carRepository.GetCarByVin(request.Vin, cancellationToken);
+        if (existingCarByVin != null)
+        {
+            throw new ConflictException($"Car with VIN {request.Vin} already exists");
+        }
+
         var car = mapper.Map<GarageFlow.Entities.Car>(request);
         await modelRepository.CreateModel(model, cancellationToken);
 

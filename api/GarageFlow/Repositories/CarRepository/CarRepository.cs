@@ -52,4 +52,9 @@ public class CarRepository(AppDbContext db,
     {
         return await db.Cars.AsNoTracking().FirstOrDefaultAsync(c => c.Id == carId, cancellationToken);
     }
+
+    public async Task<Car> GetCarByVin(string carVin, CancellationToken cancellationToken)
+    {
+        return await db.Cars.AsNoTracking().FirstOrDefaultAsync(c => c.Vin == carVin, cancellationToken);
+    }
 }
