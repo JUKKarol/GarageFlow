@@ -13,10 +13,6 @@ public class SieveConfigurationForRepair : ISieveConfiguration
         mapper.Property<Repair>(r => r.UpdatedAt)
             .CanSort();
 
-        mapper.Property<Repair>(r => r.Price)
-            .CanFilter()
-            .CanSort();
-
         mapper.Property<Repair>(r => r.Description)
             .CanFilter();
 

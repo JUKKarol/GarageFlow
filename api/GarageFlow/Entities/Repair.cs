@@ -11,7 +11,6 @@ public class Repair
     public DateOnly PlannedStartAt { get; set; }
     public DateOnly FinishedAt { get; set; }
     public DateOnly PlannedFinishAt { get; set; }
-    public int Price { get; set; }
     public string Description { get; set; }
     public string CustomerName { get; set; }
     public string CustomerPhoneNumber { get; set; }
@@ -19,6 +18,7 @@ public class Repair
     public RepairStatus Status { get; set; } = RepairStatus.Waiting;
     public Guid? CarId { get; set; }
 
+    public List<RepairDetail> RepairDetails { get; set; }
     public Car Car { get; set; }
     public List<AppUser> Users { get; set; }
 }

@@ -11,14 +11,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public DbSet<Model> Models { get; set; }
     public DbSet<Repair> Repairs { get; set; }
     public DbSet<AppConfig> AppConfig { get; set; }
+    public DbSet<RepairDetail> RepairDetails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Repair>(entity =>
         {
             entity.HasKey(r => r.Id);
-
-            entity.Property(r => r.Price).IsRequired();
 
             entity.HasOne(r => r.Car)
                 .WithMany(c => c.Repairs)
@@ -27,6 +26,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
                 .OnDelete(DeleteBehavior.NoAction);
             entity.HasMany(r => r.Users)
                .WithMany(e => e.Repairs);
+            entity.HasMany(r => r.RepairDetails)
+               .WithOne(rd => rd.Repair)
+               .HasForeignKey(m => m.RepairId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         modelBuilder.Entity<AppUser>(entity =>
@@ -86,6 +89,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
         {
             entity.Property(e => e.Id)
                 .ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<RepairDetail>(entity =>
+        {
+            entity.HasKey(m => m.Id);
+
+            entity.Property(m => m.Name).IsRequired();
+            entity.Property(m => m.Price).IsRequired();
+
+            entity.HasOne(rd => rd.Repair)
+                .WithMany(r => r.RepairDetails)
+                .HasForeignKey(m => m.RepairId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         base.OnModelCreating(modelBuilder);
