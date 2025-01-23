@@ -1,4 +1,6 @@
-﻿namespace GarageFlow.CQRS.Repair;
+﻿using GarageFlow.CQRS.RepairDetail;
+
+namespace GarageFlow.CQRS.Repair;
 
 public class InvoiceResponse
 {
@@ -12,4 +14,6 @@ public class InvoiceResponse
     public string CustomerEmail { get; set; }
     public string CustomerAddress { get; set; }
     public int Nip { get; set; }
+
+    public List<RepairDetailResponse> RepairDetails { get; set; }
 }

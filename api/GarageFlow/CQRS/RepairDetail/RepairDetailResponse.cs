@@ -1,11 +1,9 @@
-﻿namespace GarageFlow.Entities;
+﻿namespace GarageFlow.CQRS.RepairDetail;
 
-public class RepairDetail
+public class RepairDetailResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
     public int Price { get; set; }
     public Guid RepairId { get; set; }
-
-    public Repair Repair { get; set; }
 }

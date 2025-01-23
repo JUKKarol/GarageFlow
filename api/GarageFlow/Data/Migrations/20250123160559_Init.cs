@@ -238,7 +238,6 @@ namespace GarageFlow.Migrations
                     PlannedStartAt = table.Column<DateOnly>(type: "date", nullable: false),
                     FinishedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     PlannedFinishAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -278,6 +277,25 @@ namespace GarageFlow.Migrations
                         principalTable: "Repairs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RepairDetails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    RepairId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RepairDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RepairDetails_Repairs_RepairId",
+                        column: x => x.RepairId,
+                        principalTable: "Repairs",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -335,6 +353,11 @@ namespace GarageFlow.Migrations
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RepairDetails_RepairId",
+                table: "RepairDetails",
+                column: "RepairId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Repairs_CarId",
                 table: "Repairs",
                 column: "CarId");
@@ -365,13 +388,16 @@ namespace GarageFlow.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Repairs");
+                name: "RepairDetails");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Repairs");
 
             migrationBuilder.DropTable(
                 name: "Cars");
