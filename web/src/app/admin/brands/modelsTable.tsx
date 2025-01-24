@@ -71,7 +71,7 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
     };
 
     return (
-        <div className="mt-8">
+        <div className="mt-12">
             <div className="flex justify-between items-center mb-4">
                 <Select
                     value={brandId || undefined}
@@ -89,7 +89,7 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
                     </SelectContent>
                 </Select>
 
-                <Button className="mb-4 bg-blue-600 hover:bg-blue-700" onClick={handleAdd}>
+                <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleAdd}>
                     <Plus className="mr-2 h-5 w-5" /> Dodaj Model
                 </Button>
             </div>

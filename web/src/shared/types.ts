@@ -17,4 +17,20 @@ export interface Model {
     name: string;
 }
 
-
+export interface Appointment {
+    id?: string;
+    creadtedAt?: string;
+    updatedAt?: string;
+    startedAt?: string;
+    finishedAt?: string;
+    plannedStartAt: string;
+    plannedFinishAt: string;
+    description: string;
+    customerName: string;
+    customerPhoneNumber: string;
+    customerEmail: string;
+    price?: number;
+    carId?: string;
+    status?: number;
+    users?: string[];
+}

@@ -31,11 +31,13 @@ export default function BrandsPage() {
     }, [token, setBrands]);
 
     return (
-        <div className="text-white">
+        <div className="text-white p-4">
             <div className="flex justify-between">
                 <Header title="Marki" />
-                <Button
-                    className="mb-4 bg-blue-600 hover:bg-blue-700"
+            </div>
+            <div className="flex justify-end mb-4">
+            <Button
+                    className="bg-blue-600 hover:bg-blue-700"
                     onClick={() => setIsDialogOpen(true)}
                 >
                     <Plus className="mr-2 h-5 w-5" /> Dodaj Markę
