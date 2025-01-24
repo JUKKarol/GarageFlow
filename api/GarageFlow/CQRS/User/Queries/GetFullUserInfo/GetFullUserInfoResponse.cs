@@ -1,7 +1,4 @@
-﻿using GarageFlow.Constants;
-using Microsoft.AspNetCore.Identity;
-
-namespace GarageFlow.CQRS.User.Queries.GetFullUserInfo;
+﻿namespace GarageFlow.CQRS.User.Queries.GetFullUserInfo;
 
 public class GetFullUserInfoResponse
 {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MediatR;
 using GarageFlow.Repositories.ModelRepository;
+using MediatR;
 
 namespace GarageFlow.CQRS.Model.Queries.GetModels;
 

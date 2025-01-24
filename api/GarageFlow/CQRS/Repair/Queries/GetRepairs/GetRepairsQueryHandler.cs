@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using GarageFlow.Entities;
 using GarageFlow.Repositories.RepairRepository;
 using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GarageFlow.CQRS.Repair.Queries.GetRepairsByStatus;
 

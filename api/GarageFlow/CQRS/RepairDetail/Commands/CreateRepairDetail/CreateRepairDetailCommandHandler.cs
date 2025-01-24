@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
-using GarageFlow.CQRS.User;
-using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
-using GarageFlow.Repositories.CarRepository;
 using GarageFlow.Repositories.RepairDetailRepository;
 using GarageFlow.Repositories.RepairRepository;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.RepairDetail.Commands.CreateRepairDetail;
 

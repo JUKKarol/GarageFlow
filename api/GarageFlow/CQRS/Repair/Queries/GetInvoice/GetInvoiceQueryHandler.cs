@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GarageFlow.CQRS.RepairDetail;
-using GarageFlow.Entities;
 using GarageFlow.Enums;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.RepairDetailRepository;

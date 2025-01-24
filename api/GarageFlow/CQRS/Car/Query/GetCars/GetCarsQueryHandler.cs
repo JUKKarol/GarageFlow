@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using GarageFlow.CQRS.Car.Query.GetCars;
 using GarageFlow.CQRS.Car;
-using GarageFlow.CQRS.Repair.Queries;
-using GarageFlow.Entities;
+using GarageFlow.CQRS.Car.Query.GetCars;
 using GarageFlow.Repositories.CarRepository;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Cars.Queries.GetCars;
 
