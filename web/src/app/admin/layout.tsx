@@ -12,10 +12,10 @@ export default function Layout({
     const navItems = [
         {id: 1, name: "Dashboard", icon: House, href: "/admin/dashboard"},
         {id: 2, name: "Pracownicy", icon: Users, href: "/admin/employees"},
-        {id: 3, name: "Wizyty", icon: ClipboardList, href: "/admin/visits"},
+        {id: 3, name: "Wizyty", icon: ClipboardList, href: "/admin/appointments"},
         {id: 4, name: "Auta", icon: Car, href: "/admin/cars"},
-        {id: 5, name: "Marki", icon: Car, href: "/admin/brands"},
-        {id: 5, name: "Finanse", icon: Landmark, href: "/admin/finances"},
+        {id: 5, name: "Modele i marki", icon: Car, href: "/admin/brands"},
+        {id: 6, name: "Finanse", icon: Landmark, href: "/admin/finances"},
     ]
     
     return (
