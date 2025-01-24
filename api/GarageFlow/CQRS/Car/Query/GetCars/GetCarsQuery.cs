@@ -1,5 +1,4 @@
-﻿using GarageFlow.CQRS.Brands;
-using MediatR;
+﻿using MediatR;
 using Sieve.Models;
 
 namespace GarageFlow.CQRS.Car.Query.GetCars;

@@ -1,5 +1,4 @@
-﻿using GarageFlow.Enums;
-using MediatR;
+﻿using MediatR;
 using Sieve.Models;
 
 namespace GarageFlow.CQRS.Repair.Queries.GetRepairsByStatus;

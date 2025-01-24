@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
+using GarageFlow.CQRS.RepairDetail;
 using GarageFlow.Enums;
 using GarageFlow.Middlewares.Exceptions;
+using GarageFlow.Repositories.RepairDetailRepository;
 using GarageFlow.Repositories.RepairRepository;
 using MediatR;
 
 namespace GarageFlow.CQRS.Repair.Queries.GetInvoice;
 
-public class GetInvoiceQueryHandler(IMapper mapper, IRepairRepository repairRepository) : IRequestHandler<GetInvoiceQuery, InvoiceResponse>
+public class GetInvoiceQueryHandler(IMapper mapper,
+    IRepairRepository repairRepository,
+    IRepairDetailRepository repairDetailRepository) : IRequestHandler<GetInvoiceQuery, InvoiceResponse>
 {
     public async Task<InvoiceResponse> Handle(GetInvoiceQuery request, CancellationToken cancellationToken)
     {
@@ -23,8 +27,12 @@ public class GetInvoiceQueryHandler(IMapper mapper, IRepairRepository repairRepo
         }
 
         var invoice = mapper.Map<InvoiceResponse>(repair);
+        var repairDetails = await repairDetailRepository.GetRepairDetailsByRepairId(repair.Id, cancellationToken);
         invoice.CustomerAddress = request.CustomerAddress;
         invoice.Nip = request.Nip;
+
+        invoice.RepairDetails = mapper.Map<List<RepairDetailResponse>>(repairDetails);
+        invoice.Price = invoice.RepairDetails.Sum(rd => rd.Price);
 
         return invoice;
     }

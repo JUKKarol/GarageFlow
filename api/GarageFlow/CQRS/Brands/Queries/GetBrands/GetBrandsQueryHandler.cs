@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using GarageFlow.CQRS.Repair.Queries;
-using GarageFlow.Entities;
 using GarageFlow.Repositories.BrandRepository;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Brands.Queries.GetBrands;
 
