@@ -46,7 +46,7 @@ public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
 
         repair.UpdatedAt = DateTime.UtcNow;
 
-        if (request.Users.Any())
+        if (request.Users != null)
         {
             List<AppUser> users = new();
 
