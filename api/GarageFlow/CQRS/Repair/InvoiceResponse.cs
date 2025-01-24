@@ -13,7 +13,7 @@ public class InvoiceResponse
     public string CustomerPhoneNumber { get; set; }
     public string CustomerEmail { get; set; }
     public string CustomerAddress { get; set; }
-    public int Nip { get; set; }
+    public string Nip { get; set; }
 
     public List<RepairDetailResponse> RepairDetails { get; set; }
 }
