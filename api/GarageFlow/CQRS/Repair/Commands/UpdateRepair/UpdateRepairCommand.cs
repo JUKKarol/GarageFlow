@@ -13,7 +13,6 @@ public class UpdateRepairCommand : IRequest<RepairResponse>
 
     public DateOnly StartedAt { get; set; }
     public DateOnly FinishedAt { get; set; }
-    public int Price { get; set; }
     public string Description { get; set; }
     public string CustomerName { get; set; }
     public string CustomerPhoneNumber { get; set; }
