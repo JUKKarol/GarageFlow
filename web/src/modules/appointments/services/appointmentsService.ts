@@ -11,6 +11,17 @@ export const getAppointments = async (token: string) => {
     return response.data;
 };
 
+export const getAppointemtsByWeek = async (token: string, weekStartDate: string, weekEndDate: string) => {
+    const response = await httpClient.get(`/repair?filters=plannedStartAt>=${weekStartDate},plannedStartAt<=${weekEndDate}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+
+};
+
 export const getAppointment = async (token: string, id: string) => {
     const response = await httpClient.get(`/repair/${id}`, {
         headers: {

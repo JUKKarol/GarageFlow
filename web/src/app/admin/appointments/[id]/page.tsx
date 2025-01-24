@@ -8,10 +8,11 @@ import { getAppointment } from "@/modules/appointments/services/appointmentsServ
 import useAuthStore from "@/shared/stores/authStore"
 import { useAppointmentStore } from '@/shared/stores/appointmentsStore';
 import Header from "@/app/_components/dashboard/header"
+import MainContainer from "@/app/_components/dashboard/mainContainer"
 import { Badge } from "@/components/ui/badge"
-import CustomerCard from "./customerCard"
-import CarCard from "./carCard"
-import DetailsCard from "./detailsCard"
+import CustomerCard from "./_cards/customerCard"
+import CarCard from "./_cards/carCard"
+import DetailsCard from "./_cards/detailsCard"
 
 
 
@@ -78,7 +79,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
     }
 
     return (
-        <div className="text-white">
+        <MainContainer>
             {appointment ? (
                 <div>
                     <Header title="Szczegóły wizyty">
@@ -99,6 +100,6 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
             ) : (
                 <div>Nie znaleziono wizyty</div>
             )}
-        </div>
+        </MainContainer>
     )
 }

@@ -1,5 +1,5 @@
 import { Car } from "lucide-react";
-import AppointmentCard from "./_cards/appointmentCard";
+import AppointmentCard from "./appointmentCard";
 
 export default function CarCard() {
     return (

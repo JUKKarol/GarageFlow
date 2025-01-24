@@ -1,5 +1,5 @@
 import { CalendarDays, Clock } from "lucide-react";
-import AppointmentCard from "./_cards/appointmentCard";
+import AppointmentCard from "./appointmentCard";
 
 interface AppointmentCardProps {
     plannedStartAt: string;

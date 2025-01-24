@@ -1,5 +1,5 @@
 import { User } from "lucide-react";
-import AppointmentCard from "./_cards/appointmentCard";
+import AppointmentCard from "./appointmentCard";
 
 interface CustomerCardProps {
     customerName: string;

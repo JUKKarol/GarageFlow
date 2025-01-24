@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Header from "@/app/_components/dashboard/header";
+import MainContainer from "@/app/_components/dashboard/mainContainer";
 import { Button } from "@/components/ui/button";
 import useBrandStore from "@/shared/stores/brandStore";
 import useAuthStore from "@/shared/stores/authStore";
@@ -31,12 +32,10 @@ export default function BrandsPage() {
     }, [token, setBrands]);
 
     return (
-        <div className="text-white p-4">
-            <div className="flex justify-between">
-                <Header title="Marki" />
-            </div>
+        <MainContainer>
+            <Header title="Marki i modele" />
             <div className="flex justify-end mb-4">
-            <Button
+                <Button
                     className="bg-blue-600 hover:bg-blue-700"
                     onClick={() => setIsDialogOpen(true)}
                 >
@@ -45,13 +44,13 @@ export default function BrandsPage() {
             </div>
 
             <BrandsTable brands={brands} onEdit={(brand) => setEditedItem(brand)} />
-            
+
             <BrandDialog
                 isOpen={isDialogOpen}
                 onClose={() => setIsDialogOpen(false)}
             />
 
             <ModelsTable brands={brands} />
-        </div>
+        </MainContainer>
     );
 }

@@ -1,5 +1,6 @@
 import Header from "@/app/_components/dashboard/header";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import MainContainer from "@/app/_components/dashboard/mainContainer"
 
 const employees = [
     { id: 1, name: "John Doe", email: "john@example.com", department: "Engineering", status: "Active" },
@@ -11,7 +12,7 @@ const employees = [
 
 export default function EmployeesPage() {
     return (
-        <div className="text-white">
+        <MainContainer>
             <Header title="Pracownicy" />
             <div>
                 <div className="overflow-hidden rounded-lg border border-zinc-200">
@@ -45,6 +46,6 @@ export default function EmployeesPage() {
                     </Table>
                 </div>
             </div>
-        </div>
+        </MainContainer>
     );
 }
