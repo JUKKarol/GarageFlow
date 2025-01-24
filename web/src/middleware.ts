@@ -3,22 +3,26 @@ import { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
 
-  const token = req.cookies.get("token"); 
-  const userRoles = req.cookies.get("userRoles"); 
+  const token = req.cookies.get("token")?.value; 
 
-  if (!token || !userRoles) {
+  if (!token) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  const roles = JSON.parse(userRoles?.value || '[]');
+  const userRolesString = req.cookies.get("userRoles")?.value || '[]';
+  
+  try {
+    const roles = JSON.parse(userRolesString);
 
-  const requiredRoles = ["Admin", "Employee"];
-  const hasAccess = roles.some((role: string) => requiredRoles.includes(role));
+    const requiredRoles = ["Admin", "Employee"];
+    const hasAccess = roles.some((role: string) => requiredRoles.includes(role));
 
-  if (!hasAccess) {
-    return NextResponse.redirect(new URL("/", req.url));
+    if (!hasAccess) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  } catch (error) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
-
 
   return NextResponse.next();
 }
