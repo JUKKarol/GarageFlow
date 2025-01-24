@@ -19,6 +19,9 @@ import useAuthStore from '@/shared/stores/authStore';
 import { CreateAppointmentDialog } from './appointmentCreateDialog';
 import StatusesLegend from './statusesLegend';
 import { statuses } from '@/shared/statues';
+import Link from "next/link";
+
+
 
 export default function AppointmentsPage() {
   const token = useAuthStore((state) => state.token);
@@ -73,13 +76,14 @@ export default function AppointmentsPage() {
     }
   };
 
+
+
   return (
     <MainContainer>
       <Header title="Wizyty" />
 
       <StatusesLegend />
 
-      {/* Week Navigation */}
 
       <div className="flex items-center justify-between my-4">
         <Button variant="ghost" onClick={handlePreviousWeek}>
@@ -113,14 +117,12 @@ export default function AppointmentsPage() {
         </Button>
       </div>
 
-      {/* Calendar Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
         {weekDays.map((date) => (
           <div
             key={date.toISOString()}
             className="border p-2 min-h-[100px] rounded-md bg-zinc-800 text-white"
           >
-            {/* Day Name and Number */}
             <div className="text-center text-sm font-semibold">
               {format(date, 'EEEE', { locale: pl })}
             </div>
@@ -128,15 +130,22 @@ export default function AppointmentsPage() {
               {format(date, 'dd', { locale: pl })}
             </div>
 
-            {/* Display Appointments for This Day */}
             <div className="mt-2 space-y-1">
               {appointments
                 .filter((appointment) => isSameDay(parseISO(appointment.plannedStartAt), date))
-                .map((appointment) => (
-                  <div key={appointment.id} className={ `text-xs p-1 rounded-md ${statuses.find(status => status.id === appointment.status)?.color}` }>
-                    {appointment.customerName} - {appointment.description}
-                  </div>
-                ))}
+                .map((appointment) => {
+                  const status = statuses.find(status => status.id === appointment.status);
+
+                  return (
+                    <Link href={`/admin/appointments/${appointment.id}`} key={appointment.id}>
+                      <div
+                        className={`${status?.color} ${status?.hoverColor} ${status?.textColor} p-1 rounded-md transition duration-200`}
+                      >
+                        {appointment.customerName} - {appointment.description}
+                      </div>
+                    </Link>
+                  );
+                })}
             </div>
           </div>
         ))}
