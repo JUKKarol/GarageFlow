@@ -70,7 +70,7 @@ export function CreateAppointmentDialog() {
                     <Plus className="mr-2 h-4 w-4" /> Dodaj wizytę
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="text-white bg-zinc-950">
                 <DialogHeader>
                     <DialogTitle>Dodaj nową wizytę</DialogTitle>
                 </DialogHeader>
@@ -170,7 +170,7 @@ export function CreateAppointmentDialog() {
                 </div>
                 <div className="flex justify-end space-x-2">
                     <Button
-                        variant="outline"
+                        variant="secondary"
                         onClick={() => setDialogOpen(false)}
                     >
                         Anuluj

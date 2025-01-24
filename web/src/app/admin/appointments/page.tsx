@@ -97,7 +97,7 @@ export default function AppointmentsPage() {
 
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="w-10 px-0 pl-0">
+              <Button variant="secondary" className="w-10 px-0 pl-0">
                 <Calendar className="h-4 w-4" />
               </Button>
             </PopoverTrigger>
@@ -123,7 +123,7 @@ export default function AppointmentsPage() {
             key={date.toISOString()}
             className="border p-2 min-h-[100px] rounded-md bg-zinc-800 text-white"
           >
-            <div className="text-center text-sm font-semibold">
+            <div className="text-center text-sm font-semibold capitalize">
               {format(date, 'EEEE', { locale: pl })}
             </div>
             <div className="text-center text-sm">
