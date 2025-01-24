@@ -8,13 +8,26 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace GarageFlow.Controllers;
 
+/// <summary>
+/// Controller for managing brands.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class BrandController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
 {
+    /// <summary>
+    /// Create new car brand
+    /// </summary>
+    /// <remarks>
+    /// Endpoint for creating new car brand.
+    /// </remarks>
+    [SwaggerResponse(StatusCodes.Status200OK, "The brand has been successfully created")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
+    [SwaggerResponse(StatusCodes.Status409Conflict, "The brand name has been already exists")]
     [HttpPost]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateBrand(CreateBrandCommand command)
@@ -23,6 +36,15 @@ public class BrandController(IMediator mediator, UserManager<AppUser> userManage
         return Ok(brand);
     }
 
+    /// <summary>
+    /// Update existing car brand
+    /// </summary>
+    /// <remarks>
+    /// Endpoint for updating an existing car brand.
+    /// </remarks>
+    [SwaggerResponse(StatusCodes.Status200OK, "The brand has been successfully updated")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "The brand was not found")]
     [HttpPatch]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> UpdateBrand(UpdateBrandCommand command)
@@ -31,6 +53,14 @@ public class BrandController(IMediator mediator, UserManager<AppUser> userManage
         return Ok(brand);
     }
 
+    /// <summary>
+    /// Get list of car brands
+    /// </summary>
+    /// <remarks>
+    /// Endpoint for retrieving a list of car brands.
+    /// </remarks>
+    [SwaggerResponse(StatusCodes.Status200OK, "The list of brands has been successfully retrieved")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpGet]
     public async Task<IActionResult> GetBrands([FromQuery] SieveModel query)
     {

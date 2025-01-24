@@ -7,14 +7,26 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
 namespace GarageFlow.Controllers;
 
+/// <summary>
+/// Controller for managing user authentication and roles.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
 {
+    /// <summary>
+    /// Assigns a role to a user.
+    /// </summary>
+    /// <param name="command">The command containing the user's email and the role to assign.</param>
+    /// <returns>No content.</returns>
+    [SwaggerResponse(StatusCodes.Status204NoContent, "The role has been successfully assigned to the user")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "The user was not found")]
     [HttpPost("userRole")]
     [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> AssignUserRole(AssignUserRoleCommand command)
@@ -23,6 +35,14 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
         return NoContent();
     }
 
+    /// <summary>
+    /// Unassigns a role from a user.
+    /// </summary>
+    /// <param name="command">The command containing the user's email and the role to unassign.</param>
+    /// <returns>No content.</returns>
+    [SwaggerResponse(StatusCodes.Status204NoContent, "The role has been successfully unassigned from the user")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "The user was not found")]
     [HttpDelete("userRole")]
     [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> UnassignUserRole(UnassignUserRoleCommand command)
@@ -31,6 +51,12 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
         return NoContent();
     }
 
+    /// <summary>
+    /// Retrieves full information about the authenticated user.
+    /// </summary>
+    /// <returns>The full information about the authenticated user.</returns>
+    [SwaggerResponse(StatusCodes.Status200OK, "The full information about the authenticated user has been successfully retrieved")]
+    [SwaggerResponse(StatusCodes.Status401Unauthorized, "The user is not authenticated")]
     [HttpGet("manage/info/full")]
     [Authorize]
     public async Task<IActionResult> GetFullInfo()

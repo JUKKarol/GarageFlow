@@ -11,10 +11,18 @@ using Sieve.Models;
 
 namespace GarageFlow.Controllers;
 
+/// <summary>
+/// Controller for managing models.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class ModelController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
 {
+    /// <summary>
+    /// Creates a new model.
+    /// </summary>
+    /// <param name="command">The command containing the model details.</param>
+    /// <returns>The created model.</returns>
     [HttpPost]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> CreateModel(CreateModelCommand command)
@@ -23,6 +31,11 @@ public class ModelController(IMediator mediator, UserManager<AppUser> userManage
         return Ok(model);
     }
 
+    /// <summary>
+    /// Updates an existing model.
+    /// </summary>
+    /// <param name="command">The command containing the updated model details.</param>
+    /// <returns>The updated model.</returns>
     [HttpPatch]
     [Authorize(Roles = UserRoles.Employee)]
     public async Task<IActionResult> UpdateModel(UpdateModelCommand command)
@@ -31,6 +44,11 @@ public class ModelController(IMediator mediator, UserManager<AppUser> userManage
         return Ok(model);
     }
 
+    /// <summary>
+    /// Retrieves a list of models based on the provided query.
+    /// </summary>
+    /// <param name="query">The query parameters for filtering and sorting models.</param>
+    /// <returns>A list of models.</returns>
     [HttpGet]
     public async Task<IActionResult> GetModels([FromQuery] SieveModel query)
     {
