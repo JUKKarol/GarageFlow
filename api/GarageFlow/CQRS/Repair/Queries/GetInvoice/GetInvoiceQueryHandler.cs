@@ -28,11 +28,12 @@ public class GetInvoiceQueryHandler(IMapper mapper,
         }
 
         var invoice = mapper.Map<InvoiceResponse>(repair);
+        var repairDetails = await repairDetailRepository.GetRepairDetailsByRepairId(repair.Id, cancellationToken);
         invoice.CustomerAddress = request.CustomerAddress;
         invoice.Nip = request.Nip;
 
-        var repairDetails = await repairDetailRepository.GetRepairDetailsByRepairId(repair.Id, cancellationToken);
         invoice.RepairDetails = mapper.Map<List<RepairDetailResponse>>(repairDetails);
+        invoice.Price = invoice.RepairDetails.Sum(rd => rd.Price);
 
         return invoice;
     }

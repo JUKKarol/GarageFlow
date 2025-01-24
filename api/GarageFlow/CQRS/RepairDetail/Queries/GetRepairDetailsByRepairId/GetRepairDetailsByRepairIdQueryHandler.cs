@@ -12,7 +12,7 @@ public class GetRepairDetailsByRepairIdQueryHandler(IMapper mapper,
 {
     public async Task<List<RepairDetailResponse>> Handle(GetRepairDetailsByRepairIdQuery request, CancellationToken cancellationToken)
     {
-        var repair = repairRepository.GetRepairById(request.RepairId, cancellationToken);
+        var repair = await repairRepository.GetRepairById(request.RepairId, cancellationToken);
         if (repair == null)
         {
             throw new NotFoundException(nameof(Repair), request.RepairId.ToString());

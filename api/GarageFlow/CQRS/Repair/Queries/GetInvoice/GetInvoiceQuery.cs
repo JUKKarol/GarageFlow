@@ -6,5 +6,5 @@ public class GetInvoiceQuery : IRequest<InvoiceResponse>
 {
     public Guid RepairId { get; set; }
     public string CustomerAddress { get; set; }
-    public int Nip { get; set; }
+    public string Nip { get; set; }
 }
