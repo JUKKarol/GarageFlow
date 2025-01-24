@@ -8,8 +8,6 @@ public class UpdateRepairCommandValidator : AbstractValidator<UpdateRepairComman
     {
         RuleFor(c => c.StartedAt);
         RuleFor(c => c.FinishedAt);
-        RuleFor(c => c.Price)
-            .InclusiveBetween(1, 1000000000);
         RuleFor(c => c.Description)
             .Length(1, 1000);
         RuleFor(c => c.CustomerName)
