@@ -11,6 +11,8 @@ public class UpdateCarCommandValidator : AbstractValidator<UpdateCarCommand>
         RuleFor(c => c.Engine)
             .NotEmpty()
             .InclusiveBetween(1, 20000);
+        RuleFor(c => c.FuelType)
+            .IsInEnum();
         RuleFor(c => c.RegistrationNumber)
             .NotEmpty()
             .Length(1, 10);
