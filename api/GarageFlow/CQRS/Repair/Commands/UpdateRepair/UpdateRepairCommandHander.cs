@@ -45,6 +45,8 @@ public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
         }
 
         repair.UpdatedAt = DateTime.UtcNow;
+        repair.PlannedStartAt = existingRepair.PlannedStartAt;
+        repair.PlannedFinishAt = existingRepair.PlannedFinishAt;
 
         if (request.Users != null)
         {
