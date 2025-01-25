@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Brands.Commands.CreateBrand;
 
-public class CreateBrandCommandHandler(UserManager<AppUser> userManager,
-    IMapper mapper,
+public class CreateBrandCommandHandler(IMapper mapper,
     IBrandRepository brandRepository) : IRequestHandler<CreateBrandCommand, BrandResponse>
 {
     public async Task<BrandResponse> Handle(CreateBrandCommand request, CancellationToken cancellationToken)

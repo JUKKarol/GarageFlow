@@ -17,7 +17,7 @@ namespace GarageFlow.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class BrandController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
+public class BrandController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Create new car brand

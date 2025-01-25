@@ -5,8 +5,7 @@ using Sieve.Services;
 
 namespace GarageFlow.Repositories.RepairDetailRepository;
 
-public class RepairDetailRepository(AppDbContext db,
-    ISieveProcessor sieveProcessor) : IRepairDetailRepository
+public class RepairDetailRepository(AppDbContext db) : IRepairDetailRepository
 {
     public async Task<RepairDetail> CreateRepairDetail(RepairDetail repairDetail, CancellationToken cancellationToken)
     {

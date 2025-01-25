@@ -10,13 +10,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.RepairDetail.Commands.UpdateRepairDetail;
 
-public class UpdateRepairDetailCommandHandler(IUserContext userContext,
-    IUserStore<AppUser> userStore,
-    IMapper mapper,
+public class UpdateRepairDetailCommandHandler(IMapper mapper,
     IRepairDetailRepository repairDetailRepository,
-    IRepairRepository repairRepository,
-    ICarRepository carRepository,
-    UserManager<AppUser> userManager) : IRequestHandler<UpdateRepairDetailCommand, RepairDetailResponse>
+    IRepairRepository repairRepository) : IRequestHandler<UpdateRepairDetailCommand, RepairDetailResponse>
 {
     public async Task<RepairDetailResponse> Handle(UpdateRepairDetailCommand request, CancellationToken cancellationToken)
     {

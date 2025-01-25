@@ -16,7 +16,7 @@ namespace GarageFlow.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class ModelController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
+public class ModelController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Creates a new model.
