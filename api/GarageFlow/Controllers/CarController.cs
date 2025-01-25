@@ -1,7 +1,7 @@
 ﻿using GarageFlow.Constants;
-using GarageFlow.CQRS.Car.Command.CreateCar;
-using GarageFlow.CQRS.Car.Command.UpdateCar;
-using GarageFlow.CQRS.Car.Query.GetCars;
+using GarageFlow.CQRS.Car.Commands.CreateCar;
+using GarageFlow.CQRS.Car.Commands.UpdateCar;
+using GarageFlow.CQRS.Car.Queries.GetCars;
 using GarageFlow.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

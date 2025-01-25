@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace GarageFlow.CQRS.Car.Command.UpdateCar;
+namespace GarageFlow.CQRS.Car.Commands.UpdateCar;
 
 public class UpdateCarCommandValidator : AbstractValidator<UpdateCarCommand>
 {

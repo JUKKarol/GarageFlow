@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GarageFlow.CQRS.Car;
-using GarageFlow.CQRS.Car.Query.GetCars;
+using GarageFlow.CQRS.Car.Queries.GetCars;
 using GarageFlow.Repositories.CarRepository;
 using MediatR;
 

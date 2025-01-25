@@ -4,7 +4,7 @@ using GarageFlow.Repositories.CarRepository;
 using GarageFlow.Repositories.ModelRepository;
 using MediatR;
 
-namespace GarageFlow.CQRS.Car.Command.UpdateCar;
+namespace GarageFlow.CQRS.Car.Commands.UpdateCar;
 
 public class UpdateCarCommandHandler(IMapper mapper,
     ICarRepository carRepository,

@@ -1,7 +1,7 @@
 ﻿using GarageFlow.Enums;
 using MediatR;
 
-namespace GarageFlow.CQRS.Car.Command.CreateCar;
+namespace GarageFlow.CQRS.Car.Commands.CreateCar;
 
 public class CreateCarCommand : IRequest<CarResponse>
 {

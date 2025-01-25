@@ -4,7 +4,7 @@ using GarageFlow.Repositories.CarRepository;
 using GarageFlow.Repositories.ModelRepository;
 using MediatR;
 
-namespace GarageFlow.CQRS.Car.Command.CreateCar;
+namespace GarageFlow.CQRS.Car.Commands.CreateCar;
 
 public class CreateCarCommandHandler(IMapper mapper,
     ICarRepository carRepository,

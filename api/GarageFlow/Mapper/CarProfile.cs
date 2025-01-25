@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using GarageFlow.CQRS.Car;
-using GarageFlow.CQRS.Car.Command.CreateCar;
-using GarageFlow.CQRS.Car.Command.UpdateCar;
+using GarageFlow.CQRS.Car.Commands.CreateCar;
+using GarageFlow.CQRS.Car.Commands.UpdateCar;
 using GarageFlow.Entities;
 
 namespace GarageFlow.Mapper;
