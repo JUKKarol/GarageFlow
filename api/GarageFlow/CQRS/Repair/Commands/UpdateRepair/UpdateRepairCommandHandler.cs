@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Repair.Commands.UpdateRepair;
 
-public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
+public class UpdateRepairCommandHandler(UserManager<AppUser> userManager,
     IMapper mapper,
     IRepairRepository repairRepository,
     ICarRepository carRepository,
