@@ -41,7 +41,7 @@ internal class Program
             using var httpClient = new HttpClient();
             var requestContent = new StringContent(loginPayloadJson, Encoding.UTF8, "application/json");
 
-            var response = await httpClient.PostAsync($"{apiUrl}auth/login", requestContent);
+            var response = await httpClient.PostAsync($"{apiUrl}/auth/login", requestContent);
             var responseContent = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
@@ -66,7 +66,7 @@ internal class Program
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {JWTToken}");
 
-            var response = await httpClient.GetAsync($"{apiUrl}Car");
+            var response = await httpClient.GetAsync($"{apiUrl}/Car");
             var responseContent = await response.Content.ReadAsStringAsync();
 
             return response.IsSuccessStatusCode
@@ -84,7 +84,7 @@ internal class Program
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {JWTToken}");
 
-            var response = await httpClient.GetAsync($"{apiUrl}Repair");
+            var response = await httpClient.GetAsync($"{apiUrl}/Repair");
             var responseContent = await response.Content.ReadAsStringAsync();
 
             return response.IsSuccessStatusCode
