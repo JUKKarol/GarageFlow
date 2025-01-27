@@ -57,7 +57,7 @@ public class BrandRepository(AppDbContext db,
     {
         return await db.Brands
             .AsNoTracking()
-            .Where(b => string.Equals(b.Name, brandName, StringComparison.OrdinalIgnoreCase))
+            .Where(b => b.Name.ToLower() == brandName.ToLower())
             .ToListAsync(cancellationToken);
     }
 }

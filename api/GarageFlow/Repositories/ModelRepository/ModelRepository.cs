@@ -57,7 +57,7 @@ public class ModelRepository(AppDbContext db,
     {
         return await db.Models
             .AsNoTracking()
-            .Where(m => string.Equals(m.Name, modelName, StringComparison.OrdinalIgnoreCase))
+            .Where(m => m.Name.ToLower() == modelName.ToLower())
             .ToListAsync(cancellationToken);
     }
 }

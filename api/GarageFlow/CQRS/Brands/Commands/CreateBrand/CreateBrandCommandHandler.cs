@@ -13,7 +13,7 @@ public class CreateBrandCommandHandler(IMapper mapper,
     public async Task<BrandResponse> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
     {
         var existingBrand = await brandRepository.GetBrandsByName(request.Name, cancellationToken);
-        if (existingBrand != null)
+        if (existingBrand.Count > 0)
         {
             throw new ConflictException($"Brand {request.Name} already exists");
         }
