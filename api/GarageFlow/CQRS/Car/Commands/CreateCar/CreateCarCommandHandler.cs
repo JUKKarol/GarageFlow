@@ -25,7 +25,7 @@ public class CreateCarCommandHandler(IMapper mapper,
         }
 
         var car = mapper.Map<GarageFlow.Entities.Car>(request);
-        await modelRepository.CreateModel(model, cancellationToken);
+        await carRepository.CreateCar(car, cancellationToken);
 
         var carDto = mapper.Map<CarResponse>(car);
         return carDto;
