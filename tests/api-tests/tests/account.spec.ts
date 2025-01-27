@@ -1,23 +1,20 @@
 import {
-  test,
-  expect,
   request as playwrightRequest,
   APIRequestContext,
 } from '@playwright/test';
-import dotenv from 'dotenv';
-import { AuthSupport } from '../supports/auth.support';
-
-dotenv.config();
+import { test, expect } from '../fixtures/env.fixture';
+import { AuthSupport, LoginResponse } from '../supports/auth.support';
 
 let requestContext: APIRequestContext;
 
-const apiUrl = process.env.BASE_URL!;
-const email = process.env.USER_EMAIL!;
-const password = process.env.USER_PASSWORD!;
 const authSupport = new AuthSupport();
 
-test.beforeAll(async () => {
-  const loginResponse = await authSupport.login(email, password, apiUrl);
+test.beforeAll(async ({ env }) => {
+  const loginResponse: LoginResponse = await authSupport.login(
+    env.USER_EMAIL,
+    env.USER_PASSWORD,
+    env.BASE_URL,
+  );
 
   requestContext = await playwrightRequest.newContext({
     extraHTTPHeaders: {
@@ -30,24 +27,30 @@ test.afterAll(async () => {
   await requestContext.dispose();
 });
 
-test('should login, get users and account info', async () => {
+test('should login, get users and account info', async ({ env }) => {
   const infoResponse = await requestContext.get(
-    `${apiUrl}/auth/manage/info/full`,
+    `${env.BASE_URL}/auth/manage/info/full`,
   );
 
   expect(infoResponse.status()).toBe(200);
   const infoResponseBody = await infoResponse.json();
-  expect(infoResponseBody.email).toBe(email);
+  expect(infoResponseBody.email).toBe(env.USER_EMAIL);
 
-  const userResponse = await requestContext.get(`${apiUrl}/auth/manage/info`);
+  const userResponse = await requestContext.get(
+    `${env.BASE_URL}/auth/manage/info`,
+  );
 
   expect(userResponse.status()).toBe(200);
   const userResponseBody = await userResponse.json();
-  expect(userResponseBody.email).toBe(email);
+  expect(userResponseBody.email).toBe(env.USER_EMAIL);
 });
 
-test('should refresh token', async () => {
-  const loginResponse = await authSupport.login(email, password, apiUrl);
+test('should refresh token', async ({ env }) => {
+  const loginResponse = await authSupport.login(
+    env.USER_EMAIL,
+    env.USER_PASSWORD,
+    env.BASE_URL,
+  );
 
   const loginContext = await playwrightRequest.newContext({
     extraHTTPHeaders: {
@@ -55,14 +58,17 @@ test('should refresh token', async () => {
     },
   });
 
-  const refreshResponse = await loginContext.post(`${apiUrl}/auth/refresh`, {
-    data: {
-      refreshToken: loginResponse.refreshToken,
+  const refreshResponse = await loginContext.post(
+    `${env.BASE_URL}/auth/refresh`,
+    {
+      data: {
+        refreshToken: loginResponse.refreshToken,
+      },
     },
-  });
+  );
 
   expect(refreshResponse.status()).toBe(200);
-  const refreshResponseBody = await refreshResponse.json();
+  const refreshResponseBody: LoginResponse = await refreshResponse.json();
   expect(refreshResponseBody.accessToken).toBeDefined();
 
   const refreshContext = await playwrightRequest.newContext({
@@ -71,12 +77,14 @@ test('should refresh token', async () => {
     },
   });
 
-  const infoResponse = await refreshContext.get(`${apiUrl}/auth/user`);
+  const infoResponse = await refreshContext.get(`${env.BASE_URL}/auth/user`);
 
   expect(infoResponse.status()).toBe(200);
   const infoResponseBody = await infoResponse.json();
   expect(Array.isArray(infoResponseBody)).toBe(true);
   expect(
-    infoResponseBody.some((user: { email: string }) => user.email === email),
+    infoResponseBody.some(
+      (user: { email: string }) => user.email === env.USER_EMAIL,
+    ),
   ).toBe(true);
 });
