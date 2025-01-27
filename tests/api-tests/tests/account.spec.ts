@@ -5,6 +5,7 @@ import {
   APIRequestContext,
 } from '@playwright/test';
 import dotenv from 'dotenv';
+import { AuthSupport } from '../supports/auth.support';
 
 dotenv.config();
 
@@ -13,24 +14,14 @@ let requestContext: APIRequestContext;
 const apiUrl = process.env.BASE_URL!;
 const email = process.env.USER_EMAIL!;
 const password = process.env.USER_PASSWORD!;
+const authSupport = new AuthSupport();
 
 test.beforeAll(async () => {
-  const loginResponse = await (
-    await playwrightRequest.newContext()
-  ).post(`${apiUrl}/auth/login`, {
-    data: {
-      email,
-      password,
-    },
-  });
-
-  expect(loginResponse.status()).toBe(200);
-  const loginResponseBody = await loginResponse.json();
-  const accessToken = loginResponseBody.accessToken;
+  const loginResponse = await authSupport.login(email, password, apiUrl);
 
   requestContext = await playwrightRequest.newContext({
     extraHTTPHeaders: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${loginResponse.accessToken}`,
     },
   });
 });
@@ -56,28 +47,17 @@ test('should login, get users and account info', async () => {
 });
 
 test('should refresh token', async () => {
-  const loginResponse = await (
-    await playwrightRequest.newContext()
-  ).post(`${apiUrl}/auth/login`, {
-    data: {
-      email,
-      password,
-    },
-  });
-
-  expect(loginResponse.status()).toBe(200);
-  const loginResponseBody = await loginResponse.json();
-  const refreshToken = loginResponseBody.refreshToken;
+  const loginResponse = await authSupport.login(email, password, apiUrl);
 
   const loginContext = await playwrightRequest.newContext({
     extraHTTPHeaders: {
-      Authorization: `Bearer ${loginResponseBody.accessToken}`,
+      Authorization: `Bearer ${loginResponse.accessToken}`,
     },
   });
 
   const refreshResponse = await loginContext.post(`${apiUrl}/auth/refresh`, {
     data: {
-      refreshToken,
+      refreshToken: loginResponse.refreshToken,
     },
   });
 
