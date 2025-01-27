@@ -28,7 +28,7 @@ test.afterAll(async () => {
   await requestContext.dispose();
 });
 
-test('should create car with brand and model', async ({ env }) => {
+test('should create repair with brand, model and car', async ({ env }) => {
   const brandName = `${faker.vehicle.manufacturer()}${faker.number.int({ min: 1, max: 1000 })}`;
 
   const brandResponse = await requestContext.post(`${env.BASE_URL}/brand`, {
@@ -66,4 +66,20 @@ test('should create car with brand and model', async ({ env }) => {
   expect(carResponse.status()).toBe(200);
   const carResponseBody = await carResponse.json();
   expect(carResponseBody.modelId).toBe(modelResponseBody.id);
+
+  const repairResponse = await requestContext.post(`${env.BASE_URL}/repair`, {
+    data: {
+      plannedFinishAt: '2025-01-27',
+      plannedStartAt: '2025-01-27',
+      description: faker.lorem.sentence(10),
+      customerName: faker.person.fullName(),
+      customerPhoneNumber: faker.phone.number({ style: 'national' }),
+      customerEmail: faker.internet.email(),
+      carId: carResponseBody.id,
+    },
+  });
+
+  expect(repairResponse.status()).toBe(200);
+  const repairResponseBody = await repairResponse.json();
+  expect(repairResponseBody.carId).toBe(carResponseBody.id);
 });
