@@ -9,12 +9,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Repair.Commands.CreateRepair;
 
-public class CreateRepairCommandHandler(IUserContext userContext,
-    IUserStore<AppUser> userStore,
-    IMapper mapper,
+public class CreateRepairCommandHandler(IMapper mapper,
     IRepairRepository repairRepository,
-    ICarRepository carRepository,
-    UserManager<AppUser> userManager) : IRequestHandler<CreateRepairCommand, RepairResponse>
+    ICarRepository carRepository) : IRequestHandler<CreateRepairCommand, RepairResponse>
 {
     public async Task<RepairResponse> Handle(CreateRepairCommand request, CancellationToken cancellationToken)
     {

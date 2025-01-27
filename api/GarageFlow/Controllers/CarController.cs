@@ -1,7 +1,7 @@
 ﻿using GarageFlow.Constants;
-using GarageFlow.CQRS.Car.Command.CreateCar;
-using GarageFlow.CQRS.Car.Command.UpdateCar;
-using GarageFlow.CQRS.Car.Query.GetCars;
+using GarageFlow.CQRS.Car.Commands.CreateCar;
+using GarageFlow.CQRS.Car.Commands.UpdateCar;
+using GarageFlow.CQRS.Car.Queries.GetCars;
 using GarageFlow.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +17,7 @@ namespace GarageFlow.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class CarController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
+public class CarController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Creates a new car.

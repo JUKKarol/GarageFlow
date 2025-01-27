@@ -17,7 +17,7 @@ namespace GarageFlow.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class RepairDetailsController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
+public class RepairDetailsController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Creates a new repair detail.

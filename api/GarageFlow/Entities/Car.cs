@@ -1,4 +1,6 @@
-﻿namespace GarageFlow.Entities;
+﻿using GarageFlow.Enums;
+
+namespace GarageFlow.Entities;
 
 public class Car
 {
@@ -6,6 +8,7 @@ public class Car
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public int Engine { get; set; }
+    public FuelType FuelType { get; set; }
     public string RegistrationNumber { get; set; }
     public string Vin { get; set; }
     public int YearOfProduction { get; set; }

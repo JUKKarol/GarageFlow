@@ -1,6 +1,7 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.User.Commands.AssignUserRole;
 using GarageFlow.CQRS.User.Commands.UnAssignUserRole;
+using GarageFlow.CQRS.User.Queries.GetAllUsers;
 using GarageFlow.CQRS.User.Queries.GetFullUserInfo;
 using GarageFlow.Entities;
 using MediatR;
@@ -17,7 +18,7 @@ namespace GarageFlow.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : ControllerBase
+public class AuthController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Assigns a role to a user.
@@ -63,6 +64,21 @@ public class AuthController(IMediator mediator, UserManager<AppUser> userManager
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var query = new GetFullUserInfoQuery { UserId = Guid.Parse(userId) };
+        var result = await mediator.Send(query);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Retrieves all users
+    /// </summary>
+    /// <returns>Id, name and email of all users.</returns>
+    [SwaggerResponse(StatusCodes.Status200OK, "The list of all users has been successfully retrieved")]
+    [SwaggerResponse(StatusCodes.Status401Unauthorized, "The user is not authenticated")]
+    [HttpGet("user")]
+    [Authorize]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        var query = new GetAllUsersQuery();
         var result = await mediator.Send(query);
         return Ok(result);
     }

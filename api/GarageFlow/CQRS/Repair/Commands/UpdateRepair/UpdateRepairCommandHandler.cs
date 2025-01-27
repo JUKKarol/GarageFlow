@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GarageFlow.CQRS.Repair.Commands.UpdateRepair;
 
-public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
+public class UpdateRepairCommandHandler(UserManager<AppUser> userManager,
     IMapper mapper,
     IRepairRepository repairRepository,
     ICarRepository carRepository,
@@ -45,6 +45,8 @@ public class UpdateRepairCommandHander(UserManager<AppUser> userManager,
         }
 
         repair.UpdatedAt = DateTime.UtcNow;
+        repair.PlannedStartAt = existingRepair.PlannedStartAt;
+        repair.PlannedFinishAt = existingRepair.PlannedFinishAt;
 
         if (request.Users != null)
         {

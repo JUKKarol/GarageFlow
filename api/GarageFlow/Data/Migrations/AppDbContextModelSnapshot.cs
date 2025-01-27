@@ -154,6 +154,9 @@ namespace GarageFlow.Migrations
                     b.Property<int>("Engine")
                         .HasColumnType("int");
 
+                    b.Property<int>("FuelType")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ModelId")
                         .HasColumnType("uniqueidentifier");
 

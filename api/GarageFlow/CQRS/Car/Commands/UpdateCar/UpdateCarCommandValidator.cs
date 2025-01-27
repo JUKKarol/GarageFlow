@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace GarageFlow.CQRS.Car.Command.UpdateCar;
+namespace GarageFlow.CQRS.Car.Commands.UpdateCar;
 
 public class UpdateCarCommandValidator : AbstractValidator<UpdateCarCommand>
 {
@@ -11,6 +11,8 @@ public class UpdateCarCommandValidator : AbstractValidator<UpdateCarCommand>
         RuleFor(c => c.Engine)
             .NotEmpty()
             .InclusiveBetween(1, 20000);
+        RuleFor(c => c.FuelType)
+            .IsInEnum();
         RuleFor(c => c.RegistrationNumber)
             .NotEmpty()
             .Length(1, 10);

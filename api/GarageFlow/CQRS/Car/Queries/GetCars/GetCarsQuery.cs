@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Sieve.Models;
 
-namespace GarageFlow.CQRS.Car.Query.GetCars;
+namespace GarageFlow.CQRS.Car.Queries.GetCars;
 
 public class GetCarsQuery : IRequest<RespondListDto<CarResponse>>
 {
