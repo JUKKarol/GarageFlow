@@ -30,6 +30,7 @@ test.afterAll(async () => {
 
 test('should create repair with brand, model and car', async ({ env }) => {
   const brandName = `${faker.vehicle.manufacturer()}${faker.number.int({ min: 1, max: 1000 })}`;
+  const modelName = faker.vehicle.model();
 
   const brandResponse = await requestContext.post(`${env.BASE_URL}/brand`, {
     data: {
@@ -44,13 +45,13 @@ test('should create repair with brand, model and car', async ({ env }) => {
   const modelResponse = await requestContext.post(`${env.BASE_URL}/model`, {
     data: {
       brandId: brandResponseBody.id,
-      name: 'Kutas',
+      name: modelName,
     },
   });
 
   expect(modelResponse.status()).toBe(200);
   const modelResponseBody = await modelResponse.json();
-  expect(modelResponseBody.name).toBe('Kutas');
+  expect(modelResponseBody.name).toBe(modelName);
 
   const carResponse = await requestContext.post(`${env.BASE_URL}/car`, {
     data: {

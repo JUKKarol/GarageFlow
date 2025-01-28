@@ -28,7 +28,7 @@ test.afterAll(async () => {
   await requestContext.dispose();
 });
 
-test('should create car with brand and model', async ({ env }) => {
+test('should add repair details do created repair', async ({ env }) => {
   const brandName = `${faker.vehicle.manufacturer()}${faker.number.int({ min: 1, max: 1000 })}`;
   const modelName = faker.vehicle.model();
 
@@ -67,4 +67,53 @@ test('should create car with brand and model', async ({ env }) => {
   expect(carResponse.status()).toBe(200);
   const carResponseBody = await carResponse.json();
   expect(carResponseBody.modelId).toBe(modelResponseBody.id);
+
+  const repairResponse = await requestContext.post(`${env.BASE_URL}/repair`, {
+    data: {
+      plannedFinishAt: '2025-01-27',
+      plannedStartAt: '2025-01-27',
+      description: faker.lorem.sentence(10),
+      customerName: faker.person.fullName(),
+      customerPhoneNumber: faker.phone.number({ style: 'national' }),
+      customerEmail: faker.internet.email(),
+      carId: carResponseBody.id,
+    },
+  });
+
+  expect(repairResponse.status()).toBe(200);
+  const repairResponseBody = await repairResponse.json();
+  expect(repairResponseBody.carId).toBe(carResponseBody.id);
+
+  const repairDetailsCount = 3;
+  for (let index = 0; index < repairDetailsCount; index++) {
+    const createRepairDetailsResponse = await requestContext.post(
+      `${env.BASE_URL}/repairdetails`,
+      {
+        data: {
+          name: faker.lorem.sentence(10),
+          price: faker.number.int({ min: 100, max: 1000 }),
+          repairId: repairResponseBody.id,
+        },
+      },
+    );
+
+    expect(createRepairDetailsResponse.status()).toBe(200);
+    const createRepairDetailsResponseBody =
+      await createRepairDetailsResponse.json();
+    expect(createRepairDetailsResponseBody.repairId).toBe(
+      repairResponseBody.id,
+    );
+  }
+
+  const getRepairDetailsResponse = await requestContext.get(
+    `${env.BASE_URL}/repairdetails/${repairResponseBody.id}`,
+  );
+
+  expect(getRepairDetailsResponse.status()).toBe(200);
+  const getRepairDetailsResponseBody = await getRepairDetailsResponse.json();
+  expect(Array.isArray(getRepairDetailsResponseBody)).toBe(true);
+  expect(getRepairDetailsResponseBody.length).toBe(repairDetailsCount);
+  getRepairDetailsResponseBody.forEach((detail: { repairId: string }) => {
+    expect(detail.repairId).toBe(repairResponseBody.id);
+  });
 });
