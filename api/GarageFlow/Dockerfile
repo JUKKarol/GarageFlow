@@ -6,6 +6,7 @@ WORKDIR /src
 
 # Copy and restore dependencies
 COPY api/GarageFlow/*.csproj ./api/GarageFlow/
+COPY api/GarageFlow.Tests/*.csproj ./api/GarageFlow.Tests/
 WORKDIR /src/api/GarageFlow
 RUN dotnet restore
 
