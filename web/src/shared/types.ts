@@ -19,8 +19,6 @@ export interface Model {
 
 export interface Appointment {
     id?: string;
-    creadtedAt?: string;
-    updatedAt?: string;
     startedAt?: string;
     finishedAt?: string;
     plannedStartAt: string;
@@ -33,4 +31,11 @@ export interface Appointment {
     carId?: string;
     status?: number;
     users?: string[];
+}
+
+export interface RepairDetails {
+    id: string;
+    repairId: string;
+    name: string;
+    price: number;
 }

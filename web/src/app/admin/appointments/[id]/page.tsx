@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { PenToolIcon as Tools, Wrench } from "lucide-react"
 import { use } from "react"
 import { useRouter } from "next/navigation"
 import { getAppointment } from "@/modules/appointments/services/appointmentsService"
@@ -13,8 +12,8 @@ import { Badge } from "@/components/ui/badge"
 import CustomerCard from "./_cards/customerCard"
 import CarCard from "./_cards/carCard"
 import DetailsCard from "./_cards/detailsCard"
-
-
+import { EditAppointmentDialog } from "./_dialogs/editRepairDailog"
+import RepairUpdateCard from "./_cards/repairDetailsCard"
 
 const token = useAuthStore.getState().token;
 const isAuthenticated = useAuthStore.getState().isAuthenticated;
@@ -87,14 +86,18 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                     </Header>
 
                     <div className="grid gap-6 md:grid-cols-2 mb-6">
-                        <CustomerCard 
-                            customerName={appointment.customerName} 
-                            customerPhoneNumber={appointment.customerPhoneNumber} 
-                            customerEmail={appointment.customerEmail} 
+                        <CustomerCard
+                            customerName={appointment.customerName}
+                            customerPhoneNumber={appointment.customerPhoneNumber}
+                            customerEmail={appointment.customerEmail}
                         />
                         <CarCard />
                     </div>
                     <DetailsCard plannedStartAt={appointment.plannedStartAt} plannedFinishAt={appointment.plannedFinishAt} description={appointment.description} />
+                    <div className="flex justify-end space-x-4">
+                        <EditAppointmentDialog appointment={appointment} />
+                    </div>
+                    <RepairUpdateCard repairId={appointment.id ?? ''} />
                 </div>
 
             ) : (

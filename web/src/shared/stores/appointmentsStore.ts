@@ -8,12 +8,14 @@ interface AppointmentState {
     selectedDate: Date;
     appointments: Appointment[];
     appointment: Appointment | null;
+    editedItem: Appointment | null;
     addAppointment: (appointment: Appointment) => void;
     setNewAppointment: (appointment: Appointment | null) => void;
     setSelectedDate: (date: Date) => void;
     formatDate: (date: Date, formatString?: string) => string;
     setAppointments: (appointments: Appointment[]) => void;
     setAppointment: (appointment: Appointment | null) => void;
+    setEditedItem: (appointment: Appointment | null) => void;
 }
 
 export const useAppointmentStore = create<AppointmentState>((set) => ({
@@ -22,6 +24,7 @@ export const useAppointmentStore = create<AppointmentState>((set) => ({
     selectedDate: new Date(),
     appointments: [],
     appointment: null,
+    editedItem: null,
     addAppointment: (appointment) => set((state) => ({
         appointments: [...state.appointments, appointment]
     })),
@@ -31,4 +34,5 @@ export const useAppointmentStore = create<AppointmentState>((set) => ({
         format(date, formatString),
     setAppointments: (appointments) => set({ appointments }),
     setAppointment: (appointment) => set({ appointment }),
+    setEditedItem: (appointment) => set({ editedItem: appointment })
 }));
