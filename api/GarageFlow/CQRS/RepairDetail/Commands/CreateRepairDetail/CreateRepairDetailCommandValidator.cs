@@ -12,5 +12,8 @@ public class CreateRepairDetailCommandValidator : AbstractValidator<CreateRepair
         RuleFor(c => c.Price)
            .InclusiveBetween(1, 100000000)
            .NotEmpty();
+        RuleFor(c => c.RepairDetailType)
+            .IsInEnum()
+            .NotEmpty();
     }
 }
