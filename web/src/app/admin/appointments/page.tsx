@@ -121,7 +121,7 @@ export default function AppointmentsPage() {
         {weekDays.map((date) => (
           <div
             key={date.toISOString()}
-            className="border p-2 min-h-[100px] rounded-md bg-zinc-800 text-white"
+            className="p-2 min-h-[100px] rounded-md text-white"
           >
             <div className="text-center text-sm font-semibold capitalize">
               {format(date, 'EEEE', { locale: pl })}
@@ -131,21 +131,24 @@ export default function AppointmentsPage() {
             </div>
 
             <div className="mt-2 space-y-1">
-              {appointments
+                {appointments
                 .filter((appointment) => isSameDay(parseISO(appointment.plannedStartAt), date))
                 .map((appointment) => {
                   const status = statuses.find(status => status.id === appointment.status);
 
                   return (
-                    <Link href={`/admin/appointments/${appointment.id}`} key={appointment.id}>
-                      <div
-                        className={`${status?.color} ${status?.hoverColor} ${status?.textColor} p-1 rounded-md transition duration-200`}
-                      >
-                        {appointment.customerName} - {appointment.description}
-                      </div>
-                    </Link>
+                  <Link href={`/admin/appointments/${appointment.id}`} key={appointment.id}>
+                    <div
+                    className={`${status?.color} ${status?.hoverColor} ${status?.textColor} p-1 rounded-md transition duration-200 mb-2`}
+                    >
+                    {appointment.customerName} - {appointment.description}
+                    </div>
+                  </Link>
                   );
                 })}
+                {appointments.filter((appointment) => isSameDay(parseISO(appointment.plannedStartAt), date)).length === 0 && (
+                  <p className='text-center'>Brak wizyt</p>
+                )}
             </div>
           </div>
         ))}
