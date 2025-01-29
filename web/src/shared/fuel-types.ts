@@ -1,4 +1,4 @@
-const FuelTypes = [
+export const FuelTypes = [
     {
         id: 1,
         name: 'Benzyna'

@@ -17,6 +17,16 @@ export interface Model {
     name: string;
 }
 
+export interface Car {
+    id: string;
+    fuelType: number;
+    registrationNumber: string;
+    vin: string;
+    modelId: string;
+    yearOfProduction: number;
+    engine: string;
+}
+
 export interface Appointment {
     id?: string;
     startedAt?: string;
