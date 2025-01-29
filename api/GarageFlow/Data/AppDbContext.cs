@@ -45,12 +45,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             entity.Property(c => c.Engine).IsRequired();
             entity.Property(c => c.Vin).IsRequired();
             entity.Property(c => c.YearOfProduction).IsRequired();
-            entity.Property(c => c.ModelId).IsRequired();
+            entity.Property(c => c.ModelId).IsRequired(false);
 
             entity.HasOne(c => c.Model)
                 .WithMany(m => m.Cars)
                 .HasForeignKey(c => c.ModelId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
             entity.HasMany(c => c.Repairs)
                .WithOne(r => r.Car)
                .HasForeignKey(r => r.CarId)
@@ -66,7 +66,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             entity.HasMany(b => b.Models)
                 .WithOne(m => m.Brand)
                 .HasForeignKey(m => m.BrandId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Model>(entity =>
@@ -78,11 +78,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             entity.HasOne(m => m.Brand)
                 .WithMany(b => b.Models)
                 .HasForeignKey(m => m.BrandId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
             entity.HasMany(m => m.Cars)
                 .WithOne(c => c.Model)
                 .HasForeignKey(c => c.ModelId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<AppConfig>(entity =>

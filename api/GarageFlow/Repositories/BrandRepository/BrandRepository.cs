@@ -60,4 +60,11 @@ public class BrandRepository(AppDbContext db,
             .Where(b => b.Name.ToLower() == brandName.ToLower())
             .ToListAsync(cancellationToken);
     }
+
+    public async Task DeleteBrand(Guid brandId, CancellationToken cancellationToken)
+    {
+        var brand = await db.Brands.FirstOrDefaultAsync(rd => rd.Id == brandId, cancellationToken);
+        db.Brands.Remove(brand);
+        await db.SaveChangesAsync(cancellationToken);
+    }
 }

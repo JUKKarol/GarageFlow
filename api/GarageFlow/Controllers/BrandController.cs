@@ -1,7 +1,9 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.Brands.Commands.CreateBrand;
+using GarageFlow.CQRS.Brands.Commands.DeleteBrand;
 using GarageFlow.CQRS.Brands.Commands.UpdateBrand;
 using GarageFlow.CQRS.Brands.Queries.GetBrands;
+using GarageFlow.CQRS.Model.Commands.DeleteModel;
 using GarageFlow.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -71,5 +73,17 @@ public class BrandController(IMediator mediator) : ControllerBase
 
         var repairs = await mediator.Send(getBrandsQuery);
         return Ok(repairs);
+    }
+
+    /// <summary>
+    /// Deletes brand based on the Id.
+    /// </summary>
+    /// <param name="command"> The command containing the brand Id.</param>
+    /// <returns> No content </returns>
+    [HttpDelete("{Id}")]
+    public async Task<IActionResult> DeleteBrand([FromRoute] DeleteBrandCommand command)
+    {
+        await mediator.Send(command);
+        return NoContent();
     }
 }

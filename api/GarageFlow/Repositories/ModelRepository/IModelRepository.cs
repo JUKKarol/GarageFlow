@@ -16,4 +16,6 @@ public interface IModelRepository
     Task<Model> GetModelById(Guid modelId, CancellationToken cancellationToken);
 
     Task<List<Model>> GetModelsByName(string modelName, CancellationToken cancellationToken);
+
+    Task DeleteModel(Guid modelId, CancellationToken cancellationToken);
 }

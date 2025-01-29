@@ -201,7 +201,8 @@ namespace GarageFlow.Migrations
                         name: "FK_Models_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,10 +213,11 @@ namespace GarageFlow.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Engine = table.Column<int>(type: "int", nullable: false),
+                    FuelType = table.Column<int>(type: "int", nullable: false),
                     RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Vin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     YearOfProduction = table.Column<int>(type: "int", nullable: false),
-                    ModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -224,7 +226,8 @@ namespace GarageFlow.Migrations
                         name: "FK_Cars_Models_ModelId",
                         column: x => x.ModelId,
                         principalTable: "Models",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

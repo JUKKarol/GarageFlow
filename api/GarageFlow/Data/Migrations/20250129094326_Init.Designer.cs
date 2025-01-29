@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageFlow.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250123160559_Init")]
+    [Migration("20250129094326_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -157,7 +157,10 @@ namespace GarageFlow.Migrations
                     b.Property<int>("Engine")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ModelId")
+                    b.Property<int>("FuelType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RegistrationNumber")
@@ -431,8 +434,7 @@ namespace GarageFlow.Migrations
                     b.HasOne("GarageFlow.Entities.Model", "Model")
                         .WithMany("Cars")
                         .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Model");
                 });
@@ -442,7 +444,7 @@ namespace GarageFlow.Migrations
                     b.HasOne("GarageFlow.Entities.Brand", "Brand")
                         .WithMany("Models")
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Brand");
