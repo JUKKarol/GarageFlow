@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace GarageFlow.Controllers;
 
@@ -67,7 +68,10 @@ public class ModelController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="command"> The command containing the model Id.</param>
     /// <returns> No content </returns>
+    [SwaggerResponse(StatusCodes.Status204NoContent, "Model successfully deleted")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpDelete("{Id}")]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> DeleteModels([FromRoute] DeleteModelCommand command)
     {
         await mediator.Send(command);

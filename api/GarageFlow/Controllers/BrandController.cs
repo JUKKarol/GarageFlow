@@ -80,7 +80,10 @@ public class BrandController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="command"> The command containing the brand Id.</param>
     /// <returns> No content </returns>
+    [SwaggerResponse(StatusCodes.Status204NoContent, "Brand successfully deleted")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpDelete("{Id}")]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> DeleteBrand([FromRoute] DeleteBrandCommand command)
     {
         await mediator.Send(command);
