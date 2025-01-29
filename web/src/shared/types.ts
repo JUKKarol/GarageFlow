@@ -35,7 +35,8 @@ export interface Appointment {
 
 export interface RepairDetails {
     id: string;
-    repairId: string;
     name: string;
+    repairId: string;
     price: number;
+    repairDetailType: number;
 }

@@ -7,6 +7,7 @@ interface RepairDetailsState {
     setRepairDetails: (repairDetails: RepairDetails[]) => void;
     addRepairDetail: (repairDetail: RepairDetails) => void;
     removeRepairDetail: (id: string) => void;
+    setSingleRepairDetail: (repairDetail: RepairDetails | null) => void;
 }
 
 export const useRepairDetailsStore = create<RepairDetailsState>((set) => ({
@@ -18,5 +19,6 @@ export const useRepairDetailsStore = create<RepairDetailsState>((set) => ({
     })),
     removeRepairDetail: (id) => set((state) => ({
         repairDetails: state.repairDetails.filter((r) => r.id !== id)
-    }))
+    })),
+    setSingleRepairDetail: (repairDetail) => set({ singleRepairDetail: repairDetail })
 }));
