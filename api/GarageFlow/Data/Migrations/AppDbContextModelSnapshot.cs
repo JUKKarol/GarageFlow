@@ -157,7 +157,7 @@ namespace GarageFlow.Migrations
                     b.Property<int>("FuelType")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ModelId")
+                    b.Property<Guid?>("ModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RegistrationNumber")
@@ -266,6 +266,9 @@ namespace GarageFlow.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RepairDetailType")
                         .HasColumnType("int");
 
                     b.Property<Guid>("RepairId")
@@ -431,8 +434,7 @@ namespace GarageFlow.Migrations
                     b.HasOne("GarageFlow.Entities.Model", "Model")
                         .WithMany("Cars")
                         .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Model");
                 });
@@ -442,7 +444,7 @@ namespace GarageFlow.Migrations
                     b.HasOne("GarageFlow.Entities.Brand", "Brand")
                         .WithMany("Models")
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Brand");

@@ -60,4 +60,11 @@ public class ModelRepository(AppDbContext db,
             .Where(m => m.Name.ToLower() == modelName.ToLower())
             .ToListAsync(cancellationToken);
     }
+
+    public async Task DeleteModel(Guid modelId, CancellationToken cancellationToken)
+    {
+        var model = await db.Models.FirstOrDefaultAsync(rd => rd.Id == modelId, cancellationToken);
+        db.Models.Remove(model);
+        await db.SaveChangesAsync(cancellationToken);
+    }
 }
