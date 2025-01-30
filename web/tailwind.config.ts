@@ -59,11 +59,11 @@ const config: Config = {
     },
   },
   safelist: [
-    "bg-blue-500", "hover:bg-blue-600",
+    "hover:bg-[#895432]",
     "bg-green-500", "hover:bg-green-600",
     "bg-yellow-500", "hover:bg-yellow-600",
     "bg-gray-500", "hover:bg-gray-600",
-    "bg-red-500", "hover:bg-red-600",
+    "bg-red-700", "hover:bg-red-800",
     "text-white", "text-black",
   ],
   plugins: [require("tailwindcss-animate")],

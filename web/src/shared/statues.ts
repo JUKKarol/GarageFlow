@@ -2,8 +2,8 @@ export const statuses = [
     {
         id: 1,
         name: "Zaplanowana",
-        color: "bg-blue-500",
-        hoverColor: "hover:bg-blue-600",
+        color: "bg-primary",
+        hoverColor: "hover:bg-[#895432]",
         textColor: "text-white",
     },
     {
@@ -30,7 +30,7 @@ export const statuses = [
     {
         id: 5,
         name: "Anulowana",
-        color: "bg-red-500",
+        color: "bg-red-700",
         hoverColor: "hover:bg-red-600",
         textColor: "text-white",
     },
