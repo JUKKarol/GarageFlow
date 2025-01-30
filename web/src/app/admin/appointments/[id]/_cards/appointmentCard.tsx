@@ -25,7 +25,7 @@ function AppointmentCardHeader({ title, icon: Icon }: AppointmentCardTitleProps)
 
 export default function AppointmentCard({ title, icon, children }: AppointmentCardProps) {
     return (
-        <Card className="text-white bg-zinc-900">
+        <Card className="text-white bg-foreground border-[#3b3b3b]">
             <AppointmentCardHeader title={title} icon={icon} />
             <CardContent className="space-y-2">
                 {children}

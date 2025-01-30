@@ -14,6 +14,7 @@ import CarCard from "./_cards/carCard"
 import DetailsCard from "./_cards/detailsCard"
 import { EditAppointmentDialog } from "./_dialogs/editRepairDailog"
 import RepairUpdateCard from "./_cards/repairDetailsCard"
+import { statuses } from "@/shared/statues"
 
 const token = useAuthStore.getState().token;
 const isAuthenticated = useAuthStore.getState().isAuthenticated;

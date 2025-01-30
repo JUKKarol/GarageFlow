@@ -22,7 +22,6 @@ import { statuses } from '@/shared/statues';
 import Link from "next/link";
 
 
-
 export default function AppointmentsPage() {
   const token = useAuthStore((state) => state.token);
   const {
@@ -76,14 +75,11 @@ export default function AppointmentsPage() {
     }
   };
 
-
-
   return (
     <MainContainer>
       <Header title="Wizyty" />
 
       <StatusesLegend />
-
 
       <div className="flex items-center justify-between my-4">
         <Button variant="ghost" onClick={handlePreviousWeek}>
@@ -117,43 +113,52 @@ export default function AppointmentsPage() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
+        {/* Time column lines */}
+        <div className="absolute inset-0 grid grid-rows-12 pointer-events-none">
+
+        </div>
+
         {weekDays.map((date) => (
           <div
             key={date.toISOString()}
-            className="p-2 min-h-[100px] rounded-md text-white"
+            className="relative p-2 min-h-[600px] rounded-md text-white border border-[#191919] bg-foreground"
           >
-            <div className="text-center text-sm font-semibold capitalize">
+            <div className="text-center text-sm font-semibold capitalize mb-4 py-2 rounded-t-md">
               {format(date, 'EEEE', { locale: pl })}
-            </div>
-            <div className="text-center text-sm">
-              {format(date, 'dd', { locale: pl })}
+              <div className="text-sm font-normal">
+                {format(date, 'dd', { locale: pl })}
+              </div>
             </div>
 
-            <div className="mt-2 space-y-1">
-                {appointments
+            {/* Hour markers */}
+            <div className="absolute left-0 top-12 bottom-0 w-12 text-xs text-gray-500 pointer-events-none">
+
+            </div>
+
+            <div className="mt-2 space-y-1 relative">
+              {appointments
                 .filter((appointment) => isSameDay(parseISO(appointment.plannedStartAt), date))
                 .map((appointment) => {
                   const status = statuses.find(status => status.id === appointment.status);
 
                   return (
-                  <Link href={`/admin/appointments/${appointment.id}`} key={appointment.id}>
-                    <div
-                    className={`${status?.color} ${status?.hoverColor} ${status?.textColor} p-1 rounded-md transition duration-200 mb-2`}
-                    >
-                    {appointment.customerName} - {appointment.description}
-                    </div>
-                  </Link>
+                    <Link href={`/admin/appointments/${appointment.id}`} key={appointment.id}>
+                      <div
+                        className={`${status?.color} ${status?.hoverColor} ${status?.textColor} p-1 rounded-md transition duration-200 mb-2`}
+                      >
+                        {appointment.customerName} - {appointment.description}
+                      </div>
+                    </Link>
                   );
                 })}
-                {appointments.filter((appointment) => isSameDay(parseISO(appointment.plannedStartAt), date)).length === 0 && (
-                  <p className='text-center'>Brak wizyt</p>
-                )}
+              {appointments.filter((appointment) => isSameDay(parseISO(appointment.plannedStartAt), date)).length === 0 && (
+                <p className='text-center text-gray-500'>Brak wizyt</p>
+              )}
             </div>
           </div>
         ))}
       </div>
-
 
       <CreateAppointmentDialog />
     </MainContainer>

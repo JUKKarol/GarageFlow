@@ -89,7 +89,7 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
                     </SelectContent>
                 </Select>
 
-                <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleAdd}>
+                <Button className="bg-primary" onClick={handleAdd}>
                     <Plus className="mr-2 h-5 w-5" /> Dodaj Model
                 </Button>
             </div>
@@ -99,20 +99,20 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
             ) : error ? (
                 <p className="text-red-500">{error}</p>
             ) : (
-                <div className="overflow-hidden rounded-lg border border-zinc-200">
+                <div className="overflow-hidden rounded-lg border border-[#3b3b3b]">
                     <Table>
                         <TableHeader>
-                            <TableRow className="bg-zinc-950 hover:bg-transparent">
+                            <TableRow className="bg-[#1e1e1e] hover:bg-transparent border-[#3b3b3b]">
                                 <TableHead className="font-semibold text-white py-3">Model</TableHead>
                                 <TableHead className="font-semibold text-white py-3">Akcje</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {models.map((model) => (
-                                <TableRow key={model.id} className="hover:bg-zinc-950">
+                                <TableRow key={model.id} className="hover:bg-[#0b0b0b] border-[#3b3b3b]">
                                     <TableCell>{model.name}</TableCell>
                                     <TableCell>
-                                        <Pencil className="h-5 w-5 cursor-pointer text-blue-600 hover:text-blue-800"
+                                        <Pencil className="h-5 w-5 cursor-pointer text-primary hover:text-[#895432]"
                                             onClick={() => handleEdit(model)} />
                                     </TableCell>
                                 </TableRow>

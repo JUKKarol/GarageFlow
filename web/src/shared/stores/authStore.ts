@@ -44,6 +44,9 @@ const useAuthStore = create<AuthState>()(
           user: null 
         }));
 
+        document.cookie = 'token=; path=/; max-age=0; SameSite=Strict';
+        document.cookie = 'userRoles=; path=/; max-age=0; SameSite=Strict';
+
         if (typeof window !== 'undefined') {
           window.location.href = '/login';
         }

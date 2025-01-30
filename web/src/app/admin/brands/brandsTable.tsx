@@ -13,21 +13,21 @@ export default function BrandsTable({ brands, onEdit }: BrandsTableProps) {
     const [editDialogOpenForId, setEditDialogOpenForId] = useState<string | null>(null);
 
     return (
-        <div className="overflow-hidden rounded-lg border border-zinc-200">
+        <div className="overflow-hidden rounded-lg border border-[#3b3b3b]">
             <Table>
                 <TableHeader>
-                    <TableRow className="bg-zinc-950 hover:bg-transparent">
+                    <TableRow className="bg-[#1e1e1e] hover:bg-transparent border-[#3b3b3b]">
                         <TableHead className="font-semibold text-white py-3">Nazwa</TableHead>
                         <TableHead className="font-semibold text-white py-3">Akcje</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {brands.map((brand) => (
-                        <TableRow key={brand.id} className="hover:bg-zinc-950">
+                        <TableRow key={brand.id} className="hover:bg-[#0b0b0b] border-[#3b3b3b]">
                             <TableCell>{brand.name}</TableCell>
                             <TableCell>
                                 <Pencil
-                                    className="h-5 w-5 cursor-pointer text-blue-600 hover:text-blue-800"
+                                    className="h-5 w-5 cursor-pointer text-primary hover:text-[#895432]"
                                     onClick={() => {
                                         onEdit(brand);
                                         setEditDialogOpenForId(brand.id);

@@ -36,7 +36,7 @@ export default function BrandsPage() {
             <Header title="Marki i modele" />
             <div className="flex justify-end mb-4">
                 <Button
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-primary"
                     onClick={() => setIsDialogOpen(true)}
                 >
                     <Plus className="mr-2 h-5 w-5" /> Dodaj Markę

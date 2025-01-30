@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
@@ -7,8 +8,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import useCarStore from "@/shared/stores/carsStore"
 import { Car } from "@/shared/types"
 import { FuelTypes } from "@/shared/fuel-types"
+import useBrandStore from "@/shared/stores/brandStore"
+import useModelStore from "@/shared/stores/modelStore"
+import { getBrandData } from "@/modules/brands/services/brandService"
+import { getModelData } from "@/modules/models/services/modelService"
+import useAuthStore from "@/shared/stores/authStore"
+import { createCar, updateCar } from "@/modules/cars/services/carService"
+import { useRouter } from "next/navigation"
+
 
 interface CarDialogProps {
+  car?: Car | null
   isOpen: boolean
   onClose: () => void
 }
@@ -23,18 +33,59 @@ const INITIAL_CAR: Omit<Car, 'id'> = {
 }
 
 export function CarDialog({ isOpen, onClose }: CarDialogProps) {
-  const { editedItem, setEditedItem, addCar } = useCarStore()
+  const { editedItem, setEditedItem, cars, setCars } = useCarStore()
   const [error, setError] = useState<string | null>(null)
+  const { brands, setBrands } = useBrandStore()
+  const { models, setModels, brandId, setBrandId } = useModelStore()
+  const token = useAuthStore((state) => state.token)
+  const router = useRouter();
+
+  const fetchModels = async (brandId: string) => {
+    if (!token) return
+
+    try {
+      const data = await getModelData(token, brandId)
+      setModels(data.items)
+      // Reset modelId when brand changes
+      if (editedItem) {
+        setEditedItem({
+          ...editedItem,
+          modelId: ""
+        })
+      }
+    } catch (error) {
+      console.error("Failed to fetch models:", error)
+    }
+  }
+
+  const fetchBrands = async (token: string) => {
+    try {
+      const data = await getBrandData(token)
+      setBrands(data.items)
+    } catch (error) {
+      console.error("Failed to fetch brands:", error)
+    }
+  }
+
+  const handleBrandChange = (brandId: string) => {
+    setBrandId(brandId)
+    fetchModels(brandId)
+  }
 
   useEffect(() => {
     if (!isOpen) {
       setError(null)
     }
-  }, [isOpen])
+    
+
+    if (!brands.length && token) {
+      fetchBrands(token)
+    }
+  }, [isOpen, token, setBrands, brands.length])
 
   const handleSubmit = async () => {
     try {
-      if (!editedItem?.registrationNumber || !editedItem?.engine) {
+      if (!editedItem?.registrationNumber || !editedItem?.engine || !editedItem?.modelId) {
         setError("Wypełnij wszystkie wymagane pola")
         return
       }
@@ -44,12 +95,24 @@ export function CarDialog({ isOpen, onClose }: CarDialogProps) {
         return
       }
 
-      await addCar(editedItem)
+      if (token){
+
+        if (editedItem.id) {
+          await updateCar(token, editedItem)
+          setCars(cars.map((c) => (c.id === editedItem.id ? editedItem : c)))
+        } else {
+
+        const newCar = await createCar(token, editedItem)
+        setCars([...cars, newCar])
+        }
+      }
       onClose()
+
     } catch (error) {
       console.error("Failed to save car:", error)
       setError("Nie udało się zapisać samochodu")
     }
+    router.refresh()
   }
 
   const handleInputChange = (
@@ -60,8 +123,8 @@ export function CarDialog({ isOpen, onClose }: CarDialogProps) {
 
     setEditedItem({
       ...editedItem,
-      [field]: field === 'yearOfProduction' || field === 'fuelType' 
-        ? Number(value) 
+      [field]: field === 'yearOfProduction' || field === 'fuelType'
+        ? Number(value)
         : value
     })
   }
@@ -97,6 +160,44 @@ export function CarDialog({ isOpen, onClose }: CarDialogProps) {
               value={editedItem?.vin ?? ''}
               onChange={(e) => handleInputChange('vin', e.target.value)}
             />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="brand">Marka</Label>
+            <Select
+              value={brandId ?? undefined}
+              onValueChange={handleBrandChange}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Wybierz markę" />
+              </SelectTrigger>
+              <SelectContent>
+                {brands.map((brand) => (
+                  <SelectItem key={brand.id} value={brand.id}>
+                    {brand.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="model">Model</Label>
+            <Select
+              value={editedItem?.modelId ?? ''}
+              onValueChange={(value) => handleInputChange('modelId', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Wybierz model" />
+              </SelectTrigger>
+              <SelectContent>
+                {models.map((model) => (
+                  <SelectItem key={model.id} value={model.id}>
+                    {model.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid gap-2">

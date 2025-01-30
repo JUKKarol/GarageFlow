@@ -28,7 +28,7 @@ export const FuelTypes = [
         name: 'Hybryda'
     },
     {
-        id: 9,
+        id: 8,
         name: 'Wodór'
     },
 ]
