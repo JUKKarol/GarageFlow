@@ -6,9 +6,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import useModelStore from "@/shared/stores/modelStore";
 import useAuthStore from "@/shared/stores/authStore";
-import { getModelData } from "@/modules/models/services/modelService";
+import { getModelData, deleteModel } from "@/modules/models/services/modelService";
 import { Model } from "@/shared/types";
-import { Pencil, Plus } from "lucide-react";
+import { Pencil, Plus, Trash } from "lucide-react";
 import ModelsDialog from "./modelsDialog";
 
 interface ModelsTableProps {
@@ -18,6 +18,7 @@ interface ModelsTableProps {
 export default function ModelsTable({ brands }: ModelsTableProps) {
     const { models, setModels, brandId, setBrandId } = useModelStore();
     const token = useAuthStore((state) => state.token);
+    const user = useAuthStore((state) => state.user);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedModel, setSelectedModel] = useState<Model | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +63,17 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
         setIsDialogOpen(true);
     };
 
+    const deleteModelHandler = async (id: string) => {
+        if (!token) return;
+
+        try {
+            await deleteModel(token, id);
+            setModels(models.filter((m) => m.id !== id));
+        } catch (err) {
+            console.error("Failed to delete model:", err);
+        }
+    }
+
     const handleSave = (model: Model) => {
         if (selectedModel) {
             setModels(models.map(m => m.id === model.id ? model : m));
@@ -104,16 +116,22 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
                         <TableHeader>
                             <TableRow className="bg-[#1e1e1e] hover:bg-transparent border-[#3b3b3b]">
                                 <TableHead className="font-semibold text-white py-3">Model</TableHead>
-                                <TableHead className="font-semibold text-white py-3">Akcje</TableHead>
+                                <TableHead className="flex justify-end font-semibold text-white py-3">Akcje</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {models.map((model) => (
                                 <TableRow key={model.id} className="hover:bg-[#0b0b0b] border-[#3b3b3b]">
                                     <TableCell>{model.name}</TableCell>
-                                    <TableCell>
+                                    <TableCell className="flex justify-end space-x-2">
                                         <Pencil className="h-5 w-5 cursor-pointer text-primary hover:text-[#895432]"
                                             onClick={() => handleEdit(model)} />
+                                        {user?.roles.includes("Admin") && (
+                                            <Trash
+                                                className="h-5 w-5 cursor-pointer text-red-500 hover:text-red-700"
+                                                onClick={() => deleteModelHandler(model.id)}
+                                            />
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}

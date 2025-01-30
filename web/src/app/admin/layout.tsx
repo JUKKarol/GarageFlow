@@ -1,16 +1,20 @@
 'use client'
-import { Car, Wrench, Users, House, ClipboardList, Landmark, UserRoundCog, LogOut } from "lucide-react";
+
+import { Car, Wrench, Users, House, ClipboardList, Landmark, UserRoundCog, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link";
-import UserCard from "../_components/dashboard/userCard";
-import { usePathname } from "next/navigation";
-import useAuthStore from "@/shared/stores/authStore";
+import Link from "next/link"
+import UserCard from "../_components/dashboard/userCard"
+import { usePathname } from "next/navigation"
+import useAuthStore from "@/shared/stores/authStore"
 
 export default function Layout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    // Move all Hooks to the top
+    const { user, logout } = useAuthStore()
+    const pathname = usePathname()
 
     const navItems = [
         { id: 1, name: "Dashboard", icon: House, href: "/admin/dashboard" },
@@ -22,13 +26,9 @@ export default function Layout({
         { id: 7, name: "Ustawienia", icon: UserRoundCog, href: "/admin/settings" },
     ]
 
-    const { user, logout } = useAuthStore(); 
-
     if (!user) {
-      return null;
+        return null
     }
-
-    const pathname = usePathname();
 
     return (
         <div className={`flex min-h-screen bg-background`}>
@@ -65,5 +65,5 @@ export default function Layout({
                 {children}
             </main>
         </div>
-    );
+    )
 }
