@@ -12,6 +12,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public DbSet<Repair> Repairs { get; set; }
     public DbSet<AppConfig> AppConfig { get; set; }
     public DbSet<RepairDetail> RepairDetails { get; set; }
+    public DbSet<RepairHistory> RepairHistory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,6 +28,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             entity.HasMany(r => r.Users)
                .WithMany(e => e.Repairs);
             entity.HasMany(r => r.RepairDetails)
+               .WithOne(rd => rd.Repair)
+               .HasForeignKey(m => m.RepairId)
+                .OnDelete(DeleteBehavior.NoAction);
+            entity.HasMany(r => r.RepairHistory)
                .WithOne(rd => rd.Repair)
                .HasForeignKey(m => m.RepairId)
                 .OnDelete(DeleteBehavior.NoAction);
@@ -93,13 +98,26 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
         modelBuilder.Entity<RepairDetail>(entity =>
         {
-            entity.HasKey(m => m.Id);
+            entity.HasKey(rd => rd.Id);
 
-            entity.Property(m => m.Name).IsRequired();
-            entity.Property(m => m.Price).IsRequired();
+            entity.Property(rd => rd.Name).IsRequired();
+            entity.Property(rd => rd.Price).IsRequired();
 
             entity.HasOne(rd => rd.Repair)
                 .WithMany(r => r.RepairDetails)
+                .HasForeignKey(rd => rd.RepairId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        modelBuilder.Entity<RepairHistory>(entity =>
+        {
+            entity.HasKey(rh => rh.Id);
+
+            entity.Property(rh => rh.Status).IsRequired();
+            entity.Property(rh => rh.RepairId).IsRequired();
+
+            entity.HasOne(rd => rd.Repair)
+                .WithMany(r => r.RepairHistory)
                 .HasForeignKey(m => m.RepairId)
                 .OnDelete(DeleteBehavior.NoAction);
         });

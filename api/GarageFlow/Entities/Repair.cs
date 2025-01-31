@@ -19,6 +19,7 @@ public class Repair
     public Guid? CarId { get; set; }
 
     public List<RepairDetail> RepairDetails { get; set; }
+    public List<RepairHistory> RepairHistory { get; set; }
     public Car Car { get; set; }
     public List<AppUser> Users { get; set; }
 }
