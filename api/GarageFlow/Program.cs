@@ -10,6 +10,7 @@ using GarageFlow.Repositories.BrandRepository;
 using GarageFlow.Repositories.CarRepository;
 using GarageFlow.Repositories.ModelRepository;
 using GarageFlow.Repositories.RepairDetailRepository;
+using GarageFlow.Repositories.RepairHistoryRepository;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services;
 using GarageFlow.Services.NotificationService;
@@ -97,6 +98,7 @@ builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IModelRepository, ModelRepository>();
 builder.Services.AddScoped<IRepairDetailRepository, RepairDetailRepository>();
+builder.Services.AddScoped<IRepairHistoryRepository, RepairHistoryRepository>();
 
 builder.Services.AddScoped<INotificationService, NotificationService>();
 

@@ -53,9 +53,5 @@ public class SieveConfigurationForRepair : ISieveConfiguration
         mapper.Property<Repair>(r => r.CarId)
             .CanFilter()
             .CanSort();
-
-        mapper.Property<Repair>(r => r.Status)
-            .CanFilter()
-            .CanSort();
     }
 }

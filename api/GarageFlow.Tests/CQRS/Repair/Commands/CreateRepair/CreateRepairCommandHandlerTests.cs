@@ -3,6 +3,7 @@ using GarageFlow.CQRS.Repair;
 using GarageFlow.CQRS.Repair.Commands.CreateRepair;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.CarRepository;
+using GarageFlow.Repositories.RepairHistoryRepository;
 using GarageFlow.Repositories.RepairRepository;
 using Moq;
 using System;
@@ -17,6 +18,7 @@ public class CreateRepairCommandHandlerTests
     private readonly Mock<IMapper> _mapperMock;
     private readonly Mock<IRepairRepository> _repairRepositoryMock;
     private readonly Mock<ICarRepository> _carRepositoryMock;
+    private readonly Mock<IRepairHistoryRepository> _repairHistoryRepositoryMock;
     private readonly CreateRepairCommandHandler _handler;
 
     public CreateRepairCommandHandlerTests()
@@ -24,7 +26,7 @@ public class CreateRepairCommandHandlerTests
         _mapperMock = new Mock<IMapper>();
         _repairRepositoryMock = new Mock<IRepairRepository>();
         _carRepositoryMock = new Mock<ICarRepository>();
-        _handler = new CreateRepairCommandHandler(_mapperMock.Object, _repairRepositoryMock.Object, _carRepositoryMock.Object);
+        _handler = new CreateRepairCommandHandler(_mapperMock.Object, _repairRepositoryMock.Object, _carRepositoryMock.Object, _repairHistoryRepositoryMock.Object);
     }
 
     [Fact]

@@ -53,9 +53,4 @@ public class RepairRepository(AppDbContext db,
     {
         return await db.Repairs.AsNoTracking().FirstOrDefaultAsync(r => r.Id == repairId, cancellationToken);
     }
-
-    public async Task<List<Repair>> GetRepairsByStatus(RepairStatus repairStatus, CancellationToken cancellationToken)
-    {
-        return await db.Repairs.AsNoTracking().Where(r => r.Status == repairStatus).ToListAsync(cancellationToken);
-    }
 }

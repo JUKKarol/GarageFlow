@@ -3,6 +3,7 @@ using GarageFlow.CQRS.User;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.CarRepository;
+using GarageFlow.Repositories.RepairHistoryRepository;
 using GarageFlow.Repositories.RepairRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,8 @@ namespace GarageFlow.CQRS.Repair.Commands.CreateRepair;
 
 public class CreateRepairCommandHandler(IMapper mapper,
     IRepairRepository repairRepository,
-    ICarRepository carRepository) : IRequestHandler<CreateRepairCommand, RepairResponse>
+    ICarRepository carRepository,
+    IRepairHistoryRepository repairHistoryRepository) : IRequestHandler<CreateRepairCommand, RepairResponse>
 {
     public async Task<RepairResponse> Handle(CreateRepairCommand request, CancellationToken cancellationToken)
     {
@@ -42,6 +44,14 @@ public class CreateRepairCommandHandler(IMapper mapper,
         //repair.Users.Add(user);
 
         await repairRepository.CreateRepair(repair, cancellationToken);
+
+        var repairHistory = new GarageFlow.Entities.RepairHistory
+        {
+            RepairId = repair.Id,
+            Status = Enums.RepairStatus.Waiting,
+        };
+
+        await repairHistoryRepository.CreateRepairHistory(repairHistory, cancellationToken);
 
         var repairDto = mapper.Map<RepairResponse>(repair);
 

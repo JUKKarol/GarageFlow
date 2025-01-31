@@ -2,6 +2,7 @@
 using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.CarRepository;
+using GarageFlow.Repositories.RepairHistoryRepository;
 using GarageFlow.Repositories.RepairRepository;
 using GarageFlow.Services.NotificationService;
 using MediatR;
@@ -13,6 +14,7 @@ public class UpdateRepairCommandHandler(UserManager<AppUser> userManager,
     IMapper mapper,
     IRepairRepository repairRepository,
     ICarRepository carRepository,
+    IRepairHistoryRepository repairHistoryRepository,
     INotificationService notificationService) : IRequestHandler<UpdateRepairCommand, RepairResponse>
 {
     public async Task<RepairResponse> Handle(UpdateRepairCommand request, CancellationToken cancellationToken)
@@ -63,9 +65,19 @@ public class UpdateRepairCommandHandler(UserManager<AppUser> userManager,
 
         await repairRepository.UpdateRepair(repair, cancellationToken);
 
-        if (existingRepair.Status != request.Status)
+        var repairHistoryToCreate = new GarageFlow.Entities.RepairHistory
         {
-            await notificationService.SendChangeRepairStatusEmail(existingRepair.CustomerEmail, existingRepair.Status);
+            RepairId = repair.Id,
+            Status = request.Status,
+        };
+
+        var currentRepairHistory = await repairHistoryRepository.GetCurrentRepairHistoryByRepairId(repair.Id, cancellationToken);
+
+        await repairHistoryRepository.CreateRepairHistory(repairHistoryToCreate, cancellationToken);
+
+        if (currentRepairHistory.Status != request.Status)
+        {
+            await notificationService.SendChangeRepairStatusEmail(existingRepair.CustomerEmail, repairHistoryToCreate.Status);
         }
 
         var repairDto = mapper.Map<RepairResponse>(repair);

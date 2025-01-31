@@ -15,6 +15,4 @@ public interface IRepairRepository
     Task<int> GetRepairsCount(SieveModel query, CancellationToken cancellationToken);
 
     Task<Repair> GetRepairById(Guid repairId, CancellationToken cancellationToken);
-
-    Task<List<Repair>> GetRepairsByStatus(RepairStatus repairStatus, CancellationToken cancellationToken);
 }

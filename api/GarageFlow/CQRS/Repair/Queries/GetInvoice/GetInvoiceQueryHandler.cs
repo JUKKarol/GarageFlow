@@ -3,6 +3,7 @@ using GarageFlow.CQRS.RepairDetail;
 using GarageFlow.Enums;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.RepairDetailRepository;
+using GarageFlow.Repositories.RepairHistoryRepository;
 using GarageFlow.Repositories.RepairRepository;
 using MediatR;
 
@@ -10,7 +11,8 @@ namespace GarageFlow.CQRS.Repair.Queries.GetInvoice;
 
 public class GetInvoiceQueryHandler(IMapper mapper,
     IRepairRepository repairRepository,
-    IRepairDetailRepository repairDetailRepository) : IRequestHandler<GetInvoiceQuery, InvoiceResponse>
+    IRepairDetailRepository repairDetailRepository,
+    IRepairHistoryRepository repairHistoryRepository) : IRequestHandler<GetInvoiceQuery, InvoiceResponse>
 {
     public async Task<InvoiceResponse> Handle(GetInvoiceQuery request, CancellationToken cancellationToken)
     {
@@ -21,9 +23,11 @@ public class GetInvoiceQueryHandler(IMapper mapper,
             throw new NotFoundException(nameof(Repair), request.RepairId.ToString());
         }
 
-        if (repair.Status != RepairStatus.Done)
+        var repairStatus = await repairHistoryRepository.GetCurrentRepairHistoryByRepairId(repair.Id, cancellationToken);
+
+        if (repairStatus.Status != RepairStatus.Done)
         {
-            throw new BadRequestException($"Repair {repair.Id} should be Done instead of {repair.Status}");
+            throw new BadRequestException($"Repair {repair.Id} should be Done instead of {repairStatus.Status}");
         }
 
         var invoice = mapper.Map<InvoiceResponse>(repair);
