@@ -85,12 +85,13 @@ test('should add repair details do created repair', async ({ env }) => {
   expect(repairResponseBody.carId).toBe(carResponseBody.id);
 
   const repairDetailsCount = 3;
-  for (let index = 0; index < repairDetailsCount; index++) {
+  for (let i = 0; i < repairDetailsCount; i++) {
     const createRepairDetailsResponse = await requestContext.post(
       `${env.BASE_URL}/repairdetails`,
       {
         data: {
           name: faker.lorem.sentence(10),
+          repairDetailType: 1,
           price: faker.number.int({ min: 100, max: 1000 }),
           repairId: repairResponseBody.id,
         },
