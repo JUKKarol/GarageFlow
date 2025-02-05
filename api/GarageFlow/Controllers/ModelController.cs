@@ -26,7 +26,7 @@ public class ModelController(IMediator mediator) : ControllerBase
     /// <param name="command">The command containing the model details.</param>
     /// <returns>The created model.</returns>
     [HttpPost]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> CreateModel(CreateModelCommand command)
     {
         var model = await mediator.Send(command);
@@ -39,7 +39,7 @@ public class ModelController(IMediator mediator) : ControllerBase
     /// <param name="command">The command containing the updated model details.</param>
     /// <returns>The updated model.</returns>
     [HttpPatch]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> UpdateModel(UpdateModelCommand command)
     {
         var model = await mediator.Send(command);
@@ -52,6 +52,7 @@ public class ModelController(IMediator mediator) : ControllerBase
     /// <param name="query">The query parameters for filtering and sorting models.</param>
     /// <returns>A list of models.</returns>
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> GetModels([FromQuery] SieveModel query)
     {
         GetModelsQuery getModelsQuery = new GetModelsQuery

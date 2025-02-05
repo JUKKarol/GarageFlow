@@ -25,6 +25,7 @@ public class RepairHistoryController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "The list of repair history has been successfully retrieved")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpGet("{RepairId}")]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> GetRepairHistory([FromRoute] GetRepairHistoryByRepairIdQuery query)
     {
         var cars = await mediator.Send(query);

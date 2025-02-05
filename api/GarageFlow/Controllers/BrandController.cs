@@ -31,7 +31,7 @@ public class BrandController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status409Conflict, "The brand name has been already exists")]
     [HttpPost]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> CreateBrand(CreateBrandCommand command)
     {
         var brand = await mediator.Send(command);
@@ -48,7 +48,7 @@ public class BrandController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "The brand was not found")]
     [HttpPatch]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> UpdateBrand(UpdateBrandCommand command)
     {
         var brand = await mediator.Send(command);
@@ -64,6 +64,7 @@ public class BrandController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "The list of brands has been successfully retrieved")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> GetBrands([FromQuery] SieveModel query)
     {
         GetBrandsQuery getBrandsQuery = new GetBrandsQuery

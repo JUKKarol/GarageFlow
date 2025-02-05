@@ -75,7 +75,7 @@ public class AuthController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "The list of all users has been successfully retrieved")]
     [SwaggerResponse(StatusCodes.Status401Unauthorized, "The user is not authenticated")]
     [HttpGet("user")]
-    [Authorize]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> GetAllUsers()
     {
         var query = new GetAllUsersQuery();

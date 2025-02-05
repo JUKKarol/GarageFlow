@@ -28,7 +28,7 @@ public class CarController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status409Conflict, "The car already exists")]
     [HttpPost]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> CreateCar(CreateCarCommand command)
     {
         var car = await mediator.Send(command);
@@ -44,7 +44,7 @@ public class CarController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "The car was not found")]
     [HttpPatch]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
     {
         var car = await mediator.Send(command);
@@ -59,6 +59,7 @@ public class CarController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "The list of cars has been successfully retrieved")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> GetCars([FromQuery] SieveModel query)
     {
         GetCarsQuery getCarsQuery = new GetCarsQuery

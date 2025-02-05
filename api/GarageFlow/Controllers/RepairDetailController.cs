@@ -28,7 +28,7 @@ public class RepairDetailsController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status409Conflict, "The repair detail already exists")]
     [HttpPost]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> CreateRepairDetail(CreateRepairDetailCommand command)
     {
         var repairDetail = await mediator.Send(command);
@@ -44,7 +44,7 @@ public class RepairDetailsController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "The repair detail was not found")]
     [HttpPatch]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> UpdateRepairDetail(UpdateRepairDetailCommand command)
     {
         var repairDetail = await mediator.Send(command);
@@ -59,7 +59,7 @@ public class RepairDetailsController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "The list of repair details has been successfully retrieved")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpGet("{RepairId}")]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> GetRepairDetailsByRepairId([FromRoute] GetRepairDetailsByRepairIdQuery query)
     {
         var repairDetails = await mediator.Send(query);
@@ -74,7 +74,7 @@ public class RepairDetailsController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status204NoContent, "The repair detail has been successfully deleted")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "The repair detail was not found")]
     [HttpDelete("{Id}")]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> DeleteRepairDetailById([FromRoute] DeleteRepairDetailByIdCommand query)
     {
         await mediator.Send(query);

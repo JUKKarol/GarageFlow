@@ -28,7 +28,7 @@ public class RepairController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status409Conflict, "The repair already exists")]
     [HttpPost]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> CreateRepair(CreateRepairCommand command)
     {
         var repair = await mediator.Send(command);
@@ -44,7 +44,7 @@ public class RepairController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "The repair was not found")]
     [HttpPost("Invoice")]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> PrintInvoice(GetInvoiceQuery query)
     {
         var invoice = await mediator.Send(query);
@@ -60,7 +60,7 @@ public class RepairController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "The repair was not found")]
     [HttpPatch]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> UpdateRepair(UpdateRepairCommand command)
     {
         var repair = await mediator.Send(command);
@@ -76,7 +76,7 @@ public class RepairController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "The repair was not found")]
     [HttpGet("{Id}")]
-    [Authorize(Roles = UserRoles.Employee)]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> GetRepairById([FromRoute] GetRepairByIdQuery query)
     {
         var repair = await mediator.Send(query);
@@ -91,6 +91,7 @@ public class RepairController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "The list of repairs has been successfully retrieved")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
     public async Task<IActionResult> GetRepairs([FromQuery] SieveModel query)
     {
         GetRepairsQuery getRepairsQuery = new GetRepairsQuery
