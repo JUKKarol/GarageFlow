@@ -53,4 +53,13 @@ public class RepairRepository(AppDbContext db,
     {
         return await db.Repairs.AsNoTracking().FirstOrDefaultAsync(r => r.Id == repairId, cancellationToken);
     }
+
+    public async Task<Repair> GetNewestRepairByCarId(Guid id, CancellationToken cancellationToken)
+    {
+        return await db.Repairs
+            .AsNoTracking()
+            .Where(r => r.Car.Id == id)
+            .OrderByDescending(r => r.UpdatedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
 }
