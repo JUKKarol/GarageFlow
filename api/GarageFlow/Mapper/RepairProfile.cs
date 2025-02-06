@@ -14,6 +14,7 @@ public class RepairProfile : Profile
         CreateMap<UpdateRepairCommand, Repair>()
             .ForMember(dest => dest.Users, opt => opt.Ignore());
         CreateMap<RepairResponse, Repair>().ReverseMap();
+        CreateMap<RepairWithDetailsResponse, Repair>().ReverseMap();
         CreateMap<InvoiceResponse, Repair>().ReverseMap();
     }
 }

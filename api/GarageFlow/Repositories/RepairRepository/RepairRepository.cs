@@ -62,4 +62,9 @@ public class RepairRepository(AppDbContext db,
             .OrderByDescending(r => r.UpdatedAt)
             .FirstOrDefaultAsync(cancellationToken);
     }
+
+    public async Task<List<Repair>> GetRepairsByCarId(Guid carId, CancellationToken cancellationToken)
+    {
+        return await db.Repairs.AsNoTracking().Where(r => r.CarId == carId).Include(r => r.RepairDetails).ToListAsync(cancellationToken);
+    }
 }

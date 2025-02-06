@@ -1,4 +1,5 @@
-﻿using GarageFlow.CQRS.Car.Queries.GetCurrentCarRepairHistoryByVin;
+﻿using GarageFlow.CQRS.Car.Queries.GetCarRepairsByVin;
+using GarageFlow.CQRS.Car.Queries.GetCurrentCarRepairHistoryByVin;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -21,8 +22,24 @@ public class CustomerController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "The list of brands has been successfully retrieved")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Car does not exists")]
-    [HttpGet("{Vin}")]
+    [HttpGet("history/{Vin}")]
     public async Task<IActionResult> GetStatusByVin([FromRoute] GetCurrentCarRepairHistoryByVinQuery query)
+    {
+        var repairHistories = await mediator.Send(query);
+        return Ok(repairHistories);
+    }
+
+    /// <summary>
+    /// Get car repairs by vin.
+    /// </summary>
+    /// <remarks>
+    /// Endpoint for getting car repairs by vin.
+    /// </remarks>
+    [SwaggerResponse(StatusCodes.Status200OK, "The list of brands has been successfully retrieved")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Car does not exists")]
+    [HttpGet("repair/{Vin}")]
+    public async Task<IActionResult> GetRepairsByVin([FromRoute] GetCarRepairsByVinQuery query)
     {
         var repairHistories = await mediator.Send(query);
         return Ok(repairHistories);

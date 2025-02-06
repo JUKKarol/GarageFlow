@@ -17,4 +17,6 @@ public interface IRepairRepository
     Task<Repair> GetRepairById(Guid repairId, CancellationToken cancellationToken);
 
     Task<Repair> GetNewestRepairByCarId(Guid id, CancellationToken cancellationToken);
+
+    Task<List<Repair>> GetRepairsByCarId(Guid carId, CancellationToken cancellationToken);
 }
