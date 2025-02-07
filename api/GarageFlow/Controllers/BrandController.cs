@@ -2,6 +2,7 @@
 using GarageFlow.CQRS.Brands.Commands.CreateBrand;
 using GarageFlow.CQRS.Brands.Commands.DeleteBrand;
 using GarageFlow.CQRS.Brands.Commands.UpdateBrand;
+using GarageFlow.CQRS.Brands.Queries.GetBrandById;
 using GarageFlow.CQRS.Brands.Queries.GetBrands;
 using GarageFlow.CQRS.Model.Commands.DeleteModel;
 using GarageFlow.Entities;
@@ -74,6 +75,23 @@ public class BrandController(IMediator mediator) : ControllerBase
 
         var repairs = await mediator.Send(getBrandsQuery);
         return Ok(repairs);
+    }
+
+    /// <summary>
+    /// Get brand by Id
+    /// </summary>
+    /// <remarks>
+    /// Endpoint for retrieving a brand by Id.
+    /// </remarks>
+    [SwaggerResponse(StatusCodes.Status200OK, "The brand has been successfully retrieved")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "The brand with specified Id not found")]
+    [HttpGet("{Id}")]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
+    public async Task<IActionResult> GetBrandById([FromRoute] GetBrandByIdQuery query)
+    {
+        var repair = await mediator.Send(query);
+        return Ok(repair);
     }
 
     /// <summary>
