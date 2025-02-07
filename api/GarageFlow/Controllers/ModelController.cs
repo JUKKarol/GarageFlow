@@ -2,6 +2,7 @@
 using GarageFlow.CQRS.Model.Commands.CreateModel;
 using GarageFlow.CQRS.Model.Commands.DeleteModel;
 using GarageFlow.CQRS.Model.Commands.UpdateModel;
+using GarageFlow.CQRS.Model.Queries.GetModelById;
 using GarageFlow.CQRS.Model.Queries.GetModels;
 using GarageFlow.Entities;
 using MediatR;
@@ -61,6 +62,18 @@ public class ModelController(IMediator mediator) : ControllerBase
         };
 
         var models = await mediator.Send(getModelsQuery);
+        return Ok(models);
+    }
+
+    /// <summary>
+    /// Retrieves a models by Id.
+    /// </summary>
+    /// <returns>A model by Id.</returns>
+    [HttpGet("{Id}")]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
+    public async Task<IActionResult> GetModelById([FromRoute] GetModelByIdQuery query)
+    {
+        var models = await mediator.Send(query);
         return Ok(models);
     }
 
