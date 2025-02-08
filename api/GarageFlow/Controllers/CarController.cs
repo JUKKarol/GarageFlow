@@ -1,11 +1,10 @@
 ﻿using GarageFlow.Constants;
 using GarageFlow.CQRS.Car.Commands.CreateCar;
 using GarageFlow.CQRS.Car.Commands.UpdateCar;
+using GarageFlow.CQRS.Car.Queries.GetCarById;
 using GarageFlow.CQRS.Car.Queries.GetCars;
-using GarageFlow.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
 using Swashbuckle.AspNetCore.Annotations;
@@ -49,6 +48,23 @@ public class CarController(IMediator mediator) : ControllerBase
     {
         var car = await mediator.Send(command);
         return Ok(car);
+    }
+
+    /// <summary>
+    /// Get car by Id
+    /// </summary>
+    /// <remarks>
+    /// Endpoint for retrieving a car by Id.
+    /// </remarks>
+    [SwaggerResponse(StatusCodes.Status200OK, "The car has been successfully retrieved")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "The request query contains validation errors")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "The car with specified Id not found")]
+    [HttpGet("{Id}")]
+    [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.Employee}")]
+    public async Task<IActionResult> GetCarById([FromRoute] GetCarByIdQuery query)
+    {
+        var repair = await mediator.Send(query);
+        return Ok(repair);
     }
 
     /// <summary>
