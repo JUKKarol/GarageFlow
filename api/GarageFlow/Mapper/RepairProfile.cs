@@ -13,7 +13,8 @@ public class RepairProfile : Profile
         CreateMap<CreateRepairCommand, Repair>().ReverseMap();
         CreateMap<UpdateRepairCommand, Repair>()
             .ForMember(dest => dest.Users, opt => opt.Ignore());
-        CreateMap<RepairResponse, Repair>().ReverseMap();
+        CreateMap<Repair, RepairResponse>()
+            .ForMember(dest => dest.RepairHistory, opt => opt.Ignore());
         CreateMap<RepairWithDetailsResponse, Repair>().ReverseMap();
         CreateMap<InvoiceResponse, Repair>().ReverseMap();
     }

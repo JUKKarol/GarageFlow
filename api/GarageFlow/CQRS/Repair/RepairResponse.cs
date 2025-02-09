@@ -1,4 +1,5 @@
-﻿using GarageFlow.Enums;
+﻿using GarageFlow.CQRS.RepairHistory;
+using GarageFlow.Enums;
 
 namespace GarageFlow.CQRS.Repair;
 
@@ -15,6 +16,7 @@ public class RepairResponse
     public string CustomerName { get; set; }
     public string CustomerPhoneNumber { get; set; }
     public string CustomerEmail { get; set; }
+    public RepairHistoryResponse RepairHistory { get; set; }
 
     public Guid? CarId { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GarageFlow.CQRS.RepairHistory;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
 using GarageFlow.Repositories.CarRepository;
@@ -81,6 +82,8 @@ public class UpdateRepairCommandHandler(UserManager<AppUser> userManager,
         }
 
         var repairDto = mapper.Map<RepairResponse>(repair);
+        repairDto.RepairHistory = mapper.Map<RepairHistoryResponse>(repairHistoryToCreate);
+
         return repairDto;
     }
 }

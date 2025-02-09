@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GarageFlow.CQRS.RepairHistory;
 using GarageFlow.CQRS.User;
 using GarageFlow.Entities;
 using GarageFlow.Middlewares.Exceptions;
@@ -54,6 +55,7 @@ public class CreateRepairCommandHandler(IMapper mapper,
         await repairHistoryRepository.CreateRepairHistory(repairHistory, cancellationToken);
 
         var repairDto = mapper.Map<RepairResponse>(repair);
+        repairDto.RepairHistory = mapper.Map<RepairHistoryResponse>(repairHistory);
 
         return repairDto;
     }
