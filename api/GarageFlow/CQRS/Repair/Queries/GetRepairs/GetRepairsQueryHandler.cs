@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GarageFlow.CQRS.RepairHistory;
 using GarageFlow.Repositories.RepairRepository;
 using MediatR;
 

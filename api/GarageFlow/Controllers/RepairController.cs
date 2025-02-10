@@ -19,10 +19,10 @@ namespace GarageFlow.Controllers;
 public class RepairController(IMediator mediator) : ControllerBase
 {
     /// <summary>
-    /// Registers a new user
+    /// Creates a new repair.
     /// </summary>
     /// <remarks>
-    /// Endpoint for registering a new user in the system
+    /// Endpoint for creating a new repair.
     /// </remarks>
     [SwaggerResponse(StatusCodes.Status200OK, "The repair has been successfully created")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "The request body contains validation errors")]

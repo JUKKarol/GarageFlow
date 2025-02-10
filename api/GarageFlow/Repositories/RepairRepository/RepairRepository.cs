@@ -28,6 +28,7 @@ public class RepairRepository(AppDbContext db,
     {
         var repairs = db
             .Repairs
+            .Include(r => r.RepairHistory)
             .AsNoTracking()
             .AsQueryable();
 
