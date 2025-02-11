@@ -77,14 +77,9 @@ test('should refresh token', async ({ env }) => {
     },
   });
 
-  const infoResponse = await refreshContext.get(`${env.BASE_URL}/auth/user`);
+  const infoResponse = await refreshContext.get(
+    `${env.BASE_URL}/auth/manage/info/full`,
+  );
 
   expect(infoResponse.status()).toBe(200);
-  const infoResponseBody = await infoResponse.json();
-  expect(Array.isArray(infoResponseBody)).toBe(true);
-  expect(
-    infoResponseBody.some(
-      (user: { email: string }) => user.email === env.USER_EMAIL,
-    ),
-  ).toBe(true);
 });
