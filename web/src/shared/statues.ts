@@ -31,7 +31,7 @@ export const statuses = [
         id: 5,
         name: "Anulowana",
         color: "bg-red-700",
-        hoverColor: "hover:bg-red-600",
+        hoverColor: "hover:bg-red-800",
         textColor: "text-white",
     },
 ]

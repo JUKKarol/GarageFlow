@@ -15,6 +15,7 @@ import DetailsCard from "./_cards/detailsCard"
 import { EditAppointmentDialog } from "./_dialogs/editRepairDailog"
 import RepairUpdateCard from "./_cards/repairDetailsCard"
 import { statuses } from "@/shared/statues"
+import ChangeStatusDialog from "./_dialogs/changeStatusDialog"
 
 const token = useAuthStore.getState().token;
 const isAuthenticated = useAuthStore.getState().isAuthenticated;
@@ -47,7 +48,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
 
     useEffect(() => {
         const fetchAppointment = async () => {
-            // Check both token and isAuthenticated
+
             if (!token || !isAuthenticated) {
                 router.push('/login')
                 return
@@ -83,8 +84,17 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
             {appointment ? (
                 <div>
                     <Header title="Szczegóły wizyty">
-                        <Badge className="text-lg">Zaplanowana</Badge>
+                        {appointment.status && (
+                            <Badge className={`ml-6 text-lg ${statuses[appointment.status - 1].color} hover:${statuses[appointment.status - 1].color}`}>
+                                {statuses[appointment.status - 1].name}
+                            </Badge>
+
+                        )}
                     </Header>
+                    <div className="flex mb-5 gap-4">
+                    <EditAppointmentDialog appointment={appointment} />
+                    <ChangeStatusDialog appointment={appointment} />
+                    </div>
 
                     <div className="grid gap-6 md:grid-cols-2 mb-6">
                         <CustomerCard
@@ -92,12 +102,10 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                             customerPhoneNumber={appointment.customerPhoneNumber}
                             customerEmail={appointment.customerEmail}
                         />
-                        <CarCard />
+                        <CarCard carId={appointment.carId ?? ''} appointment={appointment} />
                     </div>
                     <DetailsCard plannedStartAt={appointment.plannedStartAt} plannedFinishAt={appointment.plannedFinishAt} description={appointment.description} />
-                    <div className="flex justify-end space-x-4">
-                        <EditAppointmentDialog appointment={appointment} />
-                    </div>
+
                     <RepairUpdateCard repairId={appointment.id ?? ''} />
                 </div>
 

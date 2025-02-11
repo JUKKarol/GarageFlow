@@ -30,3 +30,14 @@ export const updateCar = async (token: string, data: any) => {
 
     return response.data;
 }
+
+export const getCar = async (token: string, id: string) => {
+    const response = await httpClient.get(`/car?filters=id==${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+
+}

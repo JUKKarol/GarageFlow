@@ -56,8 +56,8 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="mt-5 mb-5">
-          <Edit className="mr-2 h-4 w-4" />
+        <Button variant="secondary">
+          <Edit />
           Edytuj wizytę
         </Button>
       </DialogTrigger>
@@ -111,24 +111,6 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <label htmlFor="status" className="text-sm font-medium">
-              Status naprawy
-            </label>
-            <select
-              id="status"
-              name="status"
-              value={editedAppointment.status}
-              onChange={handleInputChange}
-              className="w-full p-2 mt-1 border border-gray-300 text-white bg-zinc-950 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            >
-              {statuses.map((status) => (
-                <option key={status.id} value={status.id}>
-                  {status.name}
-                </option>
-              ))}
-            </select>
-            </div>
             <div>
                 <label htmlFor="plannedStartAt" className="text-sm font-medium">
                     Termin wizyty

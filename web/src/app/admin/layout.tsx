@@ -1,6 +1,6 @@
 'use client'
 
-import { Car, Wrench, Users, House, ClipboardList, Landmark, UserRoundCog, LogOut } from "lucide-react"
+import { Car, Wrench, Users, House, ClipboardList, Landmark, UserRoundCog, LogOut, Tags } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import UserCard from "../_components/dashboard/userCard"
@@ -21,7 +21,7 @@ export default function Layout({
         { id: 2, name: "Pracownicy", icon: Users, href: "/admin/employees" },
         { id: 3, name: "Wizyty", icon: ClipboardList, href: "/admin/appointments" },
         { id: 4, name: "Auta", icon: Car, href: "/admin/cars" },
-        { id: 5, name: "Modele i marki", icon: Car, href: "/admin/brands" },
+        { id: 5, name: "Modele i marki", icon: Tags, href: "/admin/brands" },
         { id: 6, name: "Finanse", icon: Landmark, href: "/admin/finances" },
         { id: 7, name: "Ustawienia", icon: UserRoundCog, href: "/admin/settings" },
     ]
