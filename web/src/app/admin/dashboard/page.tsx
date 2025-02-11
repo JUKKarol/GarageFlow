@@ -5,6 +5,7 @@ import { ClipboardList, Car, } from "lucide-react"
 import { useState } from "react"
 import { Progress } from "@/components/ui/progress"
 import Header from "@/app/_components/dashboard/header"
+import MainContainer from "@/app/_components/dashboard/mainContainer"
 
 export default function DashboardPage() {
 
@@ -21,7 +22,7 @@ export default function DashboardPage() {
       ])
 
     return (
-        <div>
+        <MainContainer>
           <Header title="Dashboard" />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -100,6 +101,6 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
             </div>
-        </div>
+        </MainContainer>
     )
 }

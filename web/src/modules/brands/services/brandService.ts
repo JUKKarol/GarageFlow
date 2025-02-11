@@ -29,3 +29,14 @@ export const updateBrand = async (token: string, id: string, name: string) => {
 
     return response.data;
 }
+
+export const deleteBrand = async (token: string, id: string) => {
+    const response = await httpClient.delete(`/brand/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+
+}

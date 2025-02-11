@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { User } from '../types';
 
 interface AuthState {
@@ -12,61 +13,55 @@ interface AuthState {
   logout: () => void;
 }
 
-const useAuthStore = create<AuthState>((set) => {
-
-  if (typeof window !== 'undefined') {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-
-    const initialToken = storedToken ? storedToken : null;
-    const initialUser = storedUser ? JSON.parse(storedUser) : null;
-
-    return {
-      token: initialToken,
-      user: initialUser,
-      isAuthenticated: !!initialToken,  // If token exists, set as authenticated
+const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      token: null,
+      user: null,
+      isAuthenticated: false,
       setToken: (token) => {
-        set((state) => ({ token, isAuthenticated: true }));
-        localStorage.setItem('token', token);
-        document.cookie = `token=${token}; path=/; max-age=3600`;
+        set((state) => ({ 
+          token, 
+          isAuthenticated: true 
+        }));
       },
       clearToken: () => {
-        set((state) => ({ token: null, isAuthenticated: false }));
-        localStorage.removeItem('token');
+        set((state) => ({ 
+          token: null, 
+          isAuthenticated: false 
+        }));
       },
       setUser: (user) => {
         set((state) => ({ user }));
-        localStorage.setItem('user', JSON.stringify(user)); 
-        document.cookie = `userRoles=${JSON.stringify(user.roles)}; path=/; max-age=3600`;
       },
       clearUser: () => {
         set((state) => ({ user: null }));
-        localStorage.removeItem('user'); 
       },
       logout: () => {
-        set((state) => ({ token: null, isAuthenticated: false, user: null }));
-        localStorage.removeItem('token');
-        localStorage.removeItem('user'); 
+        set((state) => ({ 
+          token: null, 
+          isAuthenticated: false, 
+          user: null 
+        }));
 
-        document.cookie = "token=; path=/; max-age=0";
-        document.cookie = "userRoles=; path=/; max-age=0";
+        document.cookie = 'token=; path=/; max-age=0; SameSite=Strict';
+        document.cookie = 'userRoles=; path=/; max-age=0; SameSite=Strict';
 
-        window.location.href = '/login';
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
       },
-    };
-  }
-
-  // If the code is executed on the server, return an empty state
-  return {
-    token: null,
-    user: null,
-    isAuthenticated: false,
-    setToken: () => {},
-    clearToken: () => {},
-    setUser: () => {},
-    clearUser: () => {},
-    logout: () => {},
-  };
-});
+    }),
+    {
+      name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        token: state.token,
+        user: state.user,
+        isAuthenticated: state.isAuthenticated
+      }),
+    }
+  )
+);
 
 export default useAuthStore;

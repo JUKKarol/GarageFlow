@@ -29,3 +29,14 @@ export const updateModel = async (token: string, id: string, name: string) => {
 
     return response.data;
 }
+
+export const deleteModel = async (token: string, id: string) => {
+    const response = await httpClient.delete(`/model/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+
+}
