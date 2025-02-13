@@ -84,9 +84,9 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
             {appointment ? (
                 <div>
                     <Header title="Szczegóły wizyty">
-                        {appointment.status && (
-                            <Badge className={`ml-6 text-lg ${statuses[appointment.status - 1].color} hover:${statuses[appointment.status - 1].color}`}>
-                                {statuses[appointment.status - 1].name}
+                        {appointment.repairHistory?.status && (
+                            <Badge className={`ml-6 text-lg ${statuses[appointment.repairHistory.status - 1].color} hover:${statuses[appointment.repairHistory.status - 1].color}`}>
+                                {statuses[appointment.repairHistory.status - 1].name}
                             </Badge>
 
                         )}

@@ -40,7 +40,12 @@ export interface Appointment {
     price?: number;
     carId?: string;
     status?: number;
+    repairHistory?: RepairHistory;
     users?: string[];
+}
+
+export interface RepairHistory {
+    status: number;
 }
 
 export interface RepairDetails {
@@ -50,3 +55,4 @@ export interface RepairDetails {
     price: number;
     repairDetailType: number;
 }
+

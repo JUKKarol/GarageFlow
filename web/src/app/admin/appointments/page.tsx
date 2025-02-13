@@ -140,7 +140,7 @@ export default function AppointmentsPage() {
               {appointments
                 .filter((appointment) => isSameDay(parseISO(appointment.plannedStartAt), date))
                 .map((appointment) => {
-                  const status = statuses.find(status => status.id === appointment.status);
+                  const status = statuses.find(status => status.id === appointment.repairHistory?.status);
 
                   return (
                     <Link href={`/admin/appointments/${appointment.id}`} key={appointment.id}>

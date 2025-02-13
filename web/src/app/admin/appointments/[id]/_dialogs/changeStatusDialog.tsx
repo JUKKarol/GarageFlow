@@ -43,6 +43,7 @@ export default function ChangeStatusDialog({ appointment }: ChangeStatusDialogPr
                 return;
             }
 
+            delete editedAppointment.repairHistory;
             await updateAppointment(token, editedAppointment);
             setOpen(false);
         } catch (error) {
