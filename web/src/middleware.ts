@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
   if (token && (path === "/" || path === "/login")) {
-    return NextResponse.redirect(new URL("/admin", req.url));
+    return NextResponse.redirect(new URL("/admin/dashboard", req.url));
   }
 
   // Handle /admin routes
