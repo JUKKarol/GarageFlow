@@ -2,17 +2,23 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class LoginPage {
   readonly page: Page;
-  readonly acceptCookiesBtn: Locator;
-  readonly acceptAgeBtn: Locator;
+  readonly goToLoginBtn: Locator;
+  readonly LoginBtn: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.acceptCookiesBtn = page.locator('#onetrust-accept-btn-handler');
-    this.acceptAgeBtn = page.locator('.ageconfirmation__confirmBtn');
+    this.goToLoginBtn = page.getByRole('button', { name: 'Log in' });
+    this.LoginBtn = page.getByRole('button', { name: 'Zaloguj się' });
   }
 
-  async acceptCookiesAndAge() {
-    await this.acceptCookiesBtn.click();
-    await this.acceptAgeBtn.click();
+  async login(email: string, password: string, page: Page) {
+    await page.goto('/');
+
+    await this.goToLoginBtn.click();
+
+    await page.getByPlaceholder('Wprowadź swój email').fill(email);
+    await page.getByPlaceholder('Wprowadź swoje hasło').fill(password);
+
+    await this.LoginBtn.click();
   }
 }
