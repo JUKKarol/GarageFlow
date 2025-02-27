@@ -3,7 +3,7 @@
 import { Car } from "@/shared/types"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Edit, Trash2, Pencil } from "lucide-react"
+import { Pencil } from "lucide-react"
 import useCarStore from "@/shared/stores/carsStore"
 import { useState, useEffect } from "react"
 import { CarDialog } from "./carDailog"
@@ -44,7 +44,7 @@ export function CarTable() {
 
   useEffect(() => {
     fetchCars()
-  }, [token, setCars])
+  }, [token, setCars, fetchCars])
 
 
 

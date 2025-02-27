@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchModels = async (brandId: string) => {
+    const fetchModels = useCallback(async (brandId: string) => {
         if (!token) return;
 
         setIsLoading(true);
@@ -39,14 +39,15 @@ export default function ModelsTable({ brands }: ModelsTableProps) {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token, setModels]);
+
 
     useEffect(() => {
         if (brands.length > 0) {
             setBrandId(brands[0].id);
             fetchModels(brands[0].id);
         }
-    }, [brands]);
+    }, [brands, fetchModels, setBrandId]);
 
     const handleBrandChange = (brandId: string) => {
         setBrandId(brandId);

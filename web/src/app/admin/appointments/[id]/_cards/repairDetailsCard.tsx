@@ -21,7 +21,6 @@ const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
 export default function RepairUpdateCard({ repairId }: RepairUpdateCardProps) {
     const { repairDetails, setRepairDetails } = useRepairDetailsStore();
-    const [isLoading, setIsLoading] = useState(true)
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 
@@ -33,20 +32,17 @@ export default function RepairUpdateCard({ repairId }: RepairUpdateCardProps) {
             }
 
             try {
-                setIsLoading(true);
                 const data = await getRepairDetailsData(token, repairId);
                 console.log("Repair details data:", data);
                 setRepairDetails(data);
 
-
             } catch (error) {
                 console.log("Fetch repair details error:", error);
-            } finally {
-                setIsLoading(false);
-            }
+            } 
         };
         fetchRepairDetails();
-    }, [token, isAuthenticated, repairId, router, setRepairDetails]);
+        
+    }, [repairId, setRepairDetails]);
 
     return (
         <div>

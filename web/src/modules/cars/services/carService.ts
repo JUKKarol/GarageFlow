@@ -1,4 +1,5 @@
 import httpClient from "@/shared/tools/axiosInstance";
+import { Car } from "@/shared/types";
 
 export const getCarData = async (token: string) => {
     const response = await httpClient.get("/car?sorts=registrationNumber", {
@@ -10,7 +11,7 @@ export const getCarData = async (token: string) => {
     return response.data;
 };
 
-export const createCar = async (token: string, data: any) => {
+export const createCar = async (token: string, data: Car) => {
     const response = await httpClient.post("/car", data, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -20,7 +21,7 @@ export const createCar = async (token: string, data: any) => {
     return response.data;
 }
 
-export const updateCar = async (token: string, data: any) => {
+export const updateCar = async (token: string, data: Car) => {
     const response = await httpClient.patch("/car", data, {
         headers: {
             Authorization: `Bearer ${token}`,

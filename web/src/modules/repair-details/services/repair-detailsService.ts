@@ -1,4 +1,5 @@
 import httpClient from "@/shared/tools/axiosInstance";
+import { RepairDetails } from "@/shared/types";
 
 export const getRepairDetailsData = async (token: string, repairId: string) => {
     const response = await httpClient.get(`/RepairDetails/${repairId}`, {
@@ -10,7 +11,7 @@ export const getRepairDetailsData = async (token: string, repairId: string) => {
     return response.data;
 }
 
-export const createRepairDetails = async (token: string, data: any) => {
+export const createRepairDetails = async (token: string, data: RepairDetails) => {
     const response = await httpClient.post('/RepairDetails', data, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -20,7 +21,7 @@ export const createRepairDetails = async (token: string, data: any) => {
     return response.data;
 }
 
-export const updateRepairDetails = async (token: string, data: any) => {
+export const updateRepairDetails = async (token: string, data: RepairDetails) => {
     const response = await httpClient.patch(`/RepairDetails`, data, {
         headers: {
             Authorization: `Bearer ${token}`,

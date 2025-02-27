@@ -26,6 +26,7 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL("/", req.url));
       }
     } catch (error) {
+      console.error("Failed to parse user roles:", error);
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }

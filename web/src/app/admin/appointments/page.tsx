@@ -50,7 +50,7 @@ export default function AppointmentsPage() {
       }
     };
     fetchAppointments();
-  }, [token, currentWeek, setAppointments]);
+  }, [token, currentWeek, setAppointments, formatDate, weekStart, weekEnd]);
 
   const weekDays = useMemo(() => {
     return Array.from({ length: 7 }, (_, i) => {

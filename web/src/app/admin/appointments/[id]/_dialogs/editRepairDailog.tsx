@@ -11,7 +11,6 @@ import type { Appointment } from "@/shared/types"
 import { Edit } from "lucide-react"
 import { updateAppointment } from "@/modules/appointments/services/appointmentsService"
 import useAuthStore from "@/shared/stores/authStore"
-import { statuses } from "@/shared/statues"
 
 
 interface EditAppointmentDialogProps {

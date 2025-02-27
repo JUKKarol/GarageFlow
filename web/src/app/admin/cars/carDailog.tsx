@@ -46,7 +46,6 @@ export function CarDialog({ isOpen, onClose }: CarDialogProps) {
     try {
       const data = await getModelData(token, brandId)
       setModels(data.items)
-      // Reset modelId when brand changes
       if (editedItem) {
         setEditedItem({
           ...editedItem,
@@ -58,14 +57,7 @@ export function CarDialog({ isOpen, onClose }: CarDialogProps) {
     }
   }
 
-  const fetchBrands = async (token: string) => {
-    try {
-      const data = await getBrandData(token)
-      setBrands(data.items)
-    } catch (error) {
-      console.error("Failed to fetch brands:", error)
-    }
-  }
+
 
   const handleBrandChange = (brandId: string) => {
     setBrandId(brandId)
@@ -73,6 +65,16 @@ export function CarDialog({ isOpen, onClose }: CarDialogProps) {
   }
 
   useEffect(() => {
+
+    const fetchBrands = async (token: string) => {
+      try {
+        const data = await getBrandData(token)
+        setBrands(data.items)
+      } catch (error) {
+        console.error("Failed to fetch brands:", error)
+      }
+    }
+
     if (!isOpen) {
       setError(null)
     }

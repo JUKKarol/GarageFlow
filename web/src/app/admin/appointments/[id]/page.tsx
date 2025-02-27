@@ -31,22 +31,17 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
     const router = useRouter()
     const { id } = use(params)
 
+
+
     useEffect(() => {
+
         const unsubscribe = useAuthStore.subscribe((state) => {
             setStoreToken(state.token);
             setStoreIsAuthenticated(state.isAuthenticated);
         });
 
-        return () => unsubscribe();
-    }, []);
+        unsubscribe();
 
-    if (!storeToken || !storeIsAuthenticated) {
-        router.push('/login')
-        return null;
-    }
-
-
-    useEffect(() => {
         const fetchAppointment = async () => {
 
             if (!token || !isAuthenticated) {
@@ -69,7 +64,13 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
         }
 
         fetchAppointment()
-    }, [token, isAuthenticated, id, router, setAppointment])
+    }, [id, router, setAppointment])
+
+
+    if (!storeToken || !storeIsAuthenticated) {
+        router.push('/login')
+        return null;
+    }
 
     if (isLoading) {
         return <div>Ładowanie...</div>

@@ -28,12 +28,13 @@ export default function LoginPage() {
             loginSchema.parse({ email, password });
 
             try {
-                const response = await login(email, password);
+                await login(email, password);
                     
                 router.push('/admin/dashboard'); 
 
             } catch (error) {
                 setError('Błędny email lub hasło');
+                console.error(error);
             }
 
 
