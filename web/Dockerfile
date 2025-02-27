@@ -26,7 +26,7 @@ COPY web/nginx.conf /etc/nginx/conf.d/default.conf
 # Create directory for Next.js static files
 RUN mkdir -p /usr/share/nginx/html
 
-# Add a script to start both Next.js and nginx
+# Add Node.js for running the Next.js app
 RUN apk add --no-cache nodejs npm
 
 # Copy the necessary files from the build stage
@@ -36,11 +36,9 @@ COPY --from=build /app/.next ./.next
 COPY --from=build /app/public ./public
 COPY --from=build /app/node_modules ./node_modules
 
-# Create a script to start both nginx and Next.js
-RUN echo '#!/bin/sh\n\
-npm start & \n\
-nginx -g "daemon off;"\n\
-' > /start.sh && chmod +x /start.sh
+# Create start script properly with literal line breaks
+RUN printf '#!/bin/sh\nnpm start & \nnginx -g "daemon off;"\n' > /start.sh
+RUN chmod +x /start.sh
 
 # Expose port 5000
 EXPOSE 5000
