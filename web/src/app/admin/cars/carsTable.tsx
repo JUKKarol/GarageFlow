@@ -27,24 +27,22 @@ export function CarTable() {
     setIsDialogOpen(true)
   }
 
-  const fetchCars = async () => {
-    if (!token) return
-
-    try {
-      const data = await getCarData(token)
-      setCars(data.items)
-    } catch (error) {
-      console.error("Failed to fetch cars:", error)
-    }
-  }
-
-
-
 
 
   useEffect(() => {
+    const fetchCars = async () => {
+      if (!token) return
+  
+      try {
+        const data = await getCarData(token)
+        setCars(data.items)
+      } catch (error) {
+        console.error("Failed to fetch cars:", error)
+      }
+    }
+
     fetchCars()
-  }, [token, setCars, fetchCars])
+  }, [token, setCars])
 
 
 
