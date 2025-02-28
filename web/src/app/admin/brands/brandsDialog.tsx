@@ -16,14 +16,14 @@ import useAuthStore from "@/shared/stores/authStore";
 import { createBrand, updateBrand } from "@/modules/brands/services/brandService";
 import { Brand } from "@/shared/types";
 import { BrandSchema } from "@/shared/schemas/brand.schema";
+import { validateWithZod } from "@/shared/tools/validation";
+
 
 interface BrandDialogProps {
     brand?: Brand | null;
     isOpen: boolean;
     onClose: () => void;
 }
-
-type BrandFormData = z.infer<typeof BrandSchema>;
 
 export default function BrandDialog({ brand, isOpen, onClose }: BrandDialogProps) {
     const { brands, setBrands } = useBrandStore();
@@ -37,35 +37,21 @@ export default function BrandDialog({ brand, isOpen, onClose }: BrandDialogProps
         setErrors({});
     }, [brand]);
 
-    const validateForm = (): boolean => {
-        try {
-            BrandSchema.parse({ name });
-            setErrors({});
-            return true;
-        } catch (err) {
-            if (err instanceof z.ZodError) {
-                const formattedErrors: { [key: string]: string } = {};
-                err.errors.forEach((error) => {
-                    const path = error.path[0].toString();
-                    formattedErrors[path] = error.message;
-                });
-                setErrors(formattedErrors);
-            } else {
-                setErrors({ form: "Wystąpił nieznany błąd walidacji." });
-            }
-            return false;
-        }
-    };
+
 
     const handleSubmit = async () => {
 
 
         if (!token) {
-            setErrors({ form: "Brak uprawnień." });
+            setErrors({ form: "Nie jesteś zalogowany" });
             return;
         }
 
-        if (!validateForm()) {
+        const formData = { name };
+        const { isValid, errors: validationErrors } = validateWithZod(BrandSchema, formData);
+
+        if (!isValid) {
+            setErrors(validationErrors);
             return;
         }
 
