@@ -16,6 +16,7 @@ import { EditAppointmentDialog } from "./_dialogs/editRepairDailog"
 import RepairUpdateCard from "./_cards/repairDetailsCard"
 import { statuses } from "@/shared/statues"
 import ChangeStatusDialog from "./_dialogs/changeStatusDialog"
+import { InvoiceDialog } from "./_dialogs/generateInvoiceDialog"
 
 const token = useAuthStore.getState().token;
 const isAuthenticated = useAuthStore.getState().isAuthenticated;
@@ -95,6 +96,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                     <div className="flex mb-5 gap-4">
                     <EditAppointmentDialog appointment={appointment} />
                     <ChangeStatusDialog appointment={appointment} />
+                    {appointment.repairHistory?.status === 4 && <InvoiceDialog repairId={appointment.id || ''} />}
                     </div>
 
                     <div className="grid gap-6 md:grid-cols-2 mb-6">
@@ -108,6 +110,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                     <DetailsCard plannedStartAt={appointment.plannedStartAt} plannedFinishAt={appointment.plannedFinishAt} description={appointment.description} />
 
                     <RepairUpdateCard repairId={appointment.id ?? ''} />
+
                 </div>
 
             ) : (
