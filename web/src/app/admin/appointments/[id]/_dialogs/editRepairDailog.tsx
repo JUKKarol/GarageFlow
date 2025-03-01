@@ -50,14 +50,10 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      setAppointment(editedAppointment)
 
       if (!token || !isAuthenticated) {
         setErrors({ form: "Nie jesteś zalogowany" })
         return
-      }
-      if (!editedAppointment.carId) {
-        delete editedAppointment.carId
       }
 
       const { isValid, errors: validationErrors } = validateWithZod(appointmentFormSchema, editedAppointment)
@@ -66,9 +62,17 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
         setErrors(validationErrors)
         return
       }
+      if (!editedAppointment.carId) {
+        delete editedAppointment.carId
+      }
+
+      editedAppointment.status = editedAppointment.repairHistory?.status || 1;
+
+      delete editedAppointment.repairHistory
 
       await updateAppointment(token, editedAppointment)
 
+      setAppointment(editedAppointment)
       setOpen(false)
       window.location.reload()
     } catch (error) {
