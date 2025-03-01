@@ -63,9 +63,9 @@ export default function CarCard({ carId, appointment }: CarCardProps) {
                     </div>
                 </div>
             ) : (
-                <div>
+                <div className="flex justify-center items-center w-full">
                     <Button onClick={() => setIsDialogOpen(true)}>
-                        <Plus className="mr-2 h-4 w-4" /> Dodaj usługę
+                        <Plus className="mr-2 h-4 w-4" /> Dodaj pojazd
                     </Button>
                     <AddCarDialog appointment={appointment} isOpen={isDialogOpen}
                         onClose={() => setIsDialogOpen(false)} />

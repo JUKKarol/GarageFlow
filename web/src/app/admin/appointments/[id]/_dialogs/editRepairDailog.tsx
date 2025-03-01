@@ -11,24 +11,40 @@ import type { Appointment } from "@/shared/types"
 import { Edit } from "lucide-react"
 import { updateAppointment } from "@/modules/appointments/services/appointmentsService"
 import useAuthStore from "@/shared/stores/authStore"
+import { validateWithZod } from "@/shared/tools/validation"
+import { AppointmentSchema } from "@/shared/schemas/appointment.schema"
+
+const appointmentFormSchema = AppointmentSchema.refine(
+  (data: Appointment) => new Date(data.plannedFinishAt) >= new Date(data.plannedStartAt),
+  {
+    message: "Data zakończenia musi być późniejsza lub równa dacie rozpoczęcia",
+    path: ["plannedFinishAt"],
+  }
+)
 
 
 interface EditAppointmentDialogProps {
   appointment: Appointment
 }
 
-const token = useAuthStore.getState().token || "";
-const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
 export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProps) {
   const [open, setOpen] = useState(false)
   const [editedAppointment, setEditedAppointment] = useState<Appointment>(appointment)
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const { setAppointment } = useAppointmentStore()
-  const router = useRouter()
+  const token = useAuthStore.getState().token || "";
+  const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setEditedAppointment((prev) => ({ ...prev, [name]: value }))
+
+    if (errors[name]) {
+      const updatedErrors = { ...errors }
+      delete updatedErrors[name]
+      setErrors(updatedErrors)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,19 +52,28 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
     try {
       setAppointment(editedAppointment)
 
-        if (!token || !isAuthenticated) {
-            router.push('/login')
-            return
-        }
-        if(!editedAppointment.carId) {
-            delete editedAppointment.carId
-        }
-        await updateAppointment(token, editedAppointment)
+      if (!token || !isAuthenticated) {
+        setErrors({ form: "Nie jesteś zalogowany" })
+        return
+      }
+      if (!editedAppointment.carId) {
+        delete editedAppointment.carId
+      }
+
+      const { isValid, errors: validationErrors } = validateWithZod(appointmentFormSchema, editedAppointment)
+
+      if (!isValid) {
+        setErrors(validationErrors)
+        return
+      }
+
+      await updateAppointment(token, editedAppointment)
 
       setOpen(false)
-      router.refresh() 
+      window.location.reload()
     } catch (error) {
       console.error("Failed to update appointment:", error)
+      setErrors({ form: "Nie udało się zapisać wizyty" })
     }
   }
 
@@ -74,7 +99,11 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
               name="customerName"
               value={editedAppointment.customerName}
               onChange={handleInputChange}
+              className={errors.customerName ? "border-red-500" : ""}
             />
+            {errors.customerName && (
+              <p className="text-sm text-red-500">{errors.customerName}</p>
+            )}
           </div>
           <div>
             <label htmlFor="customerPhoneNumber" className="text-sm font-medium">
@@ -85,7 +114,11 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
               name="customerPhoneNumber"
               value={editedAppointment.customerPhoneNumber}
               onChange={handleInputChange}
+              className={errors.customerPhoneNumber ? "border-red-500" : ""}
             />
+            {errors.customerPhoneNumber && (
+              <p className="text-sm text-red-500">{errors.customerPhoneNumber}</p>
+            )}
           </div>
           <div>
             <label htmlFor="customerEmail" className="text-sm font-medium">
@@ -97,7 +130,11 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
               type="email"
               value={editedAppointment.customerEmail}
               onChange={handleInputChange}
+              className={errors.customerEmail ? "border-red-500" : ""}
             />
+            {errors.customerEmail && (
+              <p className="text-sm text-red-500">{errors.customerEmail}</p>
+            )}
           </div>
           <div>
             <label htmlFor="description" className="text-sm font-medium">
@@ -108,32 +145,44 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
               name="description"
               value={editedAppointment.description}
               onChange={handleInputChange}
+              className={errors.description ? "border-red-500" : ""}
             />
+            {errors.description && (
+              <p className="text-sm text-red-500">{errors.description}</p>
+            )}
           </div>
-            <div>
-                <label htmlFor="plannedStartAt" className="text-sm font-medium">
-                    Termin wizyty
-                </label>
-                <Input
-                    id="plannedStartAt"
-                    name="plannedStartAt"
-                    type="date"
-                    value={editedAppointment.plannedStartAt}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="plannedFinishAt" className="text-sm font-medium">
-                    Planowany koniec wizyty
-                </label>
-                <Input
-                    id="plannedFinishAt"
-                    name="plannedFinishAt"
-                    type="date"
-                    value={editedAppointment.plannedFinishAt}
-                    onChange={handleInputChange}
-                />
-            </div>
+          <div>
+            <label htmlFor="plannedStartAt" className="text-sm font-medium">
+              Termin wizyty
+            </label>
+            <Input
+              id="plannedStartAt"
+              name="plannedStartAt"
+              type="date"
+              value={editedAppointment.plannedStartAt}
+              onChange={handleInputChange}
+              className={errors.plannedStartAt ? "border-red-500" : ""}
+            />
+            {errors.plannedStartAt && (
+              <p className="text-sm text-red-500">{errors.plannedStartAt}</p>
+            )}
+          </div>
+          <div>
+            <label htmlFor="plannedFinishAt" className="text-sm font-medium">
+              Planowany koniec wizyty
+            </label>
+            <Input
+              id="plannedFinishAt"
+              name="plannedFinishAt"
+              type="date"
+              value={editedAppointment.plannedFinishAt}
+              onChange={handleInputChange}
+              className={errors.plannedFinishAt ? "border-red-500" : ""}
+            />
+            {errors.plannedFinishAt && (
+              <p className="text-sm text-red-500">{errors.plannedFinishAt}</p>
+            )}
+          </div>
           <Button type="submit" className="w-full">
             Zapisz zmiany
           </Button>

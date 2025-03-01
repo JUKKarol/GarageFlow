@@ -55,13 +55,13 @@ export function CreateAppointmentDialog() {
     const token = useAuthStore((state) => state.token)
     const [dialogOpen, setDialogOpen] = useState(false)
     const { newAppointment, setNewAppointment, appointments } = useAppointmentStore()
-    const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({})
+    const [errors, setErrors] = useState<{ [key: string]: string }>({})
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
         if (dialogOpen && !newAppointment) {
             setNewAppointment(INITIAL_APPOINTMENT)
-            setValidationErrors({})
+            setErrors({})
         }
     }, [dialogOpen, setNewAppointment, newAppointment])
 
@@ -76,10 +76,10 @@ export function CreateAppointmentDialog() {
             [field]: format(date, 'yyyy-MM-dd')
         })
         
-        if (validationErrors[field]) {
-            const updatedErrors = { ...validationErrors }
+        if (errors[field]) {
+            const updatedErrors = { ...errors }
             delete updatedErrors[field]
-            setValidationErrors(updatedErrors)
+            setErrors(updatedErrors)
         }
     }
 
@@ -94,24 +94,23 @@ export function CreateAppointmentDialog() {
             [field]: value,
         } as typeof INITIAL_APPOINTMENT)
         
-        // Clear validation error for this field when changed
-        if (validationErrors[field]) {
-            const updatedErrors = { ...validationErrors }
+        if (errors[field]) {
+            const updatedErrors = { ...errors }
             delete updatedErrors[field]
-            setValidationErrors(updatedErrors)
+            setErrors(updatedErrors)
         }
     }
 
     const resetForm = () => {
         setNewAppointment(INITIAL_APPOINTMENT)
-        setValidationErrors({})
+        setErrors({})
     }
 
     const validateForm = () => {
         if (!newAppointment) return false
 
         const { isValid, errors } = validateWithZod(appointmentFormSchema, newAppointment)
-        setValidationErrors(errors)
+        setErrors(errors)
         return isValid
     }
 
@@ -175,7 +174,7 @@ export function CreateAppointmentDialog() {
                                         className={cn(
                                             "w-full justify-start text-left font-normal border-zinc-500 hover:bg-zinc-800 hover:text-white",
                                             !newAppointment?.plannedStartAt && "text-muted-foreground",
-                                            validationErrors.plannedStartAt && "border-red-500"
+                                            errors.plannedStartAt && "border-red-500"
                                         )}
                                     >
                                         <CalendarIcon className="mr-2 h-4 w-4" />
@@ -195,8 +194,8 @@ export function CreateAppointmentDialog() {
                                     />
                                 </PopoverContent>
                             </Popover>
-                            {validationErrors.plannedStartAt && (
-                                <p className="text-red-500 text-sm mt-1">{validationErrors.plannedStartAt}</p>
+                            {errors.plannedStartAt && (
+                                <p className="text-red-500 text-sm mt-1">{errors.plannedStartAt}</p>
                             )}
                         </div>
                     </div>
@@ -212,7 +211,7 @@ export function CreateAppointmentDialog() {
                                         className={cn(
                                             "w-full justify-start text-left font-normal border-zinc-500 hover:bg-zinc-800 hover:text-white",
                                             !newAppointment?.plannedFinishAt && "text-muted-foreground",
-                                            validationErrors.plannedFinishAt && "border-red-500"
+                                            errors.plannedFinishAt && "border-red-500"
                                         )}
                                     >
                                         <CalendarIcon className="mr-2 h-4 w-4" />
@@ -232,8 +231,8 @@ export function CreateAppointmentDialog() {
                                     />
                                 </PopoverContent>
                             </Popover>
-                            {validationErrors.plannedFinishAt && (
-                                <p className="text-red-500 text-sm mt-1">{validationErrors.plannedFinishAt}</p>
+                            {errors.plannedFinishAt && (
+                                <p className="text-red-500 text-sm mt-1">{errors.plannedFinishAt}</p>
                             )}
                         </div>
                     </div>
@@ -247,10 +246,10 @@ export function CreateAppointmentDialog() {
                                 id="customerName"
                                 value={newAppointment?.customerName || ''}
                                 onChange={(e) => handleInputChange('customerName', e.target.value)}
-                                className={cn(validationErrors.customerName && "border-red-500")}
+                                className={cn(errors.customerName && "border-red-500")}
                             />
-                            {validationErrors.customerName && (
-                                <p className="text-red-500 text-sm mt-1">{validationErrors.customerName}</p>
+                            {errors.customerName && (
+                                <p className="text-red-500 text-sm mt-1">{errors.customerName}</p>
                             )}
                         </div>
                     </div>
@@ -264,10 +263,10 @@ export function CreateAppointmentDialog() {
                                 type="tel"
                                 value={newAppointment?.customerPhoneNumber || ''}
                                 onChange={(e) => handleInputChange('customerPhoneNumber', e.target.value)}
-                                className={cn(validationErrors.customerPhoneNumber && "border-red-500")}
+                                className={cn(errors.customerPhoneNumber && "border-red-500")}
                             />
-                            {validationErrors.customerPhoneNumber && (
-                                <p className="text-red-500 text-sm mt-1">{validationErrors.customerPhoneNumber}</p>
+                            {errors.customerPhoneNumber && (
+                                <p className="text-red-500 text-sm mt-1">{errors.customerPhoneNumber}</p>
                             )}
                         </div>
                     </div>
@@ -281,10 +280,10 @@ export function CreateAppointmentDialog() {
                                 type="email"
                                 value={newAppointment?.customerEmail || ''}
                                 onChange={(e) => handleInputChange('customerEmail', e.target.value)}
-                                className={cn(validationErrors.customerEmail && "border-red-500")}
+                                className={cn(errors.customerEmail && "border-red-500")}
                             />
-                            {validationErrors.customerEmail && (
-                                <p className="text-red-500 text-sm mt-1">{validationErrors.customerEmail}</p>
+                            {errors.customerEmail && (
+                                <p className="text-red-500 text-sm mt-1">{errors.customerEmail}</p>
                             )}
                         </div>
                     </div>
@@ -297,10 +296,10 @@ export function CreateAppointmentDialog() {
                                 id="description"
                                 value={newAppointment?.description || ''}
                                 onChange={(e) => handleInputChange('description', e.target.value)}
-                                className={cn(validationErrors.description && "border-red-500")}
+                                className={cn(errors.description && "border-red-500")}
                             />
-                            {validationErrors.description && (
-                                <p className="text-red-500 text-sm mt-1">{validationErrors.description}</p>
+                            {errors.description && (
+                                <p className="text-red-500 text-sm mt-1">{errors.description}</p>
                             )}
                         </div>
                     </div>

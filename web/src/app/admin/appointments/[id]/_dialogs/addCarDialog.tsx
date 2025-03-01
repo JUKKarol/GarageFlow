@@ -185,7 +185,7 @@ export default function AddCarDialog({ appointment, isOpen, onClose }: AddCarDia
                         Anuluj
                     </Button>
                     <Button onClick={handleSubmit}>
-                        Dodaj wizytę
+                        Przypisz pojazd
                     </Button>
                 </div>
             </DialogContent>
