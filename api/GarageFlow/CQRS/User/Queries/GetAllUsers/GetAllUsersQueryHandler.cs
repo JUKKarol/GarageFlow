@@ -12,6 +12,13 @@ public class GetAllUsersQueryHandler(UserManager<AppUser> userManager, IMapper m
     {
         var users = await userManager.Users.ToListAsync(cancellationToken);
 
-        return mapper.Map<List<UserResponse>>(users);
+        var usersDto = mapper.Map<List<UserResponse>>(users);
+
+        for (int i = 0; i < usersDto.Count; i++)
+        {
+            usersDto[i].Roles = await userManager.GetRolesAsync(users[i]) as List<string>;
+        }
+
+        return usersDto;
     }
 }
