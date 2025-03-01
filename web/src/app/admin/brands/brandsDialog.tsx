@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { z } from "zod";
 import {
     Dialog,
     DialogFooter,
@@ -14,6 +15,9 @@ import useBrandStore from "@/shared/stores/brandStore";
 import useAuthStore from "@/shared/stores/authStore";
 import { createBrand, updateBrand } from "@/modules/brands/services/brandService";
 import { Brand } from "@/shared/types";
+import { BrandSchema } from "@/shared/schemas/brand.schema";
+import { validateWithZod } from "@/shared/tools/validation";
+
 
 interface BrandDialogProps {
     brand?: Brand | null;
@@ -26,25 +30,32 @@ export default function BrandDialog({ brand, isOpen, onClose }: BrandDialogProps
     const token = useAuthStore((state) => state.token);
     const [name, setName] = useState(brand?.name || "");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
         setName(brand?.name || "");
+        setErrors({});
     }, [brand]);
 
+
+
     const handleSubmit = async () => {
-        if (!name.trim()) {
-            setError("Nazwa marki nie może być pusta.");
+
+
+        if (!token) {
+            setErrors({ form: "Nie jesteś zalogowany" });
             return;
         }
 
-        if (!token) {
-            setError("Nie jesteś zalogowany.");
+        const formData = { name };
+        const { isValid, errors: validationErrors } = validateWithZod(BrandSchema, formData);
+
+        if (!isValid) {
+            setErrors(validationErrors);
             return;
         }
 
         setLoading(true);
-        setError(null);
 
         try {
             if (brand) {
@@ -57,14 +68,14 @@ export default function BrandDialog({ brand, isOpen, onClose }: BrandDialogProps
             onClose();
         } catch (err) {
             console.error("Błąd podczas zapisywania marki:", err);
-            setError("Nie udało się zapisać marki. Spróbuj ponownie.");
+            setErrors({ form: "Nie udało się zapisać marki. Spróbuj ponownie." });
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
+<Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="sm:max-w-[425px] text-white bg-zinc-950">
                 <DialogHeader>
                     <DialogTitle>{brand ? "Edytuj markę" : "Dodaj markę"}</DialogTitle>
@@ -80,9 +91,11 @@ export default function BrandDialog({ brand, isOpen, onClose }: BrandDialogProps
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             disabled={loading}
+                            className={errors.name ? "border-red-500" : ""}
                         />
+                        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                     </div>
-                    {error && <p className="text-red-500">{error}</p>}
+                    {errors.form && <p className="text-red-500">{errors.form}</p>}
                 </div>
 
                 <DialogFooter>

@@ -18,3 +18,11 @@ services:
       - sqldata
     environment:
       AppSettings__ConnectionStrings__DefaultConnection: "Server=sqldata;Database=GarageFlowDb;User Id=sa;Password=StrongPassword123!;TrustServerCertificate=True"
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    ports:
+      - "8080:5000"
+    depends_on:
+      - app

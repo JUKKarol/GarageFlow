@@ -33,8 +33,8 @@ export default function AppointmentsPage() {
   } = useAppointmentStore();
   const [currentWeek, setCurrentWeek] = useState(selectedDate);
 
-  const weekStart = startOfWeek(currentWeek, { weekStartsOn: 1 });
-  const weekEnd = endOfWeek(currentWeek, { weekStartsOn: 1 });
+  const weekStart = useMemo(() => startOfWeek(currentWeek, { weekStartsOn: 1 }), [currentWeek]);
+  const weekEnd = useMemo(() => endOfWeek(currentWeek, { weekStartsOn: 1 }), [currentWeek]);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -50,7 +50,7 @@ export default function AppointmentsPage() {
       }
     };
     fetchAppointments();
-  }, [token, currentWeek, setAppointments]);
+  }, [token, currentWeek, setAppointments, formatDate, weekStart, weekEnd]);
 
   const weekDays = useMemo(() => {
     return Array.from({ length: 7 }, (_, i) => {

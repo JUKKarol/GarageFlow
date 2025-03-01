@@ -20,25 +20,25 @@ const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
       setToken: (token) => {
-        set((state) => ({ 
+        set(() => ({ 
           token, 
           isAuthenticated: true 
         }));
       },
       clearToken: () => {
-        set((state) => ({ 
+        set(() => ({ 
           token: null, 
           isAuthenticated: false 
         }));
       },
       setUser: (user) => {
-        set((state) => ({ user }));
+        set(() => ({ user }));
       },
       clearUser: () => {
-        set((state) => ({ user: null }));
+        set(() => ({ user: null }));
       },
       logout: () => {
-        set((state) => ({ 
+        set(() => ({ 
           token: null, 
           isAuthenticated: false, 
           user: null 

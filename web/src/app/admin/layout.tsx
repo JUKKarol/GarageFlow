@@ -12,7 +12,6 @@ export default function Layout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // Move all Hooks to the top
     const { user, logout } = useAuthStore()
     const pathname = usePathname()
 

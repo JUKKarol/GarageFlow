@@ -45,23 +45,25 @@ export default function AddCarDialog({ appointment, isOpen, onClose }: AddCarDia
         appointment.carId ? appointment.carId.toString() : undefined
     );
     const [open, setOpen] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm] = useState("");
 
-    const fetchCars = async () => {
-        if (!token || !isAuthenticated) {
-            router.push('/login');
-            return;
-        }
-
-        try {
-            const data = await getCarData(token);
-            setCars(data.items);
-        } catch (error) {
-            console.log("Fetch cars error:", error);
-        }
-    }
 
     useEffect(() => {
+
+        const fetchCars = async () => {
+            if (!token || !isAuthenticated) {
+                router.push('/login');
+                return;
+            }
+    
+            try {
+                const data = await getCarData(token);
+                setCars(data.items);
+            } catch (error) {
+                console.log("Fetch cars error:", error);
+            }
+        }
+
         if (isOpen) {
             setEditedAppointment({
                 ...appointment
@@ -72,7 +74,7 @@ export default function AddCarDialog({ appointment, isOpen, onClose }: AddCarDia
         if (cars.length === 0) {
             fetchCars();
         }
-    }, [isOpen, setEditedAppointment, appointment, cars, token]);
+    }, [isOpen, setEditedAppointment, appointment, cars, token, setCars]);
 
     const carOptions = cars?.map((car) => ({
         value: car.id,
@@ -83,9 +85,6 @@ export default function AddCarDialog({ appointment, isOpen, onClose }: AddCarDia
         car.label.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    console.log('Search Term:', searchTerm);
-    console.log('Car Options:', carOptions);
-    console.log('Filtered Options:', filteredCarOptions);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -186,7 +185,7 @@ export default function AddCarDialog({ appointment, isOpen, onClose }: AddCarDia
                         Anuluj
                     </Button>
                     <Button onClick={handleSubmit}>
-                        Dodaj wizytę
+                        Przypisz pojazd
                     </Button>
                 </div>
             </DialogContent>

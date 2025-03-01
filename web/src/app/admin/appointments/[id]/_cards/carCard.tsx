@@ -20,25 +20,26 @@ export default function CarCard({ carId, appointment }: CarCardProps) {
     const { token, isAuthenticated } = useAuthStore.getState();
     const { car, setCar } = useCarStore();
 
-    const fetchCar = async () => {
-        if (!token || !isAuthenticated) {
-            return;
-        }
-
-        try {
-            const data = await getCar(token, carId);
-            setCar(data.items[0]);
-
-        } catch (error) {
-            console.log("Fetch car error:", error);
-        }
-    }
 
     useEffect(() => {
+        const fetchCar = async () => {
+            if (!token || !isAuthenticated) {
+                return;
+            }
+    
+            try {
+                const data = await getCar(token, carId);
+                setCar(data.items[0]);
+    
+            } catch {
+                console.log("Fetch car error");
+            }
+        }
+
         if (carId) {
             fetchCar();
         }
-    }, [token, isAuthenticated, carId]);
+    }, [token, isAuthenticated, carId, setCar]);
 
     return (
         <AppointmentCard title="Informacje o pojeździe" icon={Car}>
@@ -62,9 +63,9 @@ export default function CarCard({ carId, appointment }: CarCardProps) {
                     </div>
                 </div>
             ) : (
-                <div>
+                <div className="flex justify-center items-center w-full">
                     <Button onClick={() => setIsDialogOpen(true)}>
-                        <Plus className="mr-2 h-4 w-4" /> Dodaj usługę
+                        <Plus className="mr-2 h-4 w-4" /> Dodaj pojazd
                     </Button>
                     <AddCarDialog appointment={appointment} isOpen={isDialogOpen}
                         onClose={() => setIsDialogOpen(false)} />

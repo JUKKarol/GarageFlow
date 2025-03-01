@@ -2,24 +2,23 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ClipboardList, Car, } from "lucide-react"
-import { useState } from "react"
 import { Progress } from "@/components/ui/progress"
 import Header from "@/app/_components/dashboard/header"
 import MainContainer from "@/app/_components/dashboard/mainContainer"
 
 export default function DashboardPage() {
 
-    const [currentJobs, setCurrentJobs] = useState([
+    const currentJobs = [
         { id: 1, car: 'Toyota Camry', owner: 'Maciej Nowak', status: 'W trakcie', completion: 65 },
         { id: 2, car: 'Honda Civic', owner: 'Tomasz Kowalski', status: 'Oczekujące', completion: 0 },
         { id: 3, car: 'Ford F-150', owner: 'Aneta Jakaś', status: 'Diagnoza', completion: 25 },
-      ])
+      ]
     
-      const [recentActivities, setRecentActivities] = useState([
+      const recentActivities =[
         { id: 1, action: 'Wymiana oleju ukończona', time: '2 godziny temu' },
         { id: 2, action: 'Nowa wizyta umówina', time: '4 godziny temu' },
         { id: 3, action: 'Zamówiono części dla E36', time: 'Wczoraj' },
-      ])
+      ]
 
     return (
         <MainContainer>

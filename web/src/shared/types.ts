@@ -7,6 +7,12 @@ export interface User {
     roles: string[];
 }
 
+export interface Employees {
+    id: string;
+    userName: string;
+    email: string;
+}
+
 export interface Brand {
     id: string;
     name: string;
