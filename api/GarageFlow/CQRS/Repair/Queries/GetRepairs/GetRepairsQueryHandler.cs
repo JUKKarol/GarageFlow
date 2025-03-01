@@ -14,6 +14,9 @@ public class GetRepairsQueryHandler(IMapper mapper,
 
         var repairs = await repairRepository.GetAllRepairs(request.Query, cancellationToken);
         var repairsDto = mapper.Map<List<RepairResponse>>(repairs);
+        foreach (var repair in repairsDto)
+        {
+        }
 
         RespondListDto<RepairResponse> respondListDto = new();
         respondListDto.Items = repairsDto;

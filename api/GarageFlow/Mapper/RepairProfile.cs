@@ -15,7 +15,7 @@ public class RepairProfile : Profile
             .ForMember(dest => dest.Users, opt => opt.Ignore());
         CreateMap<Repair, RepairResponse>()
             .ForMember(dest => dest.RepairHistory,
-                       opt => opt.MapFrom(src => src.RepairHistory.FirstOrDefault()));
+                       opt => opt.MapFrom(src => src.RepairHistory.OrderByDescending(rh => rh.CreatedAt).FirstOrDefault()));
         CreateMap<RepairWithDetailsResponse, Repair>().ReverseMap();
         CreateMap<InvoiceResponse, Repair>().ReverseMap();
     }
