@@ -94,8 +94,8 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                         )}
                     </Header>
                     <div className="flex mb-5 gap-4">
-                    <EditAppointmentDialog appointment={appointment} />
-                    <ChangeStatusDialog appointment={appointment} />
+                    {appointment.repairHistory?.status !== 4 && <EditAppointmentDialog appointment={appointment} />}
+                    {appointment.repairHistory?.status !== 4 && <ChangeStatusDialog appointment={appointment} />}
                     {appointment.repairHistory?.status === 4 && <InvoiceDialog repairId={appointment.id || ''} />}
                     </div>
 
@@ -107,9 +107,9 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                         />
                         <CarCard carId={appointment.carId ?? ''} appointment={appointment} />
                     </div>
-                    <DetailsCard plannedStartAt={appointment.plannedStartAt} plannedFinishAt={appointment.plannedFinishAt} description={appointment.description} />
+                    <DetailsCard repairHistory={appointment.repairHistory ?? {status: 0, createdAt: "Brak"}} plannedStartAt={appointment.plannedStartAt} plannedFinishAt={appointment.plannedFinishAt} description={appointment.description} />
 
-                    <RepairUpdateCard repairId={appointment.id ?? ''} />
+                    <RepairUpdateCard status={appointment.repairHistory?.status ?? 0} repairId={appointment.id ?? ''} />
 
                 </div>
 

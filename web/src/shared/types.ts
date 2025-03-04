@@ -11,6 +11,7 @@ export interface Employees {
     id: string;
     userName: string;
     email: string;
+    roles: string[];
 }
 
 export interface Brand {
@@ -52,6 +53,7 @@ export interface Appointment {
 
 export interface RepairHistory {
     status: number;
+    createdAt: string;
 }
 
 export interface RepairDetails {
