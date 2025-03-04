@@ -11,8 +11,6 @@ public class UpdateRepairCommand : IRequest<RepairResponse>
     [JsonIgnore]
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-    public DateOnly StartedAt { get; set; }
-    public DateOnly FinishedAt { get; set; }
     public string Description { get; set; }
     public string CustomerName { get; set; }
     public string CustomerPhoneNumber { get; set; }

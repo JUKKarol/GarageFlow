@@ -6,8 +6,6 @@ public class UpdateRepairCommandValidator : AbstractValidator<UpdateRepairComman
 {
     public UpdateRepairCommandValidator()
     {
-        RuleFor(c => c.StartedAt);
-        RuleFor(c => c.FinishedAt);
         RuleFor(c => c.Description)
             .Length(1, 1000);
         RuleFor(c => c.CustomerName)

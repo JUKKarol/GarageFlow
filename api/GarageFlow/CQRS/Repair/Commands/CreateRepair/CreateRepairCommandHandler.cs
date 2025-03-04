@@ -44,6 +44,8 @@ public class CreateRepairCommandHandler(IMapper mapper,
 
         //repair.Users.Add(user);
 
+        repair.StartedAt = DateOnly.FromDateTime(DateTime.UtcNow);
+
         await repairRepository.CreateRepair(repair, cancellationToken);
 
         var repairHistory = new GarageFlow.Entities.RepairHistory

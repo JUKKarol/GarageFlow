@@ -64,6 +64,11 @@ public class UpdateRepairCommandHandler(UserManager<AppUser> userManager,
             repair.Users = users;
         }
 
+        if (request.Status == Enums.RepairStatus.Done)
+        {
+            repair.FinishedAt = DateOnly.FromDateTime(DateTime.UtcNow);
+        }
+
         await repairRepository.UpdateRepair(repair, cancellationToken);
 
         var repairHistoryToCreate = new GarageFlow.Entities.RepairHistory
