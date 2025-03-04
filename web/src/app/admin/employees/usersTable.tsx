@@ -44,6 +44,7 @@ export function UsersTable() {
                     <TableRow className="bg-[#1e1e1e] hover:bg-[#1e1e1e] border-[#3b3b3b]">
                         <TableHead className="font-semibold text-white py-3">Imię</TableHead>
                         <TableHead className="font-semibold text-white py-3">Email</TableHead>
+                        <TableHead className="font-semibold text-white py-3">Rola</TableHead>
                         <TableHead className="font-semibold text-white py-3">Akcje</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -52,6 +53,7 @@ export function UsersTable() {
                         <TableRow key={user.id} className="hover:bg-[#0b0b0b] border-[#3b3b3b]">
                             <TableCell>{user.userName}</TableCell>
                             <TableCell>{user.email}</TableCell>
+                            <TableCell>Admin</TableCell>
                             <TableCell>
                                     <Pencil className="h-5 w-5 cursor-pointer text-primary hover:text-[#895432]" onClick={() => handleEdit(user)}/>
                             </TableCell>

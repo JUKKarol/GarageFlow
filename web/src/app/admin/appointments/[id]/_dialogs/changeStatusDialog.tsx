@@ -97,7 +97,7 @@ export default function ChangeStatusDialog({ appointment }: ChangeStatusDialogPr
                     <Button variant="outline" onClick={() => setOpen(false)}>
                         Anuluj
                     </Button>
-                    <Button onClick={handleSubmit}>Dodaj wizytę</Button>
+                    <Button onClick={handleSubmit}>Zmień status</Button>
                 </div>
             </DialogContent>
         </Dialog>

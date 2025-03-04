@@ -77,17 +77,19 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#cccccc',
         borderBottomStyle: 'solid',
+        flexDirection: 'row',
+        padding: 8,
     },
     tableNameCol: {
         width: '70%',
-        padding: 8,
         fontWeight: 'bold',
+        padding: 8,
     },
     tablePriceCol: {
         width: '30%',
-        padding: 8,
         fontWeight: 'bold',
         textAlign: 'right',
+        padding: 8, 
     },
     tableCell: {
         padding: 8,

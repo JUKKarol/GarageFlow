@@ -52,6 +52,7 @@ export default function LoginPage() {
 
 
     return (
+        
         <main className="min-h-screen bg-black flex items-center justify-center">
             <Card className="w-full text-white max-w-md bg-zinc-950 border-zinc-800">
                 <CardHeader>
@@ -102,6 +103,7 @@ export default function LoginPage() {
                     </CardFooter>
                 </form>
             </Card>
+            
         </main>
     );
 }

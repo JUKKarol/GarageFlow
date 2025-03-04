@@ -45,8 +45,8 @@ export default function RepairUpdateCard({ repairId }: RepairUpdateCardProps) {
     }, [repairId, setRepairDetails]);
 
     return (
-        <div>
-            <Button onClick={() => setIsDialogOpen(true)}>
+        <div className="mt-4">
+            <Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
                 <Plus className="mr-2 h-4 w-4" /> Dodaj usługę
             </Button>
 

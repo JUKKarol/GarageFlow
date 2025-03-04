@@ -114,7 +114,6 @@ export default function AppointmentsPage() {
       </div>
 
       <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
-        {/* Time column lines */}
         <div className="absolute inset-0 grid grid-rows-12 pointer-events-none">
 
         </div>
@@ -131,7 +130,6 @@ export default function AppointmentsPage() {
               </div>
             </div>
 
-            {/* Hour markers */}
             <div className="absolute left-0 top-12 bottom-0 w-12 text-xs text-gray-500 pointer-events-none">
 
             </div>

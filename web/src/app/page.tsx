@@ -1,5 +1,5 @@
 import { Navbar } from "./_components/navbar";
-import { Button } from "@/components/ui/button";
+import { SearchHistory } from "./_components/searchHistory";
 
 export default function Home() {
   return (
@@ -32,14 +32,15 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <section id="contact" className="text-center mb-5">
+          <h3 className="text-2xl font-semibold mb-4 text-gray-200">Śledź naprawy</h3>
+          <SearchHistory />
+        </section>
 
         <section id="contact" className="text-center">
           <h3 className="text-2xl font-semibold mb-4 text-gray-200">Skontaktuj się z Nami</h3>
           <p className="mb-4 text-gray-400">📞 Zadzwoń do nas: (123) 456-7890</p>
           <p className="mb-4 text-gray-400">📍 Odwiedź nas: ul. Samochodowa 123, Miasto Aut</p>
-          <Button variant="outline" className="bg-gray-800 text-gray-100 hover:bg-gray-700">
-            Umów Wizytę
-          </Button>
         </section>
       </main>
 
