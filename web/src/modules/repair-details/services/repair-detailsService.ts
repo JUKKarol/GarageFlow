@@ -30,3 +30,13 @@ export const updateRepairDetails = async (token: string, data: RepairDetails) =>
 
     return response.data;
 }
+
+export const deleteRepairDetails = async (token: string, repairDetailsId: string) => {
+    const response = await httpClient.delete(`/RepairDetails/${repairDetailsId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+}

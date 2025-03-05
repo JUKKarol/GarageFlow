@@ -42,7 +42,7 @@ export default function CarCard({ carId, appointment }: CarCardProps) {
         if (carId) {
             fetchCar();
         }
-    }, [token, isAuthenticated, carId, setCar, car, removeCar]);
+    }, [token, isAuthenticated, carId, setCar, removeCar]);
 
     return (
         <AppointmentCard title="Informacje o pojeździe" icon={Car}>

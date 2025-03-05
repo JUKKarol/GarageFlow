@@ -68,7 +68,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
         }
 
         fetchAppointment()
-    }, [id, router, setAppointment, appointment])
+    }, [id, router, setAppointment])
 
 
     if (!storeToken || !storeIsAuthenticated) {
