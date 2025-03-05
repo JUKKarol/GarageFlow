@@ -87,9 +87,9 @@ export default function RepairUpdateCard({ repairId, status, carId }: RepairUpda
                                             <span className="font-semibold">{repairDetail.price} zł</span>
                                         </div>
                                     </div>
-                                    <div>
+                                    {status !== 4 &&<div>
                                         <Trash onClick={() => handleDelete(repairDetail.id)} className="h-4 w-4 text-red-500 hover:text-red-700 duration-200 cursor-pointer" />
-                                    </div>
+                                    </div>}
                                 </div>
                             ))}
                         </div>
