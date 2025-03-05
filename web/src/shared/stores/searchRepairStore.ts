@@ -1,16 +1,8 @@
 import { create } from 'zustand';
-import { RepairDetails } from '../types';
+import { SearchRepair } from '../types';
 
-interface SearchRepair {
-    createdAt: string;
-    updatedAt: string;
-    startedAt: string;
-    finishedAt: string;
-    plannedStartAt: string;
-    plannedFinishAt: string;
-    description: string;
-    repiarDetails: RepairDetails[]
-}
+
+
 
 
 interface RepairsState {

@@ -74,7 +74,7 @@ export default function AddCarDialog({ appointment, isOpen, onClose }: AddCarDia
         if (cars.length === 0) {
             fetchCars();
         }
-    }, [isOpen, setEditedAppointment, appointment, cars, token, setCars]);
+    }, [isOpen, setEditedAppointment, appointment, cars, token, setCars, isAuthenticated, router]);
 
     const carOptions = cars?.map((car) => ({
         value: car.id,
@@ -95,6 +95,10 @@ export default function AddCarDialog({ appointment, isOpen, onClose }: AddCarDia
             }
             if (!editedAppointment.carId) {
                 delete editedAppointment.carId;
+            }
+            editedAppointment.status = editedAppointment.repairHistory?.status || 1;
+            if (editedAppointment.repairHistory) {
+                delete editedAppointment.repairHistory;
             }
             await updateAppointment(token, editedAppointment);
 

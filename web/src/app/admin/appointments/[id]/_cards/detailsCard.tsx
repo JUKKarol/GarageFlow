@@ -28,13 +28,15 @@ export default function DetailsCard({ plannedStartAt, plannedFinishAt, descripti
                     </div>
                 </div>
             </div>
-            <div className="flex items-center">
+            {repairHistory?.status === 4 &&
+                <div className="flex items-center">
                     <Clock className="mr-2 h-5 w-5" />
                     <div>
                         <div className="text-sm">Zakończona</div>
                         <span className="font-semibold">{new Date(repairHistory?.createdAt ?? "").toISOString().split('T')[0]}</span>
                     </div>
                 </div>
+            }
             <div>
                 <div className="text-sm mt-6 font-semibold">Opis</div>
                 <p>{description}</p>

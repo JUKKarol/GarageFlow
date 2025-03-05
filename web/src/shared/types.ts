@@ -38,6 +38,7 @@ export interface Appointment {
     id?: string;
     startedAt?: string;
     finishedAt?: string;
+    createdAt?: string;
     plannedStartAt: string;
     plannedFinishAt: string;
     description: string;
@@ -64,3 +65,14 @@ export interface RepairDetails {
     repairDetailType: number;
 }
 
+export interface SearchRepair {
+    createdAt: string;
+    updatedAt: string;
+    startedAt: string;
+    finishedAt: string;
+    plannedStartAt: string;
+    plannedFinishAt: string;
+    description: string;
+    repairDetails: RepairDetails[]
+    repairHistory: RepairHistory;
+}

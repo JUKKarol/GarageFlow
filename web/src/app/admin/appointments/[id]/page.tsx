@@ -54,6 +54,9 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                 setIsLoading(true)
                 const data = await getAppointment(token, id)
                 setAppointment(data)
+                if (appointment?.carId === null) {
+                    setAppointment({ ...appointment, carId: '' })
+                }
                 setError(null)
             } catch (error) {
                 console.error("Fetch appointment error:", error)
@@ -65,7 +68,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
         }
 
         fetchAppointment()
-    }, [id, router, setAppointment])
+    }, [id, router, setAppointment, appointment])
 
 
     if (!storeToken || !storeIsAuthenticated) {
@@ -95,7 +98,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                     </Header>
                     <div className="flex mb-5 gap-4">
                     {appointment.repairHistory?.status !== 4 && <EditAppointmentDialog appointment={appointment} />}
-                    {appointment.repairHistory?.status !== 4 && <ChangeStatusDialog appointment={appointment} />}
+                    {appointment.repairHistory?.status !== 4 && appointment.carId && <ChangeStatusDialog appointment={appointment} />}
                     {appointment.repairHistory?.status === 4 && <InvoiceDialog repairId={appointment.id || ''} />}
                     </div>
 
@@ -109,7 +112,7 @@ export default function AppointmentPage({ params }: { params: Promise<{ id: stri
                     </div>
                     <DetailsCard repairHistory={appointment.repairHistory ?? {status: 0, createdAt: "Brak"}} plannedStartAt={appointment.plannedStartAt} plannedFinishAt={appointment.plannedFinishAt} description={appointment.description} />
 
-                    <RepairUpdateCard status={appointment.repairHistory?.status ?? 0} repairId={appointment.id ?? ''} />
+                    <RepairUpdateCard carId={appointment.carId ?? ''} status={appointment.repairHistory?.status ?? 0} repairId={appointment.id ?? ''} />
 
                 </div>
 

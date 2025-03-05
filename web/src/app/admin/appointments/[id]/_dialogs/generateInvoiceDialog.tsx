@@ -200,10 +200,6 @@ export function InvoiceDialog({ repairId }: InvoiceDialogProps) {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Dane faktury</Text>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Data rozpoczęcia:</Text>
-                        <Text style={styles.value}>{formatDate(invoice.startedAt)}</Text>
-                    </View>
-                    <View style={styles.row}>
                         <Text style={styles.label}>Data zakończenia:</Text>
                         <Text style={styles.value}>{formatDate(invoice.finishedAt)}</Text>
                     </View>
@@ -319,7 +315,7 @@ export function InvoiceDialog({ repairId }: InvoiceDialogProps) {
                         </div>
 
                         <div className="grid gap-2">
-                            <label htmlFor="nip">NIP</label>
+                            <label htmlFor="nip">NIP (opcjonalne)</label>
                             <Input
                                 id="nip"
                                 name="nip"

@@ -15,12 +15,13 @@ import { Plus } from 'lucide-react'
 interface RepairUpdateCardProps {
     repairId: string;
     status: number;
+    carId: string;
 }
 
 const token = useAuthStore.getState().token;
 const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
-export default function RepairUpdateCard({ repairId, status }: RepairUpdateCardProps) {
+export default function RepairUpdateCard({ repairId, status, carId }: RepairUpdateCardProps) {
     const { repairDetails, setRepairDetails } = useRepairDetailsStore();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -34,7 +35,6 @@ export default function RepairUpdateCard({ repairId, status }: RepairUpdateCardP
 
             try {
                 const data = await getRepairDetailsData(token, repairId);
-                console.log("Repair details data:", data);
                 setRepairDetails(data);
 
             } catch (error) {
@@ -47,7 +47,7 @@ export default function RepairUpdateCard({ repairId, status }: RepairUpdateCardP
 
     return (
         <div className="mt-4">
-            {status !== 4 &&<Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
+            {status !== 4 && carId  && <Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
                 <Plus className="mr-2 h-4 w-4" /> Dodaj usługę
             </Button>}
 

@@ -11,7 +11,7 @@ interface CarState {
     setCars: (cars: Car[]) => void;
     setCar: (car: Car) => void;
     addCar: (car: Car) => void;
-    removeCar: (carId: string) => void;
+    removeCar: () => void;
 }
 
 const useCarStore = create<CarState>((set) => {
@@ -25,9 +25,9 @@ const useCarStore = create<CarState>((set) => {
         setCars: (cars) => set({ cars }),
         setCar: (car) => set({ car }),
         addCar: (car) => set((state) => ({ cars: [...state.cars, car] })),
-        removeCar: (carId) =>
+        removeCar: () =>
         set((state) => ({
-            cars: state.cars.filter((car) => car.id !== carId),
+            car: state.car !== null ? null : state.car,
         })),
     };
 });

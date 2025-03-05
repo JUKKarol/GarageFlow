@@ -18,10 +18,13 @@ interface CarCardProps {
 export default function CarCard({ carId, appointment }: CarCardProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { token, isAuthenticated } = useAuthStore.getState();
-    const { car, setCar } = useCarStore();
+    const { car, setCar, removeCar } = useCarStore();
 
 
     useEffect(() => {
+        if(car) {
+            removeCar();
+        }
         const fetchCar = async () => {
             if (!token || !isAuthenticated) {
                 return;
@@ -39,7 +42,7 @@ export default function CarCard({ carId, appointment }: CarCardProps) {
         if (carId) {
             fetchCar();
         }
-    }, [token, isAuthenticated, carId, setCar]);
+    }, [token, isAuthenticated, carId, setCar, car, removeCar]);
 
     return (
         <AppointmentCard title="Informacje o pojeździe" icon={Car}>

@@ -5,6 +5,8 @@ import { searchRepairsService } from "@/modules/search/services/searchService";
 import { Navbar } from "@/app/_components/navbar";
 import { useRepairsStore } from "@/shared/stores/searchRepairStore";
 import { RepairDetails } from "@/shared/types";
+import { statuses } from "@/shared/statues";
+import { SearchRepair } from "@/shared/types";
 
 const formatDate = (dateString: string): string => {
     if (!dateString) return "Brak daty";
@@ -91,7 +93,7 @@ export default function HistoryPage() {
                     </div>
                 ) : (
                     <div className="space-y-6">
-                        {sortedRepairs.map((repair: any, index: number) => (
+                        {sortedRepairs.map((repair: SearchRepair, index: number) => (
                             <div
                                 key={index}
                                 className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 shadow-md"
@@ -106,16 +108,13 @@ export default function HistoryPage() {
                                         </div>
                                     </div>
                                     <div className="flex items-start">
-                                        <span className={`px-3 py-1 text-sm rounded-full ${repair.finishedAt ? 'bg-green-900 text-green-300' :
-                                            new Date(repair.plannedStartAt) > new Date() ? 'bg-yellow-900 text-yellow-300' :
-                                                repair.startedAt ? 'bg-blue-900 text-blue-300' :
-                                                    'bg-zinc-700 text-zinc-300'
-                                            }`}>
-                                            {repair.finishedAt ? 'Zakończona' :
-                                                new Date(repair.plannedStartAt) > new Date() ? 'Zaplanowana' :
-                                                    repair.startedAt ? 'W trakcie' :
-                                                        'Oczekująca'}
-                                        </span>
+                                        {repair.repairHistory?.status !== undefined && (
+                                            <span className={`px-3 py-1 text-sm rounded-full ${statuses.find(status => status.id === repair.repairHistory.status)?.color || 'bg-gray-500'
+                                                } ${statuses.find(status => status.id === repair.repairHistory.status)?.textColor || 'text-white'
+                                                }`}>
+                                                {statuses.find(status => status.id === repair.repairHistory.status)?.name || 'Nieznany status'}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
 

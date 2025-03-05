@@ -83,7 +83,6 @@ const ResetPasswordForm: React.FC = () => {
     email, 
     resetCode, 
     newPassword, 
-    confirmPassword, 
     errors,
     setResetCode,
     setNewPassword,
@@ -104,6 +103,7 @@ const ResetPasswordForm: React.FC = () => {
         router.push('/login'); 
       } catch (error) {
         setError('Nie udało się zresetować hasła');
+        console.error(error);
       } finally {
         setIsSubmitting(false);
       }

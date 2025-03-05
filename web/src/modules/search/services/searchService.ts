@@ -5,15 +5,15 @@ export const searchService = {
     try {
       const response = await httpClient.get(`/Customer/history/${vin}`);
       return {
-        data: response.data,
-        status: response.status,
-        success: true
+      data: response.data,
+      status: response.status,
+      success: true
       };
-    } catch (error: any) {
+    } catch (error) {
       return {
-        data: null,
-        status: error.response?.status || 500,
-        success: false
+      data: null,
+      status: (error as any).response?.status || 500,
+      success: false
       };
     }
   },
@@ -28,11 +28,11 @@ export const searchRepairsService = {
           status: response.status,
           success: true
         };
-      } catch (error: any) {
+      } catch (error) {
         return {
-          data: null,
-          status: error.response?.status || 500,
-          success: false
+        data: null,
+        status: (error as any).response?.status || 500,
+        success: false
         };
       }
     },
