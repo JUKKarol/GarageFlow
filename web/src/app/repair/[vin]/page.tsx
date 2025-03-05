@@ -103,8 +103,7 @@ export default function HistoryPage() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-400">
                                             <p>Zaplanowany start: {formatDate(repair.plannedStartAt)}</p>
                                             <p>Zaplanowane zakończenie: {formatDate(repair.plannedFinishAt)}</p>
-                                            {repair.startedAt && <p>Rzeczywisty start: {formatDate(repair.startedAt)}</p>}
-                                            {repair.finishedAt && <p>Zakończono: {formatDate(repair.finishedAt)}</p>}
+                                            {repair.finishedAt !== '0001-01-01' && <p>Zakończono: {formatDate(repair.finishedAt)}</p>}
                                         </div>
                                     </div>
                                     <div className="flex items-start">
