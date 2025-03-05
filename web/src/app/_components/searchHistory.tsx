@@ -11,24 +11,23 @@ export function SearchHistory() {
     const [vin, setVin] = useState("");
     const router = useRouter();
 
-    const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    const handleSearch = (e: FormEvent<HTMLFormElement>, route: string) => {
         e.preventDefault();
         if (vin.trim()) {
-            router.push(`/repair/${vin}`);
+            router.push(`/${route}/${vin}`);
         }
     };
 
     return (
-        
         <div className="p-4 max-w-md mx-auto flex flex-wrap gap-5">
-            <form onSubmit={handleSearch} className="flex flex-col gap-4">
+            <form onSubmit={(e) => handleSearch(e, 'repair')} className="flex flex-col gap-4">
                 <div className="space-y-2 text-white">
-                    <Label htmlFor="vin-input">
+                    <Label htmlFor="vin-input-repair">
                         Wyszukaj wszystkie naprawy
                     </Label>
                     <Input
                         className="text-white"
-                        id="vin-input"
+                        id="vin-input-repair"
                         type="text"
                         value={vin}
                         onChange={(e) => setVin(e.target.value)}
@@ -39,14 +38,14 @@ export function SearchHistory() {
                     Wyszukaj historię
                 </Button>
             </form>
-            <form onSubmit={handleSearch} className="flex flex-col gap-4">
+            <form onSubmit={(e) => handleSearch(e, 'history')} className="flex flex-col gap-4">
                 <div className="space-y-2 text-white">
-                    <Label htmlFor="vin-input">
+                    <Label htmlFor="vin-input-history">
                         Wyszukaj aktualną naprawę
                     </Label>
                     <Input
                         className="text-white"
-                        id="vin-input"
+                        id="vin-input-history"
                         type="text"
                         value={vin}
                         onChange={(e) => setVin(e.target.value)}
