@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 export default function LoginPage() {
 
     const [email, setEmail] = useState('');
@@ -53,7 +55,7 @@ export default function LoginPage() {
 
     return (
         
-        <main className="min-h-screen bg-black flex items-center justify-center">
+        <main className="flex flex-col justify-center w-full flex-grow items-center mx-auto px-4 py-8">
             <Card className="w-full text-white max-w-md bg-zinc-950 border-zinc-800">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold text-center">GarageFlow</CardTitle>
@@ -88,10 +90,10 @@ export default function LoginPage() {
                                 <Checkbox id="remember-me" className="border-white"></Checkbox>
                                 <Label htmlFor="remember-me">Zapamiętaj mnie</Label>
                             </div>
-                            <a href="#" className="text-blue-400 hover:underline">Zapomniałeś hasła?</a>
+                            <Link className="text-blue-400 hover:underline" href="/forgot-password">Zapomniałeś hasła?</Link>
                         </div>
                     </CardContent>
-                    {error && <p className="text-red-500 text-center mb-5">{error}</p>} {/* Display error message */}
+                    {error && <p className="text-red-500 text-center mb-5">{error}</p>} 
                     <CardFooter>
                         <Button
                                 className="w-full font-medium bg-blue-700 hover:bg-blue-800"

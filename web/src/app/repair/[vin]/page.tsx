@@ -107,9 +107,9 @@ export default function HistoryPage() {
                                     </div>
                                     <div className="flex items-start">
                                         <span className={`px-3 py-1 text-sm rounded-full ${repair.finishedAt ? 'bg-green-900 text-green-300' :
-                                                new Date(repair.plannedStartAt) > new Date() ? 'bg-yellow-900 text-yellow-300' :
-                                                    repair.startedAt ? 'bg-blue-900 text-blue-300' :
-                                                        'bg-zinc-700 text-zinc-300'
+                                            new Date(repair.plannedStartAt) > new Date() ? 'bg-yellow-900 text-yellow-300' :
+                                                repair.startedAt ? 'bg-blue-900 text-blue-300' :
+                                                    'bg-zinc-700 text-zinc-300'
                                             }`}>
                                             {repair.finishedAt ? 'Zakończona' :
                                                 new Date(repair.plannedStartAt) > new Date() ? 'Zaplanowana' :
@@ -121,32 +121,32 @@ export default function HistoryPage() {
 
                                 <p className="mb-4">{repair.description}</p>
                                 {repair.repairDetails && repair.repairDetails.length > 0 && (
-  <div>
-    <h3 className="text-lg font-medium mb-2">Wykonane usługi:</h3>
-    <ul className="space-y-2">
-      {repair.repairDetails
-        .filter((detail: { repairDetailType: number; }) => detail.repairDetailType === 1)
-        .map((detail: RepairDetails) => (
-          <li key={detail.id} className="flex justify-between">
-            <span>{detail.name}</span>
-            <span>{detail.price.toFixed(2)} zł</span>
-          </li>
-        ))}
-    </ul>
+                                    <div>
+                                        <h3 className="text-lg font-medium mb-2">Wykonane usługi:</h3>
+                                        <ul className="space-y-2">
+                                            {repair.repairDetails
+                                                .filter((detail: { repairDetailType: number; }) => detail.repairDetailType === 1)
+                                                .map((detail: RepairDetails) => (
+                                                    <li key={detail.id} className="flex justify-between">
+                                                        <span>{detail.name}</span>
+                                                        <span>{detail.price.toFixed(2)} zł</span>
+                                                    </li>
+                                                ))}
+                                        </ul>
 
-    <h3 className="text-lg font-medium mt-4 mb-2">Wymienione części:</h3>
-    <ul className="space-y-2">
-      {repair.repairDetails
-        .filter((detail: { repairDetailType: number; }) => detail.repairDetailType === 2)
-        .map((detail: RepairDetails) => (
-          <li key={detail.id} className="flex justify-between">
-            <span>{detail.name}</span>
-            <span>{detail.price.toFixed(2)} zł</span>
-          </li>
-        ))}
-    </ul>
-  </div>
-)}
+                                        <h3 className="text-lg font-medium mt-4 mb-2">Wymienione części:</h3>
+                                        <ul className="space-y-2">
+                                            {repair.repairDetails
+                                                .filter((detail: { repairDetailType: number; }) => detail.repairDetailType === 2)
+                                                .map((detail: RepairDetails) => (
+                                                    <li key={detail.id} className="flex justify-between">
+                                                        <span>{detail.name}</span>
+                                                        <span>{detail.price.toFixed(2)} zł</span>
+                                                    </li>
+                                                ))}
+                                        </ul>
+                                    </div>
+                                )}
 
 
                                 <div className="mt-4 text-xs text-gray-500">
