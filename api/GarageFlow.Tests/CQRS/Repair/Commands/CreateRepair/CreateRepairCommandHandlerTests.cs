@@ -26,6 +26,7 @@ public class CreateRepairCommandHandlerTests
         _mapperMock = new Mock<IMapper>();
         _repairRepositoryMock = new Mock<IRepairRepository>();
         _carRepositoryMock = new Mock<ICarRepository>();
+        _repairHistoryRepositoryMock = new Mock<IRepairHistoryRepository>();
         _handler = new CreateRepairCommandHandler(_mapperMock.Object, _repairRepositoryMock.Object, _carRepositoryMock.Object, _repairHistoryRepositoryMock.Object);
     }
 
