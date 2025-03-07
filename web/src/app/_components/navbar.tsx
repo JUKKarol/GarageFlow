@@ -25,7 +25,9 @@ export function Navbar() {
             </div>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <Button variant="outline" className="mr-2 bg-zinc-950 text-white hover:text-white hover:bg-zinc-900">Rejestracja</Button>
+          <Link href="/register">
+                <Button variant="outline" className="mr-2 bg-zinc-950 text-white hover:text-white hover:bg-zinc-900">Rejestracja</Button>
+            </Link>
             <Link href="/login">
                 <Button className="bg-gray-100 text-black hover:bg-gray-300">Logowanie</Button>
             </Link>

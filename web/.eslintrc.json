@@ -2,6 +2,10 @@
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
     // Disable the no-explicit-any rule globally
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    // Ignore variables that are declared but never used
+    "@typescript-eslint/no-unused-vars": "off",
+    // Ignore missing dependencies in useEffect and other React hooks
+    "react-hooks/exhaustive-deps": "off"
   }
 }

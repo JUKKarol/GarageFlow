@@ -104,6 +104,11 @@ export default function LoginPage() {
                         </Button>
                     </CardFooter>
                 </form>
+                <div className="text-center pb-4">
+                        <Link className="text-blue-400 hover:underline" href="/register">
+                            Nie posiadasz konta? Zarejestruj się
+                        </Link>
+                    </div>
             </Card>
             
         </main>
