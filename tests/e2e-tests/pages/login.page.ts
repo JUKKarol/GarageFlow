@@ -7,7 +7,7 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.goToLoginBtn = page.getByRole('button', { name: 'Log in' });
+    this.goToLoginBtn = page.getByRole('button', { name: 'Logowanie' });
     this.LoginBtn = page.getByRole('button', { name: 'Zaloguj się' });
   }
 
